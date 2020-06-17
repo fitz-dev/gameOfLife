@@ -5,20 +5,27 @@ namespace GameOfLife
 {
     public class World
     {
-        public static City[,] CreateWorld(int rows, int columns)
+        public static City[,] CreateWorld(int columns, int rows)
         {
-            var world = new City[rows, columns];
+            var world = new City[columns, rows];
             
-            int rowLength = world.GetLength(0);
-            int columnLength = world.GetLength(1);
+            int columnLength = world.GetLength(0);
+            int rowLength = world.GetLength(1);
 
-            for (int xIndex = 0; xIndex < rowLength; xIndex++)
+            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
             {
-                for (int yIndex = 0; yIndex < columnLength; yIndex++)
+                for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
                 {
-                    world[xIndex,yIndex] = new City(xIndex, yIndex);
+                    world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
                 }
             }
+            // for (int columnIndex = 0; columnIndex < rowLength; columnIndex++)
+            // {
+            //     for (int rowIndex = 0; rowIndex < columnLength; rowIndex++)
+            //     {
+            //         world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
+            //     }
+            // }
             return world;
         }
     }

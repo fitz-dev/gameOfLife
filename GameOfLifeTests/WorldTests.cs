@@ -15,16 +15,5 @@ namespace GameOfLifeTests
             
             Assert.Equal(80, worldSize);
         }
-        
-        [Fact]
-        public void Given_ANumberOfStartingSeeds_When_SeedsAreAddedToWorld_Then_SameNumberAreReturnedInArray()
-        {
-            var world = World.CreateWorld(8, 10);
-            
-            
-            var worldSize = world.Length;
-            
-            Assert.Equal(80, worldSize);
-        }
-    }
+   }
 }

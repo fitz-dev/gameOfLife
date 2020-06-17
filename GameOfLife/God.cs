@@ -2,9 +2,14 @@ namespace GameOfLife
 {
     public class God
     {
-        public void AddSeeds(City[,] world, int xIndex, int yIndex)
+        public void AddSeeds(City[,] world, int columnIndex, int rowIndex)
         {
-            world[xIndex, yIndex].Live = true;
+            world[columnIndex, rowIndex].Live = true;
+        }
+
+        public City FetchCity(City[,] world, int columnIndex, int rowIndex)
+        {
+            return world[columnIndex, rowIndex];
         }
     }
 }
