@@ -5,7 +5,7 @@ namespace GameOfLife
 {
     public class World
     {
-        public City[,] CreateWorld(int rows, int columns)
+        public static City[,] CreateWorld(int rows, int columns)
         {
             var world = new City[rows, columns];
             

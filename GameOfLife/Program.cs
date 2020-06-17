@@ -6,17 +6,14 @@ namespace GameOfLife
     {
         static void Main(string[] args)
         {
-            var world = new World().CreateWorld(10,10);
-
-            AddSeed(world, 5, 5);
-            AddSeed(world, 3, 2);
+            var world = World.CreateWorld(10,10);
+            var god = new God();
+            god.AddSeeds(world, 3, 2);
+            god.AddSeeds(world, 6, 9);
+            god.AddSeeds(world, 2, 5);
 
             PrintWorld(world);
-        }
-
-        private static void AddSeed(City[,] world, int xIndex, int yIndex)
-        {
-            world[xIndex, yIndex].Live = true;
+            Console.WriteLine(world.Length);
         }
 
         private static void PrintWorld(City[,] world)
