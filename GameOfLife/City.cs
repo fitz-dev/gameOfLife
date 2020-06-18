@@ -94,32 +94,26 @@ namespace GameOfLife
 
         private Tuple<int, int> CheckForEdgeNeighbours(City[,] world, Tuple<int, int> coordinates)
         {
-            var (xCoord, yCoord) = coordinates;
-            var columns = world.GetLength(0);
-            var rows = world.GetLength(1);
+            var (rowIndex, columnIndex) = coordinates;
+            var columnSize = world.GetLength(0) - 1;
+            var rowsSize = world.GetLength(1) - 1;
+
+            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, rowsSize);
+            rowIndex = CheckForIndexLargerThanWorld(rowIndex, rowsSize);
             
-            if (xCoord < 0)
-            {
-                xCoord = rows - 1;
-            }
-            
-            if (xCoord > rows - 1)
-            {
-                xCoord = 0;
-            }
-            
-            if (yCoord < 0)
-            {
-                yCoord = columns - 1;
-            }
-            
-            if (yCoord > columns - 1)
-            {
-                yCoord = 0;
-            }
-            // var checkedXLower = xCoord < 0 ? (rows - 1) : xCoord;
-            // var checkedYLower = yCoord < 0 ? (columns - 1) : yCoord;
-            return new Tuple<int, int>(xCoord, yCoord);
+            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, columnSize);
+            columnIndex = CheckForIndexLargerThanWorld(columnIndex, columnSize);
+      
+            return new Tuple<int, int>(rowIndex, columnIndex);
+        }
+
+        private int CheckForIndexSmallerThanWorld(int coordinate, int axisSize)
+        {
+            return coordinate < 0 ? axisSize : coordinate;
+        }
+        private int CheckForIndexLargerThanWorld(int coordinate, int axisSize)
+        {
+            return coordinate > axisSize ? 0 : coordinate;
         }
     }
 }

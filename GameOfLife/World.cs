@@ -19,13 +19,6 @@ namespace GameOfLife
                     world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
                 }
             }
-            // for (int columnIndex = 0; columnIndex < rowLength; columnIndex++)
-            // {
-            //     for (int rowIndex = 0; rowIndex < columnLength; rowIndex++)
-            //     {
-            //         world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
-            //     }
-            // }
             return world;
         }
     }
