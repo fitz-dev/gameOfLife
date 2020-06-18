@@ -11,6 +11,8 @@ namespace GameOfLife
         public int Y;
         public bool Live;
         public string Display = "-";
+        public int LiveNeighbours;
+        
         public City(int x, int y)
         {
             X = x;
@@ -22,6 +24,19 @@ namespace GameOfLife
         public void SetLifeDisplay()
         {
             Display = Live ? "0" : "-";
+        }
+
+        public void GetNumberOfLiveNeighbours(City[,] world)
+        {
+            foreach (var neighbour in Neighbours)
+            {
+                var columnIndex = neighbour.Value.Item1;
+                var rowIndex = neighbour.Value.Item2;
+                if (world[columnIndex, rowIndex].Live)
+                {
+                    LiveNeighbours++;
+                }
+            }
         }
 
         public void FindNeighbours(City[,] world)

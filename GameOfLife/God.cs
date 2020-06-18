@@ -11,5 +11,10 @@ namespace GameOfLife
         {
             return world[columnIndex, rowIndex];
         }
+
+        public bool ApplyLifeRules(City city)
+        {
+            return city.Live && city.LiveNeighbours == 2 || city.LiveNeighbours == 3;
+        }
     }
 }

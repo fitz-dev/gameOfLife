@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks.Dataflow;
 using GameOfLife;
 using Xunit;
 
@@ -6,6 +7,19 @@ namespace GameOfLifeTests
 {
     public class CityTests
     {
+        [Fact]
+        public void Given_ANewWorld_When_ANewSeedIsAdded_Then_SeedIsLive()
+        {
+            var world = World.CreateWorld(5, 5);
+            var god = new God();
+            
+            god.AddSeeds(world, 2, 2);
+            var chosenCity =  god.FetchCity(world, 2, 2);
+
+            Assert.True(chosenCity.Live);
+        }
+
+        
         
         [Fact]
         public void Given_NeighbourThatIsToTheLeftEdgeOfTheCity_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
@@ -92,6 +106,34 @@ namespace GameOfLifeTests
             var leftNeighbour = new Tuple<int, int>(4,3);
             
             Assert.Equal(leftNeighbour, chosenCity.Neighbours["left"]);
+        }
+        
+        [Fact]
+        public void Given_ACityThatHasTwoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
+        {
+            var world = World.CreateWorld(10, 10);
+            var god = new God();
+            god.AddSeeds(world, 0, 4);
+            god.AddSeeds(world, 0, 6);
+            
+            var chosenCity = god.FetchCity(world, 0, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.GetNumberOfLiveNeighbours(world);
+        
+            Assert.Equal(2, chosenCity.LiveNeighbours);
+        }
+          
+        [Fact]
+        public void Given_ACityThatHasNoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
+        {
+            var world = World.CreateWorld(10, 10);
+            var god = new God();
+            
+            var chosenCity = god.FetchCity(world, 0, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.GetNumberOfLiveNeighbours(world);
+        
+            Assert.Equal(0, chosenCity.LiveNeighbours);
         }
     }
 }

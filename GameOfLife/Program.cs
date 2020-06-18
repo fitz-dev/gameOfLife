@@ -7,40 +7,32 @@ namespace GameOfLife
     {
         static void Main(string[] args)
         {
-            var world = World.CreateWorld(10,5);
+            var world = World.CreateWorld(10,10);
             var god = new God();
-            var cityTest = world[1,4];
+            god.AddSeeds(world, 2, 5);
+            var cityTest = god.FetchCity(world, 2, 5);
             cityTest.FindNeighbours(world);
-            cityTest.Live = true;
+            
             var neighbours = cityTest.Neighbours;
             
             foreach (var (item1, item2) in neighbours)
             {
                 Console.WriteLine($"{item1}, {item2}");
             }
-            SetAllNeighboursToLive(world, neighbours);
 
             Console.WriteLine("");
+            
             PrintWorld(world);
         }
 
         private static void SetAllNeighboursToLive(City[,] world, Dictionary<string, Tuple<int, int>> neighbours)
         {
-            int columnLength = world.GetLength(0);
-            int rowLength = world.GetLength(1);
-
-            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            foreach (var neighbour in neighbours)
             {
-                for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
-                {
-                    foreach (var neighbour in neighbours)
-                    {
-                        if (neighbour.Value.Item1 == columnIndex && neighbour.Value.Item2 == rowIndex)
-                        {
-                            world[columnIndex, rowIndex].Live = true;
-                        }
-                    }
-                }
+                var columnIndex = neighbour.Value.Item1;
+                var rowIndex = neighbour.Value.Item2;
+                world[columnIndex, rowIndex].Live = true;
+                world[columnIndex, rowIndex].SetLifeDisplay();
             }
         }
 
@@ -53,10 +45,7 @@ namespace GameOfLife
             {
                 for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
                 {
-                    // Display
                     Console.Write($"{world[columnIndex, rowIndex].Display} ");
-                    // Coordinates
-                    // Console.Write($"({world[columnIndex, rowIndex].X} {world[columnIndex, rowIndex].Y}) ");
                 }
                 Console.WriteLine();
             }
