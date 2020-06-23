@@ -29,6 +29,7 @@ namespace GameOfLife
                 (!city.Live && city.LiveNeighbours == 3))
             {
                 NextTickLiveCities.Add(city);
+                city.Live = true;
                 city.Display = "X";
             }
             else
@@ -36,14 +37,5 @@ namespace GameOfLife
                 city.Display = "-";
             }
         }
-
-        // public bool ApplyLifeRules(City city)
-        // {
-        //     if (city.Live && city.LiveNeighbours == 2 || city.LiveNeighbours == 3)
-        //     {
-        //         return true;
-        //     }
-        //     return false;
-        // }
     }
 }

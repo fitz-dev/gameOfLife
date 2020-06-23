@@ -19,8 +19,6 @@ namespace GameOfLifeTests
             Assert.True(chosenCity.Live);
         }
 
-        
-        
         [Fact]
         public void Given_NeighbourThatIsToTheLeftEdgeOfTheCity_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
@@ -92,8 +90,6 @@ namespace GameOfLifeTests
             Assert.Equal(rightNeighbour, chosenCity.Neighbours["right"]);
         }
         
-        
-        
         [Fact]
         public void Given_NeighbourThatIsOffTheLeftEdgeOfTheWorld_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
@@ -118,7 +114,7 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 0, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
         
             Assert.Equal(2, chosenCity.LiveNeighbours);
         }
@@ -131,7 +127,7 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 0, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
         
             Assert.Equal(0, chosenCity.LiveNeighbours);
         }

@@ -26,7 +26,7 @@ namespace GameOfLife
             Display = Live ? "0" : "-";
         }
 
-        public void GetNumberOfLiveNeighbours(City[,] world)
+        public void FindNumberOfLiveNeighbours(City[,] world)
         {
             foreach (var neighbour in Neighbours)
             {

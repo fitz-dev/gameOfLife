@@ -20,42 +20,38 @@ namespace GameOfLife
             god.AddSeeds(world, 5, 2);
             god.AddSeeds(world, 5, 0);
             
-            Console.WriteLine("=1111=============================");
+            Console.WriteLine("=Initial=============================");
             PrintWorld(world);
             
-            Console.WriteLine("=2222=============================");
-            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
-            {
-                for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
-                {
-                    var city = world[columnIndex, rowIndex];
-                    city.FindNeighbours(world);
-                    city.GetNumberOfLiveNeighbours(world);
-                    god.ApplyLifeRules(city);
-                }
-            }
+            Console.WriteLine("==============================");
+            ProcessEachCell(rowLength, columnLength, world, god);
             PrintWorld(world);
 
-            for (int i = 3; i < 10; i++)
+            while (god.NextTickLiveCities.Count > 0)
             {
-                Console.WriteLine($"={i}{i}{i}{i}==================");
+                Console.WriteLine($"===================");
                 world = World.CreateWorld(10,10);
                 foreach (var city in god.NextTickLiveCities)
                 {
                     god.AddSeeds(world, city.X, city.Y);
                 }
                 god.NextTickLiveCities = new List<City>();
-                for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
-                {
-                    for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
-                    {
-                        var city = world[columnIndex, rowIndex];
-                        city.FindNeighbours(world);
-                        city.GetNumberOfLiveNeighbours(world);
-                        god.ApplyLifeRules(city);
-                    }
-                }
+                ProcessEachCell(rowLength, columnLength, world, god);
                 PrintWorld(world);
+            }
+        }
+
+        private static void ProcessEachCell(int rowLength, int columnLength, City[,] world, God god)
+        {
+            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
+                {
+                    var city = world[columnIndex, rowIndex];
+                    city.FindNeighbours(world);
+                    city.FindNumberOfLiveNeighbours(world);
+                    god.ApplyLifeRules(city);
+                }
             }
         }
 

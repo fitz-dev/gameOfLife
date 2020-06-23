@@ -43,7 +43,7 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNeighbours(world);
-            // chosenCity.Live = god.ApplyLifeRules(chosenCity);
+            god.ApplyLifeRules(chosenCity);
         
             Assert.False(chosenCity.Live);
         }
@@ -61,9 +61,9 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
-            // chosenCity.Live = god.ApplyLifeRules(chosenCity);
-
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
+            
             Assert.False(chosenCity.Live);
         }
         
@@ -79,8 +79,8 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
-            // chosenCity.Live = god.ApplyLifeRules(chosenCity);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
 
             Assert.True(chosenCity.Live);
         }
@@ -96,8 +96,8 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
-            // chosenCity.Live = god.ApplyLifeRules(chosenCity);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
 
             Assert.True(chosenCity.Live);
         }
@@ -114,9 +114,10 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
-            // chosenCity.Live = god.ApplyLifeRules(chosenCity);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
 
+            Assert.Equal(3, chosenCity.LiveNeighbours);
             Assert.True(chosenCity.Live);
         }
         
@@ -131,8 +132,8 @@ namespace GameOfLifeTests
             
             var chosenCity = god.FetchCity(world, 5, 5);
             chosenCity.FindNeighbours(world);
-            chosenCity.GetNumberOfLiveNeighbours(world);
-            // chosenCity.Live = god.ApplyLifeRules(chosenCity);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
 
             Assert.False(chosenCity.Live);
         }
