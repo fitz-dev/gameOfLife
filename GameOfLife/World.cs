@@ -19,9 +19,9 @@ namespace GameOfLife
         {
             var world = new City[columns, rows];
                 
-            for (int rowIndex = 0; rowIndex < RowLength; rowIndex++)
+            for (int rowIndex = 0; rowIndex < rows; rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < ColumnLength; columnIndex++)
+                for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                 {
                     world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
                 }

@@ -12,11 +12,11 @@ namespace GameOfLifeTests
         public void Given_ANumberOfStartingSeeds_When_SeedsAreAddedToWorld_Then_SameNumberOfLiveCitiesReturnedInArray()
         {
             var god = new God();
-            var world = new World(8, 10);
+            var world = new World(10, 10);
             var numberOfLiveCities = 0;
 
             god.AddSeeds(world, 3,4);
-            god.AddSeeds(world, 7,8);
+            god.AddSeeds(world, 1,5);
 
             int rowLength = world.RowLength;
             int columnLength = world.ColumnLength;
@@ -50,94 +50,91 @@ namespace GameOfLifeTests
             Assert.False(chosenCity.Live);
         }
         
-        //
-        // [Fact]
-        // public void Given_ALiveCityWithMoreThanLiveThreeNeighbours_When_LifeRulesAreApplied_Then_CityDies()
-        // {
-        //     var world = new World(10, 10);
-        //     var god = new God();
-        //     god.AddSeeds(world, 2, 4);
-        //     god.AddSeeds(world, 2, 6);
-        //     god.AddSeeds(world, 1, 5);
-        //     god.AddSeeds(world, 1, 6);
-        //     
-        //     var chosenCity = god.FetchCity(world, 2, 5);
-        //     chosenCity.FindNeighbours(world);
-        //     chosenCity.FindNumberOfLiveNeighbours(world.Grid);
-        //     god.ApplyLifeRules(chosenCity);
-        //     
-        //     Assert.False(chosenCity.Live);
-        // }
-        //
-        //
-        // [Fact]
-        // public void Given_ALiveCityWithTwoLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
-        // {
-        //     var world = new World(10, 10);
-        //     var god = new God();
-        //     god.AddSeeds(world, 2, 5);
-        //     god.AddSeeds(world, 2, 4);
-        //     god.AddSeeds(world, 2, 6);
-        //     
-        //     var chosenCity = god.FetchCity(world, 2, 5);
-        //     chosenCity.FindNeighbours(world);
-        //     chosenCity.FindNumberOfLiveNeighbours(world.Grid);
-        //     god.ApplyLifeRules(chosenCity);
-        //
-        //     Assert.True(chosenCity.Live);
-        // }
-        //
-        // [Fact]
-        // public void Given_ALiveCityWithThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
-        // {
-        //     var world = new World(10, 10);
-        //     var god = new God();
-        //     god.AddSeeds(world, 2, 4);
-        //     god.AddSeeds(world, 2, 6);
-        //     god.AddSeeds(world, 1, 5);
-        //     
-        //     var chosenCity = god.FetchCity(world, 2, 5);
-        //     chosenCity.FindNeighbours(world);
-        //     chosenCity.FindNumberOfLiveNeighbours(world.Grid);
-        //     god.ApplyLifeRules(chosenCity);
-        //
-        //     Assert.True(chosenCity.Live);
-        // }
-        //
-        //
-        // [Fact]
-        // public void Given_ADeadCityWithExactlyThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
-        // {
-        //     var world = new World(10, 10);
-        //     var god = new God();
-        //     god.AddSeeds(world, 2, 4);
-        //     god.AddSeeds(world, 2, 6);
-        //     god.AddSeeds(world, 1, 5);
-        //     
-        //     var chosenCity = god.FetchCity(world, 2, 5);
-        //     chosenCity.FindNeighbours(world);
-        //     chosenCity.FindNumberOfLiveNeighbours(world.Grid);
-        //     god.ApplyLifeRules(chosenCity);
-        //
-        //     Assert.Equal(3, chosenCity.LiveNeighbours);
-        //     Assert.True(chosenCity.Live);
-        // }
-        //
-        // [Fact]
-        // public void Given_ADeadCityWithNoLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
-        // {
-        //     var world = new World(10, 10);
-        //     var god = new God();
-        //     god.AddSeeds(world, 2, 4);
-        //     god.AddSeeds(world, 2, 6);
-        //     god.AddSeeds(world, 1, 5);
-        //     
-        //     var chosenCity = god.FetchCity(world, 2, 5);
-        //     chosenCity.FindNeighbours(world);
-        //     chosenCity.FindNumberOfLiveNeighbours(world.Grid);
-        //     god.ApplyLifeRules(chosenCity);
-        //
-        //     Assert.False(chosenCity.Live);
-        // }
+        
+        [Fact]
+        public void Given_ALiveCityWithMoreThanLiveThreeNeighbours_When_LifeRulesAreApplied_Then_CityDies()
+        {
+            var world = new World(10, 10);
+            var god = new God();
+            god.AddSeeds(world, 2, 4);
+            god.AddSeeds(world, 2, 6);
+            god.AddSeeds(world, 1, 5);
+            god.AddSeeds(world, 1, 6);
+            
+            var chosenCity = god.FetchCity(world, 2, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
+            
+            Assert.False(chosenCity.Live);
+        }
+        
+        
+        [Fact]
+        public void Given_ALiveCityWithTwoLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
+        {
+            var world = new World(10, 10);
+            var god = new God();
+            god.AddSeeds(world, 2, 5);
+            god.AddSeeds(world, 2, 4);
+            god.AddSeeds(world, 2, 6);
+            
+            var chosenCity = god.FetchCity(world, 2, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
+        
+            Assert.True(chosenCity.Live);
+        }
+        
+        [Fact]
+        public void Given_ALiveCityWithThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
+        {
+            var world = new World(10, 10);
+            var god = new God();
+            god.AddSeeds(world, 2, 4);
+            god.AddSeeds(world, 2, 6);
+            god.AddSeeds(world, 1, 5);
+            
+            var chosenCity = god.FetchCity(world, 2, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
+        
+            Assert.True(chosenCity.Live);
+        }
+        
+        
+        [Fact]
+        public void Given_ADeadCityWithExactlyThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
+        {
+            var world = new World(10, 10);
+            var god = new God();
+            god.AddSeeds(world, 2, 4);
+            god.AddSeeds(world, 2, 6);
+            god.AddSeeds(world, 1, 5);
+            
+            var chosenCity = god.FetchCity(world, 2, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
+        
+            Assert.Equal(3, chosenCity.LiveNeighbours);
+            Assert.True(chosenCity.Live);
+        }
+        
+        [Fact]
+        public void Given_ADeadCityWithNoLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
+        {
+            var world = new World(10, 10);
+            var god = new God();
+
+            var chosenCity = god.FetchCity(world, 7, 5);
+            chosenCity.FindNeighbours(world);
+            chosenCity.FindNumberOfLiveNeighbours(world);
+            god.ApplyLifeRules(chosenCity);
+        
+            Assert.False(chosenCity.Live);
+        }
     }
 }
