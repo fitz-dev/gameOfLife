@@ -8,17 +8,7 @@ namespace GameOfLife
         static void Main(string[] args)
         {
             var world = new World(10,10);
-            var population = world.Population;
 
-            foreach (var city in population)
-            {
-                Console.WriteLine(city.Live);
-            }
-            
-            // var world = World.CreateWorld(10,10);
-            // int columnLength = world.GetLength(0);
-            // int rowLength = world.GetLength(1);
-            
             var god = new God();
             god.AddSeeds(world, 2, 3);
             god.AddSeeds(world, 3, 2);
@@ -32,30 +22,30 @@ namespace GameOfLife
             PrintWorld(world);
             
             Console.WriteLine("==============================");
-            ProcessEachCell(world.RowLength, world.ColumnLength, world, god);
+            ProcessEachCell(world, god);
             PrintWorld(world);
 
             while (god.NextTickLiveCities.Count > 0)
             {
                 Console.WriteLine($"===================");
-                world = World.CreateWorld(10,10);
+                world = new World(10,10);
                 foreach (var city in god.NextTickLiveCities)
                 {
                     god.AddSeeds(world, city.X, city.Y);
                 }
                 god.NextTickLiveCities = new List<City>();
-                ProcessEachCell(rowLength, columnLength, world, god);
+                ProcessEachCell(world, god);
                 PrintWorld(world);
             }
         }
 
-        private static void ProcessEachCell(int rowLength, int columnLength, City[,] world, God god)
+        private static void ProcessEachCell(World world, God god)
         {
-            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
+                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    var city = world[columnIndex, rowIndex];
+                    var city = world.Grid[columnIndex, rowIndex];
                     city.FindNeighbours(world);
                     city.FindNumberOfLiveNeighbours(world);
                     god.ApplyLifeRules(city);
@@ -74,16 +64,13 @@ namespace GameOfLife
             }
         }
 
-        private static void PrintWorld(City[,] world)
+        private static void PrintWorld(World world)
         {
-            int columnLength = world.GetLength(0);
-            int rowLength = world.GetLength(1);
-
-            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
+                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    Console.Write($"{world[columnIndex, rowIndex].Display} ");
+                    Console.Write($"{world.Grid[columnIndex, rowIndex].Display} ");
                 }
                 Console.WriteLine();
             }

@@ -5,24 +5,19 @@ namespace GameOfLife
 {
     public class World
     {
-        public static int Columns;
-        public static int Rows;
-        public static int ColumnLength { get; set; }
-        public static int RowLength { get; set; }
-        public City[,] Population { get; set; }
+        public int ColumnLength { get; set; }
+        public int RowLength { get; set; }
+        public City[,] Grid { get; set; }
 
         public World(int columns, int rows)
         {
-            Columns = columns;
             ColumnLength = columns - 1;
-            Rows = rows;
             RowLength = rows - 1;
-            Population = CreateWorld();
+            Grid = CreateWorld(columns, rows);
         }
-
-        public static City[,] CreateWorld()
+        public City[,] CreateWorld(int columns, int rows)
         {
-            var world = new City[Columns, Rows];
+            var world = new City[columns, rows];
                 
             for (int rowIndex = 0; rowIndex < RowLength; rowIndex++)
             {
@@ -33,5 +28,6 @@ namespace GameOfLife
             }
             return world;
         }
+
     }
 }

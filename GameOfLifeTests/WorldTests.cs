@@ -9,9 +9,9 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ANumberOfRowsAndColumns_When_WorldIsCreated_Then_CorrectArrayIsReturned()
         {
-            var world = World.CreateWorld(8, 10);
+            var world = new World(8, 10);
 
-            var worldSize = world.Length;
+            var worldSize = world.Grid.Length;
             
             Assert.Equal(80, worldSize);
         }
