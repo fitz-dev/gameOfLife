@@ -7,9 +7,17 @@ namespace GameOfLife
     {
         static void Main(string[] args)
         {
-            var world = World.CreateWorld(10,10);
-            int columnLength = world.GetLength(0);
-            int rowLength = world.GetLength(1);
+            var world = new World(10,10);
+            var population = world.Population;
+
+            foreach (var city in population)
+            {
+                Console.WriteLine(city.Live);
+            }
+            
+            // var world = World.CreateWorld(10,10);
+            // int columnLength = world.GetLength(0);
+            // int rowLength = world.GetLength(1);
             
             var god = new God();
             god.AddSeeds(world, 2, 3);
@@ -24,7 +32,7 @@ namespace GameOfLife
             PrintWorld(world);
             
             Console.WriteLine("==============================");
-            ProcessEachCell(rowLength, columnLength, world, god);
+            ProcessEachCell(world.RowLength, world.ColumnLength, world, god);
             PrintWorld(world);
 
             while (god.NextTickLiveCities.Count > 0)
