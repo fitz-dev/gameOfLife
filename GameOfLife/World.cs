@@ -24,6 +24,7 @@ namespace GameOfLife
                 for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                 {
                     world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
+                    world[columnIndex,rowIndex].FindNeighbours(rows, columns);
                 }
             }
             return world;

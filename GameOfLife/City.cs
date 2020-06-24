@@ -8,20 +8,13 @@ namespace GameOfLife
         public int X;
         public int Y;
         public bool Live;
-        public string Display = "-";
         public int LiveNeighbours;
+        public Dictionary<string, Tuple<int, int>> Neighbours = new Dictionary<string, Tuple<int, int>>();
         
         public City(int x, int y)
         {
             X = x;
             Y = y;
-        }
-        
-        public Dictionary<string, Tuple<int, int>> Neighbours = new Dictionary<string, Tuple<int, int>>();
-
-        public void SetLifeDisplay()
-        {
-            Display = Live ? "0" : "-";
         }
 
         public void FindNumberOfLiveNeighbours(World world)
@@ -37,27 +30,27 @@ namespace GameOfLife
             }
         }
 
-        public void FindNeighbours(World world)
+        public void FindNeighbours(int rows, int columns)
         {
-            Neighbours.Add("topLeft", CheckForEdgeNeighbours(world, SetTopLeft()));
-            Neighbours.Add("left", CheckForEdgeNeighbours(world, SetLeft()));
-            Neighbours.Add("bottomLeft", CheckForEdgeNeighbours(world, SetBottomLeft()));
-            Neighbours.Add("top", CheckForEdgeNeighbours(world, SetTop()));
-            Neighbours.Add("bottom", CheckForEdgeNeighbours(world, SetBottom()));
-            Neighbours.Add("topRight", CheckForEdgeNeighbours(world, SetTopRight()));
-            Neighbours.Add("right", CheckForEdgeNeighbours(world, SetRight()));
-            Neighbours.Add("bottomRight", CheckForEdgeNeighbours(world, SetBottomRight()));
+            Neighbours.Add("topLeft", CheckForEdgeNeighbours(rows, columns, SetTopLeft()));
+            Neighbours.Add("left", CheckForEdgeNeighbours(rows, columns, SetLeft()));
+            Neighbours.Add("bottomLeft", CheckForEdgeNeighbours(rows, columns, SetBottomLeft()));
+            Neighbours.Add("top", CheckForEdgeNeighbours(rows, columns, SetTop()));
+            Neighbours.Add("bottom", CheckForEdgeNeighbours(rows, columns, SetBottom()));
+            Neighbours.Add("topRight", CheckForEdgeNeighbours(rows, columns, SetTopRight()));
+            Neighbours.Add("right", CheckForEdgeNeighbours(rows, columns, SetRight()));
+            Neighbours.Add("bottomRight", CheckForEdgeNeighbours(rows, columns, SetBottomRight()));
         }
         
-        private Tuple<int, int> CheckForEdgeNeighbours(World world, Tuple<int, int> coordinates)
+        private Tuple<int, int> CheckForEdgeNeighbours(int rows, int columns, Tuple<int, int> coordinates)
         {
             var (rowIndex, columnIndex) = coordinates;
 
-            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, world.RowLength);
-            rowIndex = CheckForIndexLargerThanWorld(rowIndex, world.ColumnLength);
+            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, rows - 1);
+            rowIndex = CheckForIndexLargerThanWorld(rowIndex, columns - 1);
             
-            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, world.RowLength);
-            columnIndex = CheckForIndexLargerThanWorld(columnIndex, world.ColumnLength);
+            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, rows - 1);
+            columnIndex = CheckForIndexLargerThanWorld(columnIndex, columns - 1);
       
             return new Tuple<int, int>(rowIndex, columnIndex);
         }

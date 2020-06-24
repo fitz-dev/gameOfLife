@@ -25,7 +25,6 @@ namespace GameOfLifeTests
             var god = new God();
             
             var chosenCity = god.FetchCity(world, 2, 2);
-            chosenCity.FindNeighbours(world);
 
             var leftNeighbour = new Tuple<int, int>(1,2);
             
@@ -39,7 +38,6 @@ namespace GameOfLifeTests
             var god = new God();
             
             var chosenCity = god.FetchCity(world, 2, 2);
-            chosenCity.FindNeighbours(world);
 
             var leftNeighbour = new Tuple<int, int>(3,2);
             
@@ -53,7 +51,6 @@ namespace GameOfLifeTests
             var god = new God();
                
             var chosenCity = god.FetchCity(world, 2, 0);
-            chosenCity.FindNeighbours(world);
         
             var topNeighbour = new Tuple<int, int>(2,4);
             
@@ -67,7 +64,6 @@ namespace GameOfLifeTests
             var god = new God();
             
             var chosenCity = god.FetchCity(world, 2, 4);
-            chosenCity.FindNeighbours(world);
         
             var bottomNeighbour = new Tuple<int, int>(2,0);                   
             
@@ -82,7 +78,6 @@ namespace GameOfLifeTests
             var god = new God();
             
             var chosenCity = god.FetchCity(world, 4, 2);
-            chosenCity.FindNeighbours(world);
         
             var rightNeighbour = new Tuple<int, int>(0,2);
             
@@ -96,7 +91,6 @@ namespace GameOfLifeTests
             var god = new God();
             
             var chosenCity = god.FetchCity(world, 0, 3);
-            chosenCity.FindNeighbours(world);
         
             var leftNeighbour = new Tuple<int, int>(4,3);
             
@@ -113,7 +107,6 @@ namespace GameOfLifeTests
             god.AddSeeds(world, 0, 6);
             
             var chosenCity = god.FetchCity(world, 0, 5);
-            chosenCity.FindNeighbours(world);
             chosenCity.FindNumberOfLiveNeighbours(world);
         
             Assert.Equal(2, chosenCity.LiveNeighbours);
@@ -126,7 +119,6 @@ namespace GameOfLifeTests
             var god = new God();
             
             var chosenCity = god.FetchCity(world, 0, 5);
-            chosenCity.FindNeighbours(world);
             chosenCity.FindNumberOfLiveNeighbours(world);
         
             Assert.Equal(0, chosenCity.LiveNeighbours);

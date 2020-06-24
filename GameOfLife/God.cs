@@ -14,7 +14,6 @@ namespace GameOfLife
         {
             var city = world.Grid[columnIndex, rowIndex];
             city.Live = true;
-            city.Display = "X";
             LiveCities.Add(world.Grid[columnIndex, rowIndex]);
         }
 
@@ -30,11 +29,6 @@ namespace GameOfLife
             {
                 NextTickLiveCities.Add(city);
                 city.Live = true;
-                city.Display = "X";
-            }
-            else
-            {
-                city.Display = "-";
             }
         }
     }
