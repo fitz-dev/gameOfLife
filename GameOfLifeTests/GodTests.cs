@@ -12,7 +12,7 @@ namespace GameOfLifeTests
         public void Given_ANumberOfStartingSeeds_When_SeedsAreAddedToWorld_Then_SameNumberOfLiveCitiesReturnedInArray()
         {
             var god = new God();
-            var world = new World(10, 10);
+            var world = new World(god, 10, 10);
             var numberOfLiveCities = 0;
 
             god.AddSeed(world, 3,4);
@@ -37,8 +37,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ALiveCityWithLessThanTwoLiveNeighbours_When_LifeRulesAreApplied_Then_CityDies()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             god.AddSeed(world, 2, 4);
             
             var chosenCity = god.FetchCity(world, 2, 5);
@@ -53,8 +53,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ALiveCityWithMoreThanLiveThreeNeighbours_When_LifeRulesAreApplied_Then_CityDies()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             god.AddSeed(world, 2, 4);
             god.AddSeed(world, 2, 6);
             god.AddSeed(world, 1, 5);
@@ -71,8 +71,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ALiveCityWithTwoLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             god.AddSeed(world, 2, 5);
             god.AddSeed(world, 2, 4);
             god.AddSeed(world, 2, 6);
@@ -87,8 +87,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ALiveCityWithThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             god.AddSeed(world, 2, 4);
             god.AddSeed(world, 2, 6);
             god.AddSeed(world, 1, 5);
@@ -104,8 +104,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ADeadCityWithExactlyThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             god.AddSeed(world, 2, 4);
             god.AddSeed(world, 2, 6);
             god.AddSeed(world, 1, 5);
@@ -121,8 +121,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ADeadCityWithNoLiveNeighbours_When_LifeRulesAreApplied_Then_CityLives()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
 
             var chosenCity = god.FetchCity(world, 7, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);

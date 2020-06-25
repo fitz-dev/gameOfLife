@@ -13,12 +13,12 @@ namespace GameOfLife
             var outputMessage = new Output.Messages();
 
             input = ValidateWorldFormat(input, outputMessage);
-            input = ValidateCoordinateValues(world, input);
-            while (!IsValidCoordinate(world, input) || !IsNumber(input))
-            {
-                Console.WriteLine(outputMessage.SeedXEntry);
-                input = Console.ReadLine();
-            }
+            // input = ValidateCoordinateValues(world, input);
+            // while (!IsValidCoordinate(world, input) || !IsNumber(input))
+            // {
+            //     Console.WriteLine(outputMessage.SeedXEntry);
+            //     input = Console.ReadLine();
+            // }
             return Convert.ToInt32(input);
         }
 

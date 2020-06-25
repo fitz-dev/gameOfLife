@@ -9,6 +9,21 @@ namespace GameOfLife
         public List<City> NextTickLiveCities = new List<City>();
         public List<City> DeadCities = new List<City>();
         
+        public City[,] CreateWorld(int columns, int rows)
+        {
+            var world = new City[columns, rows];
+                
+            for (int rowIndex = 0; rowIndex < rows; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < columns; columnIndex++)
+                {
+                    world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
+                    world[columnIndex,rowIndex].FindNeighbours(rows, columns);
+                    // TODO remove find neighbours and have the method run when a city is made
+                }
+            }
+            return world;
+        }
         
         public void AddSeed(World world, int columnIndex, int rowIndex)
         {

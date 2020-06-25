@@ -9,8 +9,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ANewWorld_When_ANewSeedIsAdded_Then_SeedIsLive()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
             
             god.AddSeed(world, 2, 2);
             var chosenCity =  god.FetchCity(world, 2, 2);
@@ -21,8 +21,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_NeighbourThatIsToTheLeftOfTheCity_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
             
             var chosenCity = god.FetchCity(world, 2, 2);
 
@@ -34,8 +34,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_NeighbourThatIsToTheRightOfTheCity_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
             
             var chosenCity = god.FetchCity(world, 2, 2);
 
@@ -47,8 +47,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_NeighbourThatIsOffTheTopEdgeOfTheWorld_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
                
             var chosenCity = god.FetchCity(world, 2, 0);
         
@@ -60,8 +60,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_NeighbourThatIsOffTheBottomEdgeOfTheWorld_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
             
             var chosenCity = god.FetchCity(world, 2, 4);
         
@@ -74,8 +74,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_NeighbourThatIsOffTheRightEdgeOfTheWorld_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
             
             var chosenCity = god.FetchCity(world, 4, 2);
         
@@ -87,8 +87,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_NeighbourThatIsOffTheLeftEdgeOfTheWorld_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
-            var world = new World(5, 5);
             var god = new God();
+            var world = new World(god, 5, 5);
             
             var chosenCity = god.FetchCity(world, 0, 3);
         
@@ -100,8 +100,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ACityThatHasTwoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             god.AddSeed(world, 0, 4);
             god.AddSeed(world, 0, 5);
             god.AddSeed(world, 0, 6);
@@ -115,8 +115,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_ACityThatHasNoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
         {
-            var world = new World(10, 10);
             var god = new God();
+            var world = new World(god, 10, 10);
             
             var chosenCity = god.FetchCity(world, 0, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);
