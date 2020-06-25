@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 
 namespace GameOfLife
@@ -10,7 +10,8 @@ namespace GameOfLife
             var input = new Input();
             var output = new Output();
             var outputMessages = new Output.Messages();
-            Console.WriteLine(outputMessages.Welcome);
+            // outputmessages in their own methods? 
+            output.PrintOutput(outputMessages.Welcome);
             
             Console.WriteLine(outputMessages.AskLength);
             var columnInt = input.ProcessWorldInput(Console.ReadLine());
@@ -19,38 +20,30 @@ namespace GameOfLife
             
             var world = new World(columnInt,rowInt);
             
-            var seeds = new List<Tuple<int, int>>();
-            
-            Console.WriteLine(outputMessages.FirstSeedEntry);
-            var seed = Console.ReadLine();
-            
-            input.ValidateSeed(world, seed);
-            seeds.Add(input.ProcessSeedFormat(seed));
-            
-            Console.WriteLine(outputMessages.EnterAnotherSeed);
-            var additionalSeeds = "";
-            
-            while (additionalSeeds != "exit")
+            // seeds as input? make a city or create seed from input? 
+            var allSeeds = new List<(Seeds)>()
             {
-                additionalSeeds = Console.ReadLine();
-                if (additionalSeeds != "exit")
-                {
-                    input.ValidateSeed(world, additionalSeeds);
-                    seeds.Add(input.ProcessSeedFormat(additionalSeeds)); 
-                    Console.WriteLine(outputMessages.EnterAnotherSeed);
-                }
-            }
-            
-            
+                (2,4),
+                (3,4),
+                (5,6),
+                (7,8)
+            };
 
+            var columnIndex = 0;
+            var rowIndex = 0;
             var god = new God();
-            god.AddSeeds(world, 2, 3);
-            god.AddSeeds(world, 3, 2);
-            god.AddSeeds(world, 1, 2);
-            god.AddSeeds(world, 3, 1);
-            god.AddSeeds(world, 5, 1);
-            god.AddSeeds(world, 5, 2);
-            god.AddSeeds(world, 5, 0);
+
+            Console.WriteLine(outputMessages.SeedXEntry);
+            columnIndex = input.ProcessSeedInput(world, Console.ReadLine());
+            Console.WriteLine(outputMessages.SeedYEntry);
+            columnIndex = input.ProcessSeedInput(world, Console.ReadLine());
+            // allSeeds.Add(seed.x = columnIndex, seed.y = rowIndex);
+            
+            
+            god.AddSeeds(world, columnIndex, rowIndex);
+
+            Console.WriteLine(outputMessages.SeedXEntry);
+
             
             Console.WriteLine("=Initial=============================");
             output.PrintWorld(world);

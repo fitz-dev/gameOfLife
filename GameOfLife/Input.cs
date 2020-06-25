@@ -8,32 +8,32 @@ namespace GameOfLife
 {
     public class Input
     {
-        public void ValidateSeed(World world, string seed)
+        public int ProcessSeedInput(World world, string input)
         {
-            // split the input into indexes
             var outputMessage = new Output.Messages();
-            var coordinates = seed.Split(",");
 
-            // ensure there are two indexes
-            if (coordinates.Length != 2 || coordinates.Any(index => !IsNumber(index)))
+            input = ValidateWorldFormat(input, outputMessage);
+            input = ValidateCoordinateValues(world, input);
+            while (!IsValidCoordinate(world, input) || !IsNumber(input))
             {
-                Console.WriteLine(outputMessage.IncorrectSeedCoordinateFormat);
-                ValidateSeed(world, Console.ReadLine());
+                Console.WriteLine(outputMessage.SeedXEntry);
+                input = Console.ReadLine();
             }
-
-            if (Convert.ToInt32(coordinates[0]) > world.RowLength + 1 ||
-                Convert.ToInt32(coordinates[1]) > world.ColumnLength + 1)
-            {
-                Console.WriteLine(outputMessage.SeedTooHighOrLow);
-                ValidateSeed(world, Console.ReadLine());
-            }
+            return Convert.ToInt32(input);
         }
 
-        public Tuple<int, int> ProcessSeedFormat(string seed)
+        private bool ValidateCoordinateValues(World world, string input)
         {
-            var coordinates = seed.Split(",");
-            return new Tuple<int, int>(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
+            var convertedInput = Convert.ToInt32(input);
+            return convertedInput > world.ColumnLength || convertedInput > world.RowLength;
         }
+        
+        //
+        // public Tuple<int, int> ProcessSeedFormat(string seed)
+        // {
+        //     var coordinates = seed.Split(",");
+        //     return new Tuple<int, int>(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
+        // }
        
         public int ProcessWorldInput(string input)
         {
@@ -68,7 +68,6 @@ namespace GameOfLife
                 Console.WriteLine(outputMessage.IncorrectFormat);
                 input = Console.ReadLine();
             }
-
             return input;
         }
 

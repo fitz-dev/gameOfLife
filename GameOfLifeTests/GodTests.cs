@@ -15,8 +15,8 @@ namespace GameOfLifeTests
             var world = new World(10, 10);
             var numberOfLiveCities = 0;
 
-            god.AddSeeds(world, 3,4);
-            god.AddSeeds(world, 1,5);
+            god.AddSeed(world, 3,4);
+            god.AddSeed(world, 1,5);
 
             int rowLength = world.RowLength;
             int columnLength = world.ColumnLength;
@@ -39,7 +39,7 @@ namespace GameOfLifeTests
         {
             var world = new World(10, 10);
             var god = new God();
-            god.AddSeeds(world, 2, 4);
+            god.AddSeed(world, 2, 4);
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);
@@ -55,10 +55,10 @@ namespace GameOfLifeTests
         {
             var world = new World(10, 10);
             var god = new God();
-            god.AddSeeds(world, 2, 4);
-            god.AddSeeds(world, 2, 6);
-            god.AddSeeds(world, 1, 5);
-            god.AddSeeds(world, 1, 6);
+            god.AddSeed(world, 2, 4);
+            god.AddSeed(world, 2, 6);
+            god.AddSeed(world, 1, 5);
+            god.AddSeed(world, 1, 6);
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);
@@ -73,9 +73,9 @@ namespace GameOfLifeTests
         {
             var world = new World(10, 10);
             var god = new God();
-            god.AddSeeds(world, 2, 5);
-            god.AddSeeds(world, 2, 4);
-            god.AddSeeds(world, 2, 6);
+            god.AddSeed(world, 2, 5);
+            god.AddSeed(world, 2, 4);
+            god.AddSeed(world, 2, 6);
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);
@@ -89,9 +89,9 @@ namespace GameOfLifeTests
         {
             var world = new World(10, 10);
             var god = new God();
-            god.AddSeeds(world, 2, 4);
-            god.AddSeeds(world, 2, 6);
-            god.AddSeeds(world, 1, 5);
+            god.AddSeed(world, 2, 4);
+            god.AddSeed(world, 2, 6);
+            god.AddSeed(world, 1, 5);
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);
@@ -106,9 +106,9 @@ namespace GameOfLifeTests
         {
             var world = new World(10, 10);
             var god = new God();
-            god.AddSeeds(world, 2, 4);
-            god.AddSeeds(world, 2, 6);
-            god.AddSeeds(world, 1, 5);
+            god.AddSeed(world, 2, 4);
+            god.AddSeed(world, 2, 6);
+            god.AddSeed(world, 1, 5);
             
             var chosenCity = god.FetchCity(world, 2, 5);
             chosenCity.FindNumberOfLiveNeighbours(world);

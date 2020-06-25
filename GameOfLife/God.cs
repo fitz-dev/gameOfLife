@@ -10,7 +10,7 @@ namespace GameOfLife
         public List<City> DeadCities = new List<City>();
         
         
-        public void AddSeeds(World world, int columnIndex, int rowIndex)
+        public void AddSeed(World world, int columnIndex, int rowIndex)
         {
             var city = world.Grid[columnIndex, rowIndex];
             city.Live = true;
