@@ -5,16 +5,17 @@ namespace GameOfLife
 {
     public class City
     {
-        public int X;
-        public int Y;
+        private int _column;
+        private int _row;
         public bool Live;
         public int LiveNeighbours;
-        public Dictionary<string, Tuple<int, int>> Neighbours = new Dictionary<string, Tuple<int, int>>();
+        public Dictionary<string, Tuple<int, int>> Neighbours;
         
-        public City(int x, int y)
+        public City(City[,] world, int column, int row)
         {
-            X = x;
-            Y = y;
+            _column = column;
+            _row = row;
+            Neighbours = FindNeighbours(world);
         }
 
         public void FindNumberOfLiveNeighbours(World world)
@@ -30,27 +31,33 @@ namespace GameOfLife
             }
         }
 
-        public void FindNeighbours(int rows, int columns)
+        private Dictionary<string, Tuple<int, int>> FindNeighbours(City[,] world)
         {
-            Neighbours.Add("topLeft", CheckForEdgeNeighbours(rows, columns, SetTopLeft()));
-            Neighbours.Add("left", CheckForEdgeNeighbours(rows, columns, SetLeft()));
-            Neighbours.Add("bottomLeft", CheckForEdgeNeighbours(rows, columns, SetBottomLeft()));
-            Neighbours.Add("top", CheckForEdgeNeighbours(rows, columns, SetTop()));
-            Neighbours.Add("bottom", CheckForEdgeNeighbours(rows, columns, SetBottom()));
-            Neighbours.Add("topRight", CheckForEdgeNeighbours(rows, columns, SetTopRight()));
-            Neighbours.Add("right", CheckForEdgeNeighbours(rows, columns, SetRight()));
-            Neighbours.Add("bottomRight", CheckForEdgeNeighbours(rows, columns, SetBottomRight()));
+            var neighbours = new Dictionary<string, Tuple<int, int>>
+            {
+                {"topLeft", CheckForEdgeNeighbours(SetTopLeft(), world)},
+                {"left", CheckForEdgeNeighbours(SetLeft(), world)},
+                {"bottomLeft", CheckForEdgeNeighbours(SetBottomLeft(), world)},
+                {"top", CheckForEdgeNeighbours(SetTop(), world)},
+                {"bottom", CheckForEdgeNeighbours(SetBottom(), world)},
+                {"topRight", CheckForEdgeNeighbours(SetTopRight(), world)},
+                {"right", CheckForEdgeNeighbours(SetRight(), world)},
+                {"bottomRight", CheckForEdgeNeighbours(SetBottomRight(), world)}
+            };
+            return neighbours;
         }
         
-        private Tuple<int, int> CheckForEdgeNeighbours(int rows, int columns, Tuple<int, int> coordinates)
+        private Tuple<int, int> CheckForEdgeNeighbours(Tuple<int, int> coordinates, City[,] world)
         {
+            var worldLength = world.GetLength(0) - 1;
+            var worldHeight = world.GetLength(1) - 1;
             var (rowIndex, columnIndex) = coordinates;
-
-            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, rows - 1);
-            rowIndex = CheckForIndexLargerThanWorld(rowIndex, columns - 1);
             
-            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, rows - 1);
-            columnIndex = CheckForIndexLargerThanWorld(columnIndex, columns - 1);
+            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, worldHeight);
+            columnIndex = CheckForIndexLargerThanWorld(columnIndex, worldLength);
+
+            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, worldHeight);
+            rowIndex = CheckForIndexLargerThanWorld(rowIndex, worldLength);
       
             return new Tuple<int, int>(rowIndex, columnIndex);
         }
@@ -66,57 +73,57 @@ namespace GameOfLife
 
         private Tuple<int, int> SetTopLeft()
         {
-            var neighbourX = X - 1;
-            var neighbourY = Y - 1;
+            var neighbourX = _column - 1;
+            var neighbourY = _row - 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         } 
         
         private Tuple<int, int> SetLeft()
         {
-            var neighbourX = X - 1;
-            var neighbourY = Y;
+            var neighbourX = _column - 1;
+            var neighbourY = _row;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetBottomLeft()
         {
-            var neighbourX = X - 1;
-            var neighbourY = Y + 1;
+            var neighbourX = _column - 1;
+            var neighbourY = _row + 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetTop()
         {
-            var neighbourX = X;
-            var neighbourY = Y - 1;
+            var neighbourX = _column;
+            var neighbourY = _row - 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         } 
         
         private Tuple<int, int> SetBottom()
         {
-            var neighbourX = X;
-            var neighbourY = Y + 1;
+            var neighbourX = _column;
+            var neighbourY = _row + 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetTopRight()
         {
-            var neighbourX = X + 1;
-            var neighbourY = Y - 1;
+            var neighbourX = _column + 1;
+            var neighbourY = _row - 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetRight()
         {
-            var neighbourX = X + 1;
-            var neighbourY = Y;
+            var neighbourX = _column + 1;
+            var neighbourY = _row;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetBottomRight()
         {
-            var neighbourX = X + 1;
-            var neighbourY = Y + 1;
+            var neighbourX = _column + 1;
+            var neighbourY = _row + 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
     }

@@ -17,9 +17,7 @@ namespace GameOfLife
             {
                 for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                 {
-                    world[columnIndex,rowIndex] = new City(columnIndex, rowIndex);
-                    world[columnIndex,rowIndex].FindNeighbours(rows, columns);
-                    // TODO remove find neighbours and have the method run when a city is made
+                    world[columnIndex,rowIndex] = new City(world, columnIndex, rowIndex);
                 }
             }
             return world;
