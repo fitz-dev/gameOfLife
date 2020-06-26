@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿﻿﻿using System;
 using System.Collections.Generic;
 
 namespace GameOfLife
@@ -22,32 +22,52 @@ namespace GameOfLife
             var world = new World(god, columnInt,rowInt);
             
             // seeds as input? make a city or create seed from input? 
-            // var allSeeds = new List<(Seeds)>()
+            var allSeeds = new List<(int, int)>()
+            {
+                (2,4),
+                (2,6),
+                (3,5),
+                (4,4),
+                (4,6)
+            };
+
+            foreach (var seed in allSeeds)
+            {
+                god.AddSeed(world, seed.Item1, seed.Item2);
+            }
+
+            Console.WriteLine($"live cities: {god.LiveCities.Count}");
+
+            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
+                {
+                    var city = world.Grid[columnIndex, rowIndex];
+                    city.GetNumberOfLiveNeighbours(world);
+                    god.CompareNumberOfLiveNeighbours(city);
+                }
+            }
+            
+            Console.WriteLine($"new live cities: {god.NextTickLiveCities.Count}");
+
+            foreach (var city in god.NextTickLiveCities)
+            {
+                Console.WriteLine($"{city.Column}, {city.Row}");
+            }
+            
+            
+            // while (god.NextTickLiveCities.Count > 0)
             // {
-            //     (2,4),
-            //     (3,4),
-            //     (5,6),
-            //     (7,8)
-            // };
-
-            var columnIndex = 0;
-            var rowIndex = 0;
-
-            Console.WriteLine(outputMessages.SeedXEntry);
-            columnIndex = input.ProcessSeedInput(world, Console.ReadLine());
-            Console.WriteLine(outputMessages.SeedYEntry);
-            columnIndex = input.ProcessSeedInput(world, Console.ReadLine());
-            // allSeeds.Add(seed.x = columnIndex, seed.y = rowIndex);
-            
-            
-            // god.AddSeeds(world, columnIndex, rowIndex);
-
-            Console.WriteLine(outputMessages.SeedXEntry);
-
-            
-            Console.WriteLine("=Initial=============================");
-            output.PrintWorld(world);
-       
+            //     Console.WriteLine($"===================");
+            //     world = new World(10,10);
+            //     foreach (var city in god.NextTickLiveCities)
+            //     {
+            //         god.AddSeed(world, city.Column, city.Row);
+            //     }
+            //     god.NextTickLiveCities = new List<City>();
+            //     ProcessEachCell(world, god);
+            //     PrintWorld(world);
+            // }
         }
     }
 }

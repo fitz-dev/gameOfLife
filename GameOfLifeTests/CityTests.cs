@@ -107,7 +107,7 @@ namespace GameOfLifeTests
             god.AddSeed(world, 0, 6);
             
             var chosenCity = god.FetchCity(world, 0, 5);
-            chosenCity.FindNumberOfLiveNeighbours(world);
+            chosenCity.GetNumberOfLiveNeighbours(world);
         
             Assert.Equal(2, chosenCity.LiveNeighbours);
         }
@@ -119,7 +119,7 @@ namespace GameOfLifeTests
             var world = new World(god, 10, 10);
             
             var chosenCity = god.FetchCity(world, 0, 5);
-            chosenCity.FindNumberOfLiveNeighbours(world);
+            chosenCity.GetNumberOfLiveNeighbours(world);
         
             Assert.Equal(0, chosenCity.LiveNeighbours);
         }

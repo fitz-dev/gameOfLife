@@ -11,8 +11,8 @@ namespace GameOfLife
 
         public World(God god, int columns, int rows)
         {
-            ColumnLength = columns - 1;
-            RowLength = rows - 1;
+            ColumnLength = columns;
+            RowLength = rows;
             Grid = god.CreateWorld(columns, rows);
         }
     }

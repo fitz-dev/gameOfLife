@@ -5,20 +5,20 @@ namespace GameOfLife
 {
     public class City
     {
-        private int _column;
-        private int _row;
+        public int Column;
+        public int Row;
         public bool Live;
         public int LiveNeighbours;
         public Dictionary<string, Tuple<int, int>> Neighbours;
         
         public City(City[,] world, int column, int row)
         {
-            _column = column;
-            _row = row;
+            Column = column;
+            Row = row;
             Neighbours = FindNeighbours(world);
         }
 
-        public void FindNumberOfLiveNeighbours(World world)
+        public void GetNumberOfLiveNeighbours(World world)
         {
             foreach (var neighbour in Neighbours)
             {
@@ -73,57 +73,57 @@ namespace GameOfLife
 
         private Tuple<int, int> SetTopLeft()
         {
-            var neighbourX = _column - 1;
-            var neighbourY = _row - 1;
+            var neighbourX = Column - 1;
+            var neighbourY = Row - 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         } 
         
         private Tuple<int, int> SetLeft()
         {
-            var neighbourX = _column - 1;
-            var neighbourY = _row;
+            var neighbourX = Column - 1;
+            var neighbourY = Row;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetBottomLeft()
         {
-            var neighbourX = _column - 1;
-            var neighbourY = _row + 1;
+            var neighbourX = Column - 1;
+            var neighbourY = Row + 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetTop()
         {
-            var neighbourX = _column;
-            var neighbourY = _row - 1;
+            var neighbourX = Column;
+            var neighbourY = Row - 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         } 
         
         private Tuple<int, int> SetBottom()
         {
-            var neighbourX = _column;
-            var neighbourY = _row + 1;
+            var neighbourX = Column;
+            var neighbourY = Row + 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetTopRight()
         {
-            var neighbourX = _column + 1;
-            var neighbourY = _row - 1;
+            var neighbourX = Column + 1;
+            var neighbourY = Row - 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetRight()
         {
-            var neighbourX = _column + 1;
-            var neighbourY = _row;
+            var neighbourX = Column + 1;
+            var neighbourY = Row;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
         
         private Tuple<int, int> SetBottomRight()
         {
-            var neighbourX = _column + 1;
-            var neighbourY = _row + 1;
+            var neighbourX = Column + 1;
+            var neighbourY = Row + 1;
             return new Tuple<int, int>(neighbourX, neighbourY);
         }
     }
