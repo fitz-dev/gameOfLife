@@ -8,7 +8,7 @@ namespace GameOfLife
     {
         public class Messages
         {
-            public string Welcome = "Hello God. Let's make a world...";
+            public string Welcome = "Hello there. Let's make a world...";
             public string AskLength = "Enter length of the world between 1 & 100: ";
             public string AskHeight = "Enter height of the world between 1 & 100: ";
             public string IncorrectFormat = "That's not a number, please try again.";
@@ -41,9 +41,9 @@ namespace GameOfLife
             }
         }
         
-        public string SetLifeDisplay(City city)
+        public string SetLifeDisplay(Cell cell)
         {
-            return city.Live ? "O" : "-";
+            return cell.Live ? "O" : "-";
         }
     }
 }

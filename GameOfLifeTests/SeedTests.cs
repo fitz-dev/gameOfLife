@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using GameOfLife;
 using Xunit;
 
@@ -11,8 +12,8 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_StillLifeStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
         {
-            var god = new God();
-            var world = new World(god, 6, 6);
+            var cellManager = new CellManager();
+            var world = new World(cellManager, 6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(2,1),
@@ -23,18 +24,18 @@ namespace GameOfLifeTests
                 new Seed(3,3),
             };
             
-            god.AddSeeds(world, seeds);
+            cellManager.AddSeeds(world, seeds);
             
-            god.FindNextTickLiveCities(world);
+            cellManager.FindNextTickLiveCities(world);
         
-            Assert.Equal(ConvertFormat(seeds), ConvertFormat(god.NextTickSeeds));
+            cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
         public void Given_OscillatorToadStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
         {
-            var god = new God();
-            var world = new World(god, 6, 6);
+            var cellManager = new CellManager();
+            var world = new World(cellManager, 6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(2,2),
@@ -55,18 +56,18 @@ namespace GameOfLifeTests
                 new Seed(2,4)
             };
             
-            god.AddSeeds(world, seeds);
+            cellManager.AddSeeds(world, seeds);
             
-            god.FindNextTickLiveCities(world);
+            cellManager.FindNextTickLiveCities(world);
         
-            Assert.Equal(ConvertFormat(expectedSeedCoordinates), ConvertFormat(god.NextTickSeeds));
+            cellManager.NextTickSeeds.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
         
         [Fact]
         public void Given_OscillatorBeaconStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
         {
-            var god = new God();
-            var world = new World(god, 6, 6);
+            var cellManager = new CellManager();
+            var world = new World(cellManager, 6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(1,1),
@@ -89,17 +90,17 @@ namespace GameOfLifeTests
                 new Seed(4,4),
             };
             
-            god.AddSeeds(world, seeds);
-            god.FindNextTickLiveCities(world);
+            cellManager.AddSeeds(world, seeds);
+            cellManager.FindNextTickLiveCities(world);
         
-            Assert.Equal(ConvertFormat(expectedSeedCoordinates), ConvertFormat(god.NextTickSeeds));
+            cellManager.NextTickSeeds.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
 
         [Fact]
         public void Given_OscillatorBeaconStartingSeeds_When_TwoTicksHaveElapsed_Then_ExpectedSeedCoordinatedAreReturned()
         {
-            var god = new God();
-            var world = new World(god, 6, 6);
+            var cellManager = new CellManager();
+            var world = new World(cellManager, 6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(1,1),
@@ -112,24 +113,24 @@ namespace GameOfLifeTests
                 new Seed(4,4),
             };
             
-            god.AddSeeds(world, seeds);
+            cellManager.AddSeeds(world, seeds);
             
-            god.FindNextTickLiveCities(world);
-            god.ApplyLifeRules(world);
+            cellManager.FindNextTickLiveCities(world);
+            cellManager.ApplyLifeRules(world);
             
-            god.AddSeeds(world, god.NextTickSeeds);
+            cellManager.AddSeeds(world, cellManager.NextTickSeeds);
             
-            god.FindNextTickLiveCities(world);
-            god.ApplyLifeRules(world);
+            cellManager.FindNextTickLiveCities(world);
+            cellManager.ApplyLifeRules(world);
 
-            Assert.Equal(ConvertFormat(seeds), ConvertFormat(god.NextTickSeeds));
+            cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
         public void Given_OscillatorPulsarStartingSeeds_When_ThreeTicksHaveElapsed_Then_ExpectedSeedCoordinatedAreReturned()
         {
-            var god = new God();
-            var world = new World(god, 20, 20);
+            var cellManager = new CellManager();
+            var world = new World(cellManager, 20, 20);
             var seeds = new List<Seed>()
             {
                 new Seed(4,2),
@@ -182,25 +183,15 @@ namespace GameOfLifeTests
                 new Seed(12,14),
             };
             
-            god.AddSeeds(world, seeds);
+            cellManager.AddSeeds(world, seeds);
             
             for (int i = 0; i < 3; i++)
             {
-                god.FindNextTickLiveCities(world);
-                god.ApplyLifeRules(world);
-                god.AddSeeds(world, god.NextTickSeeds);
+                cellManager.FindNextTickLiveCities(world);
+                cellManager.ApplyLifeRules(world);
+                cellManager.AddSeeds(world, cellManager.NextTickSeeds);
             }
-            Assert.Equal(ConvertFormat(seeds), ConvertFormat(god.NextTickSeeds));
-        }
-
-        private List<Tuple<int, int>> ConvertFormat(List<Seed> seedsToConvert)
-        {
-            var output = new List<Tuple<int, int>>();
-            foreach (var seed in seedsToConvert)
-            {
-                output.Add(Tuple.Create(seedsToConvert[0].X, seedsToConvert[1].Y));
-            }
-            return output;
+            cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
         }
     }
 }

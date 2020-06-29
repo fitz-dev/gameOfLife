@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameOfLife
 {
-    public class City
+    public class Cell
     {
         public Dictionary<string, Tuple<int, int>> Neighbours;
         public int Column;
@@ -11,7 +11,7 @@ namespace GameOfLife
         public bool Live;
         public int LiveNeighbours;
         
-        public City(City[,] world, int column, int row)
+        public Cell(Cell[,] world, int column, int row)
         {
             Column = column;
             Row = row;
@@ -30,7 +30,7 @@ namespace GameOfLife
             }
         }
 
-        private Dictionary<string, Tuple<int, int>> FindNeighbours(City[,] world)
+        private Dictionary<string, Tuple<int, int>> FindNeighbours(Cell[,] world)
         {
             var neighbours = new Dictionary<string, Tuple<int, int>>
             {
@@ -46,7 +46,7 @@ namespace GameOfLife
             return neighbours;
         }
         
-        private Tuple<int, int> CheckForEdgeNeighbours(Tuple<int, int> coordinates, City[,] world)
+        private Tuple<int, int> CheckForEdgeNeighbours(Tuple<int, int> coordinates, Cell[,] world)
         {
             var worldLength = world.GetLength(0) - 1;
             var worldHeight = world.GetLength(1) - 1;

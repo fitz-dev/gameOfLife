@@ -7,13 +7,15 @@ namespace GameOfLife
     {
         public int ColumnLength { get; set; }
         public int RowLength { get; set; }
-        public City[,] Grid { get; set; }
+        public Cell[,] Grid { get; set; }
+        // public int[,] grid { get; }
 
-        public World(God god, int columns, int rows)
+        public World(CellManager cellManager, int columns, int rows)
         {
             ColumnLength = columns;
             RowLength = rows;
-            Grid = god.CreateWorld(columns, rows);
+            Grid = cellManager.CreateWorld(columns, rows);
+            // Grid = new Cell[rows, columns];
         }
     }
 }

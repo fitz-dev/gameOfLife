@@ -1,22 +1,23 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace GameOfLife
 {
-    public class God
+    public class CellManager
     {
         private List<Seed> _liveCities = new List<Seed>();
         public List<Seed> NextTickSeeds = new List<Seed>();
         
-        public City[,] CreateWorld(int columns, int rows)
+        public Cell[,] CreateWorld(int columns, int rows)
         {
-            var world = new City[columns, rows];
+            var world = new Cell[columns, rows];
                 
             for (int rowIndex = 0; rowIndex < rows; rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                 {
-                    world[columnIndex,rowIndex] = new City(world, columnIndex, rowIndex);
+                    world[columnIndex,rowIndex] = new Cell(world, columnIndex, rowIndex);
                 }
             }
             return world;
@@ -27,9 +28,9 @@ namespace GameOfLife
             _liveCities.Clear();
             foreach (var seed in seeds)
             {
-                var city = world.Grid[seed.X, seed.Y];
-                city.Live = true;
-                _liveCities.Add(new Seed(city.Column, city.Row));
+                var cell = world.Grid[seed.X, seed.Y];
+                cell.Live = true;
+                _liveCities.Add(seed);
             }
         }
         
@@ -40,9 +41,9 @@ namespace GameOfLife
             {
                 for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    var city = world.Grid[columnIndex, rowIndex];
-                    city.SetNumberOfLiveNeighbours(world);
-                    CheckLiveNeighboursAgainstLifeRules(city);
+                    var cell = world.Grid[columnIndex, rowIndex];
+                    cell.SetNumberOfLiveNeighbours(world);
+                    CheckLiveNeighboursAgainstLifeRules(cell);
                 }
             }
         }
@@ -52,21 +53,20 @@ namespace GameOfLife
             {
                 for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    var city = world.Grid[columnIndex, rowIndex];
-                    var cityCoordinates = new Seed(city.Column, city.Row);
-                    city.Live = NextTickSeeds.Contains(cityCoordinates);
+                    var cell = world.Grid[columnIndex, rowIndex];
+                    cell.Live = NextTickSeeds.Any(seed => seed.X == cell.Column && seed.Y == cell.Row);
                 }
             }
         }
-        private void CheckLiveNeighboursAgainstLifeRules(City city)
+        private void CheckLiveNeighboursAgainstLifeRules(Cell cell)
         {
-            if ((city.Live && city.LiveNeighbours == 2) || (city.Live && city.LiveNeighbours == 3) ||
-                (!city.Live && city.LiveNeighbours == 3))
+            if ((cell.Live && cell.LiveNeighbours == 2) || (cell.Live && cell.LiveNeighbours == 3) ||
+                (!cell.Live && cell.LiveNeighbours == 3))
             {
-                NextTickSeeds.Add(new Seed(city.Column, city.Row));
+                NextTickSeeds.Add(new Seed(cell.Column, cell.Row));
             }
         }
-        public City FetchCity(World world, int columnIndex, int rowIndex)
+        public Cell FetchCell(World world, int columnIndex, int rowIndex)
         {
             return world.Grid[columnIndex, rowIndex];
         }
