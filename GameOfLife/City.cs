@@ -5,11 +5,11 @@ namespace GameOfLife
 {
     public class City
     {
+        public Dictionary<string, Tuple<int, int>> Neighbours;
         public int Column;
         public int Row;
         public bool Live;
         public int LiveNeighbours;
-        public Dictionary<string, Tuple<int, int>> Neighbours;
         
         public City(City[,] world, int column, int row)
         {
@@ -18,7 +18,7 @@ namespace GameOfLife
             Neighbours = FindNeighbours(world);
         }
 
-        public void GetNumberOfLiveNeighbours(World world)
+        public void SetNumberOfLiveNeighbours(World world)
         {
             LiveNeighbours = 0;
             foreach (var (_, (columnIndex, rowIndex)) in Neighbours)
