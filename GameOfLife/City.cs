@@ -20,10 +20,9 @@ namespace GameOfLife
 
         public void GetNumberOfLiveNeighbours(World world)
         {
-            foreach (var neighbour in Neighbours)
+            LiveNeighbours = 0;
+            foreach (var (_, (columnIndex, rowIndex)) in Neighbours)
             {
-                var columnIndex = neighbour.Value.Item1;
-                var rowIndex = neighbour.Value.Item2;
                 if (world.Grid[columnIndex, rowIndex].Live)
                 {
                     LiveNeighbours++;
