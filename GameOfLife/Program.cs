@@ -21,16 +21,24 @@ namespace GameOfLife
             
             var world = new World(god, columnInt,rowInt);
             
-            // seeds as input? make a city or create seed from input? 
-            var allSeeds = new List<(int, int)>()
+            var seeds = new List<Seed>()
             {
-                (2,4),
-                (2,6),
-                (3,5),
-                (4,4),
-                (4,6)
+                new Seed(2,1),
+                new Seed(3,2),
+                new Seed(1,3),
+                new Seed(2,3),
+                new Seed(3,3),
             };
 
+            god.AddSeeds(world, seeds);
+            output.PrintWorld(world);
+            for (int i = 0; i < 30; i++)
+            {
+                god.FindNextTickLiveCities(world);
+                god.ApplyLifeRules(world);
+                god.AddSeeds(world, god.NextTickSeeds);
+                output.PrintWorld(world);
+            }
         }
     }
 }
