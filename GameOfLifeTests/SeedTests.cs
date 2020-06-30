@@ -14,14 +14,14 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,1),
-                new Seed(3,1),
-                new Seed(1,2),
-                new Seed(4,2),
-                new Seed(2,3),
-                new Seed(3,3),
+                new Coordinates(2,1),
+                new Coordinates(3,1),
+                new Coordinates(1,2),
+                new Coordinates(4,2),
+                new Coordinates(2,3),
+                new Coordinates(3,3),
             };
             
             cellManager.AddSeeds(seeds);
@@ -36,24 +36,24 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,2),
-                new Seed(3,2),
-                new Seed(4,2),
-                new Seed(1,3),
-                new Seed(2,3),
-                new Seed(3,3),
+                new Coordinates(2,2),
+                new Coordinates(3,2),
+                new Coordinates(4,2),
+                new Coordinates(1,3),
+                new Coordinates(2,3),
+                new Coordinates(3,3),
             };
             
-            var expectedSeedCoordinates = new List<Seed>()
+            var expectedSeedCoordinates = new List<Coordinates>()
             {
-                new Seed(3,1),
-                new Seed(1,2),
-                new Seed(4,2),
-                new Seed(1,3),
-                new Seed(4,3),
-                new Seed(2,4)
+                new Coordinates(3,1),
+                new Coordinates(1,2),
+                new Coordinates(4,2),
+                new Coordinates(1,3),
+                new Coordinates(4,3),
+                new Coordinates(2,4)
             };
             
             cellManager.AddSeeds(seeds);
@@ -68,26 +68,26 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(1,1),
-                new Seed(2,1),
-                new Seed(1,2),
-                new Seed(2,2),
-                new Seed(3,3),
-                new Seed(4,3),
-                new Seed(3,4),
-                new Seed(4,4),
+                new Coordinates(1,1),
+                new Coordinates(2,1),
+                new Coordinates(1,2),
+                new Coordinates(2,2),
+                new Coordinates(3,3),
+                new Coordinates(4,3),
+                new Coordinates(3,4),
+                new Coordinates(4,4),
             };
             
-            var expectedSeedCoordinates = new List<Seed>()
+            var expectedSeedCoordinates = new List<Coordinates>()
             {
-                new Seed(1,1),
-                new Seed(2,1),
-                new Seed(1,2),
-                new Seed(4,3),
-                new Seed(3,4),
-                new Seed(4,4),
+                new Coordinates(1,1),
+                new Coordinates(2,1),
+                new Coordinates(1,2),
+                new Coordinates(4,3),
+                new Coordinates(3,4),
+                new Coordinates(4,4),
             };
             
             cellManager.AddSeeds(seeds);
@@ -101,16 +101,16 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(1,1),
-                new Seed(2,1),
-                new Seed(1,2),
-                new Seed(2,2),
-                new Seed(3,3),
-                new Seed(4,3),
-                new Seed(3,4),
-                new Seed(4,4),
+                new Coordinates(1,1),
+                new Coordinates(2,1),
+                new Coordinates(1,2),
+                new Coordinates(2,2),
+                new Coordinates(3,3),
+                new Coordinates(4,3),
+                new Coordinates(3,4),
+                new Coordinates(4,4),
             };
             
             cellManager.AddSeeds(seeds);
@@ -131,56 +131,56 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(20, 20);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(4,2),
-                new Seed(5,2),
-                new Seed(6,2),
-                new Seed(10,2),
-                new Seed(11,2),
-                new Seed(12,2),
-                new Seed(2,4),
-                new Seed(7,4),
-                new Seed(9,4),
-                new Seed(14,4),
-                new Seed(2,5),
-                new Seed(7,5),
-                new Seed(9,5),
-                new Seed(14,5),
-                new Seed(2,6),
-                new Seed(7,6),
-                new Seed(9,6),
-                new Seed(14,6),
-                new Seed(4,7),
-                new Seed(5,7),
-                new Seed(6,7),
-                new Seed(10,7),
-                new Seed(11,7),
-                new Seed(12,7),
-                new Seed(4,9),
-                new Seed(5,9),
-                new Seed(6,9),
-                new Seed(10,9),
-                new Seed(11,9),
-                new Seed(12,9),
-                new Seed(2,10),
-                new Seed(7,10),
-                new Seed(9,10),
-                new Seed(14,10),
-                new Seed(2,11),
-                new Seed(7,11),
-                new Seed(9,11),
-                new Seed(14,11),
-                new Seed(2,12),
-                new Seed(7,12),
-                new Seed(9,12),
-                new Seed(14,12),
-                new Seed(4,14),
-                new Seed(5,14),
-                new Seed(6,14),
-                new Seed(10,14),
-                new Seed(11,14),
-                new Seed(12,14),
+                new Coordinates(4,2),
+                new Coordinates(5,2),
+                new Coordinates(6,2),
+                new Coordinates(10,2),
+                new Coordinates(11,2),
+                new Coordinates(12,2),
+                new Coordinates(2,4),
+                new Coordinates(7,4),
+                new Coordinates(9,4),
+                new Coordinates(14,4),
+                new Coordinates(2,5),
+                new Coordinates(7,5),
+                new Coordinates(9,5),
+                new Coordinates(14,5),
+                new Coordinates(2,6),
+                new Coordinates(7,6),
+                new Coordinates(9,6),
+                new Coordinates(14,6),
+                new Coordinates(4,7),
+                new Coordinates(5,7),
+                new Coordinates(6,7),
+                new Coordinates(10,7),
+                new Coordinates(11,7),
+                new Coordinates(12,7),
+                new Coordinates(4,9),
+                new Coordinates(5,9),
+                new Coordinates(6,9),
+                new Coordinates(10,9),
+                new Coordinates(11,9),
+                new Coordinates(12,9),
+                new Coordinates(2,10),
+                new Coordinates(7,10),
+                new Coordinates(9,10),
+                new Coordinates(14,10),
+                new Coordinates(2,11),
+                new Coordinates(7,11),
+                new Coordinates(9,11),
+                new Coordinates(14,11),
+                new Coordinates(2,12),
+                new Coordinates(7,12),
+                new Coordinates(9,12),
+                new Coordinates(14,12),
+                new Coordinates(4,14),
+                new Coordinates(5,14),
+                new Coordinates(6,14),
+                new Coordinates(10,14),
+                new Coordinates(11,14),
+                new Coordinates(12,14),
             };
             
             cellManager.AddSeeds(seeds);

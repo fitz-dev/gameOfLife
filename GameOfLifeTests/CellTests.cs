@@ -31,9 +31,9 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
             
             var chosenCell = cellManager.FetchCell(3, 1);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
 
-            var leftNeighbour = new Seed(2,1);
+            var leftNeighbour = new Coordinates(2,1);
             
             leftNeighbour.Should().BeEquivalentTo(chosenCell.Neighbours["left"]);
         }
@@ -47,12 +47,11 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
             
             var chosenCell = cellManager.FetchCell(2, 2);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
 
-            var rightNeighbour = new Seed(3,2);
+            var rightNeighbour = new Coordinates(3,2);
             
             rightNeighbour.Should().BeEquivalentTo(chosenCell.Neighbours["right"]);
-            // Assert.Equal(leftNeighbour, chosenCell.Neighbours["right"]);
         }
         
         [Fact]
@@ -64,9 +63,9 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
                
             var chosenCell = cellManager.FetchCell(2, 0);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
         
-            var topNeighbour = new Seed(2,4);
+            var topNeighbour = new Coordinates(2,4);
             
             topNeighbour.Should().BeEquivalentTo(chosenCell.Neighbours["top"]);
         }
@@ -80,9 +79,9 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
             
             var chosenCell = cellManager.FetchCell(2, 4);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
         
-            var bottomNeighbour = new Seed(2,0);                   
+            var bottomNeighbour = new Coordinates(2,0);                   
             
             bottomNeighbour.Should().BeEquivalentTo(chosenCell.Neighbours["bottom"]);
         }
@@ -97,9 +96,9 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
             
             var chosenCell = cellManager.FetchCell(4, 2);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
         
-            var rightNeighbour = new Seed(0,2);
+            var rightNeighbour = new Coordinates(0,2);
             
             rightNeighbour.Should().BeEquivalentTo(chosenCell.Neighbours["right"]);
         }
@@ -113,9 +112,9 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
             
             var chosenCell = cellManager.FetchCell(0, 3);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
         
-            var leftNeighbour = new Seed(4,3);
+            var leftNeighbour = new Coordinates(4,3);
             
             leftNeighbour.Should().BeEquivalentTo(chosenCell.Neighbours["left"]);
         }
@@ -127,16 +126,16 @@ namespace GameOfLifeTests
             var world = new World(10, 10);
             var length = world.Grid.GetLength(0);
             var height = world.Grid.GetLength(1);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(0,4),
-                new Seed(0,5),
-                new Seed(0,6)
+                new Coordinates(0,4),
+                new Coordinates(0,5),
+                new Coordinates(0,6)
             };
             cellManager.AddSeeds(seeds);
             var chosenCell = cellManager.FetchCell(0, 5);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
-            chosenCell.SetNumberOfLiveNeighbours(cellManager.LiveCities);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
+            cellManager.SetNumberOfLiveNeighbours(cellManager.LiveCities, chosenCell);
         
             Assert.Equal(2, chosenCell.LiveNeighbours);
         }
@@ -150,8 +149,8 @@ namespace GameOfLifeTests
             var height = world.Grid.GetLength(1);
             
             var chosenCell = cellManager.FetchCell(0, 5);
-            chosenCell.Neighbours = chosenCell.FindNeighbours(length, height);
-            chosenCell.SetNumberOfLiveNeighbours(cellManager.LiveCities);
+            chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
+            cellManager.SetNumberOfLiveNeighbours(cellManager.LiveCities, chosenCell);
         
             Assert.Equal(0, chosenCell.LiveNeighbours);
         }

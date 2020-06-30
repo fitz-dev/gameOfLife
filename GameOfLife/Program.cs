@@ -21,16 +21,16 @@ namespace GameOfLife
             
             var world = new World(columnInt,rowInt);
             
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(1,1),
-                new Seed(2,1),
-                new Seed(1,2),
-                new Seed(2,2),
-                new Seed(3,3),
-                new Seed(4,3),
-                new Seed(3,4),
-                new Seed(4,4),
+                new Coordinates(1,1),
+                new Coordinates(2,1),
+                new Coordinates(1,2),
+                new Coordinates(2,2),
+                new Coordinates(3,3),
+                new Coordinates(4,3),
+                new Coordinates(3,4),
+                new Coordinates(4,4),
             };
 
             cellManager.AddSeeds(seeds);

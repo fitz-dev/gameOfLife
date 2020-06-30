@@ -42,9 +42,9 @@ namespace GameOfLifeTests
             var cellManager = new CellManager();
             var world = new World(10, 10);
             var chosenCell = cellManager.FetchCell(2, 5);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,4),
+                new Coordinates(2,4),
             };
             
             cellManager.AddSeeds(seeds);
@@ -61,12 +61,12 @@ namespace GameOfLifeTests
             var cellManager = new CellManager();
             var world = new World(10, 10);
             var chosenCell = cellManager.FetchCell(2, 5);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,4),
-                new Seed(2,6),
-                new Seed(1,5),
-                new Seed(1,6)
+                new Coordinates(2,4),
+                new Coordinates(2,6),
+                new Coordinates(1,5),
+                new Coordinates(1,6)
             };
             
             cellManager.AddSeeds(seeds);
@@ -83,12 +83,12 @@ namespace GameOfLifeTests
             var cellManager = new CellManager();
             var world = new World(10, 10);
             // var chosenCell = cellManager.FetchCell(world, 2, 5);
-            var chosenCell = new Cell(new Seed(2,5));
-            var seeds = new List<Seed>()
+            var chosenCell = new Cell(new Coordinates(2,5));
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,4),
-                new Seed(2,5),
-                new Seed(2,6),
+                new Coordinates(2,4),
+                new Coordinates(2,5),
+                new Coordinates(2,6),
             };
 
             cellManager.AddSeeds(seeds);
@@ -103,11 +103,11 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(10, 10);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,4),
-                new Seed(2,6),
-                new Seed(1,5),
+                new Coordinates(2,4),
+                new Coordinates(2,6),
+                new Coordinates(1,5),
             };
             
             var chosenCell = cellManager.FetchCell(2, 5);
@@ -126,11 +126,11 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(7, 7);
-            var seeds = new List<Seed>()
+            var seeds = new List<Coordinates>()
             {
-                new Seed(2,4),
-                new Seed(2,6),
-                new Seed(1,5),
+                new Coordinates(2,4),
+                new Coordinates(2,6),
+                new Coordinates(1,5),
             };
             var chosenCell = cellManager.FetchCell(2, 5);
             
@@ -147,7 +147,7 @@ namespace GameOfLifeTests
         {
             var cellManager = new CellManager();
             var world = new World(10, 10);
-            var seeds = new List<Seed>();
+            var seeds = new List<Coordinates>();
             var chosenCell = cellManager.FetchCell(7, 5);
             
             cellManager.AddSeeds(seeds);

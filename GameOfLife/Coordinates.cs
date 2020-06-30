@@ -1,11 +1,11 @@
 namespace GameOfLife
 {
-    public class Seed
+    public class Coordinates
     {
         public int X;
         public int Y;
 
-        public Seed(int x, int y)
+        public Coordinates(int x, int y)
         {
             X = x;
             Y = y;
