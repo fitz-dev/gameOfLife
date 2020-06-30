@@ -6,15 +6,15 @@ namespace GameOfLife
 {
     public class CellManager
     {
-        public List<Coordinates> LiveCities = new List<Coordinates>();
-        public List<Coordinates> NextTickSeeds = new List<Coordinates>();
+        public List<Coordinates> PreviousState = new List<Coordinates>();
+        public List<Coordinates> CurrentState = new List<Coordinates>();
         
         public void AddSeeds(IEnumerable<Coordinates> seeds)
         {
-            LiveCities.Clear();
+            PreviousState.Clear();
             foreach (var seed in seeds)
             {
-                LiveCities.Add(seed);
+                PreviousState.Add(seed);
             }
         }
         
@@ -34,10 +34,10 @@ namespace GameOfLife
             return neighbours;
         }
         
-        public void SetNumberOfLiveNeighbours(List<Coordinates> liveCities, Cell cell)
+        public int SetNumberOfLiveNeighbours(List<Coordinates> liveCities, Cell cell)
         {
             cell.LiveNeighbours = 0;
-            cell.LiveNeighbours = cell.Neighbours.Count(neighbour => liveCities.Any(city => neighbour.Value.X == city.X && neighbour.Value.Y == city.Y));
+            return cell.Neighbours.Count(neighbour => liveCities.Any(city => neighbour.Value.X == city.X && neighbour.Value.Y == city.Y));
         }
         
         private Coordinates CheckForEdgeNeighbours(Coordinates coordinates, World world)
@@ -63,44 +63,42 @@ namespace GameOfLife
             return coordinate > axisSize ? 0 : coordinate;
         }
         
-        public void FindNextTickLiveCities(World world)
+        public void CheckEachCellForLife(World world)
         {
-            NextTickSeeds.Clear();
+            // PreviousState = CurrentState;
+            CurrentState.Clear();
             for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
                     var cell = new Cell(new Coordinates(columnIndex, rowIndex));
                     cell.Neighbours = FindNeighbours(cell, world);
-                    SetNumberOfLiveNeighbours(LiveCities, cell);
-                    CheckLiveNeighboursAgainstLifeRules(cell);
+                    cell.LiveNeighbours = SetNumberOfLiveNeighbours(PreviousState, cell);
+                    var cellWasLive= CheckIfCellWasLiveInPreviousState(PreviousState, cell);
+                    if(CellIsLive(cell, cellWasLive))
+                    {
+                        cell.Live = true;
+                        CurrentState.Add(new Coordinates(cell.Position.X, cell.Position.Y));
+                    };
                 }
             }
         }
-        public void ApplyLifeRules(World world)
+
+        private bool CheckIfCellWasLiveInPreviousState(List<Coordinates> state, Cell cell)
         {
-            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
-            {
-                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
-                {
-                    var cell = new Cell(new Coordinates(columnIndex, rowIndex));
-                    cell.Live = NextTickSeeds.Any(seed => seed.X == cell.Position.X && seed.Y == cell.Position.Y);
-                }
-            }
+            return state.Any(seed => seed.X == cell.Position.X && seed.Y == cell.Position.Y);
         }
-        private void CheckLiveNeighboursAgainstLifeRules(Cell cell)
+        private bool CellIsLive(Cell cell, bool cellWasLive)
         {
-            if ((cell.Live && cell.LiveNeighbours == 2) || (cell.Live && cell.LiveNeighbours == 3) ||
-                (!cell.Live && cell.LiveNeighbours == 3))
-            {
-                NextTickSeeds.Add(new Coordinates(cell.Position.X, cell.Position.Y));
-            }
+            return ((cellWasLive && cell.LiveNeighbours == 2) || 
+                    (cellWasLive && cell.LiveNeighbours == 3) || 
+                    (!cellWasLive && cell.LiveNeighbours == 3));
         }
+        
         public Cell FetchCell(int columnIndex, int rowIndex)
         {
             return new Cell(new Coordinates(columnIndex, rowIndex)){Live = true};
         }
-        
         
         private Coordinates SetTopLeft(Cell cell)
         {

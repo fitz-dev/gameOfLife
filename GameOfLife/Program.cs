@@ -35,13 +35,13 @@ namespace GameOfLife
 
             cellManager.AddSeeds(seeds);
             output.PrintWorld(world);
-            for (int i = 0; i < 30; i++)
-            {
-                cellManager.FindNextTickLiveCities(world);
-                cellManager.ApplyLifeRules(world);
-                cellManager.AddSeeds(cellManager.NextTickSeeds);
-                output.PrintWorld(world);
-            }
+            // for (int i = 0; i < 30; i++)
+            // {
+            //     cellManager.CheckForLiveCities(world);
+            //     cellManager.ApplyLifeRules(cell);
+            //     cellManager.AddSeeds(cellManager.CurrentState);
+            //     output.PrintWorld(world);
+            // }
         }
     }
 }

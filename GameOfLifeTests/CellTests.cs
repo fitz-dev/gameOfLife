@@ -132,10 +132,11 @@ namespace GameOfLifeTests
                 new Coordinates(0,5),
                 new Coordinates(0,6)
             };
+            
             cellManager.AddSeeds(seeds);
             var chosenCell = cellManager.FetchCell(0, 5);
             chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
-            cellManager.SetNumberOfLiveNeighbours(cellManager.LiveCities, chosenCell);
+            cellManager.SetNumberOfLiveNeighbours(cellManager.PreviousState, chosenCell);
         
             Assert.Equal(2, chosenCell.LiveNeighbours);
         }
@@ -150,7 +151,7 @@ namespace GameOfLifeTests
             
             var chosenCell = cellManager.FetchCell(0, 5);
             chosenCell.Neighbours = cellManager.FindNeighbours(chosenCell, world);
-            cellManager.SetNumberOfLiveNeighbours(cellManager.LiveCities, chosenCell);
+            cellManager.SetNumberOfLiveNeighbours(cellManager.PreviousState, chosenCell);
         
             Assert.Equal(0, chosenCell.LiveNeighbours);
         }

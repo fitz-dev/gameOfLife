@@ -26,9 +26,9 @@ namespace GameOfLifeTests
             
             cellManager.AddSeeds(seeds);
             
-            cellManager.FindNextTickLiveCities(world);
+            cellManager.CheckEachCellForLife(world);
         
-            cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
+            cellManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
@@ -58,9 +58,9 @@ namespace GameOfLifeTests
             
             cellManager.AddSeeds(seeds);
             
-            cellManager.FindNextTickLiveCities(world);
+            cellManager.CheckEachCellForLife(world);
         
-            cellManager.NextTickSeeds.Should().BeEquivalentTo(expectedSeedCoordinates);
+            cellManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
         
         [Fact]
@@ -91,9 +91,9 @@ namespace GameOfLifeTests
             };
             
             cellManager.AddSeeds(seeds);
-            cellManager.FindNextTickLiveCities(world);
+            cellManager.CheckEachCellForLife(world);
         
-            cellManager.NextTickSeeds.Should().BeEquivalentTo(expectedSeedCoordinates);
+            cellManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
 
         [Fact]
@@ -115,15 +115,13 @@ namespace GameOfLifeTests
             
             cellManager.AddSeeds(seeds);
             
-            cellManager.FindNextTickLiveCities(world);
-            cellManager.ApplyLifeRules(world);
+            cellManager.CheckEachCellForLife(world);
             
-            cellManager.AddSeeds(cellManager.NextTickSeeds);
+            cellManager.AddSeeds(cellManager.CurrentState);
             
-            cellManager.FindNextTickLiveCities(world);
-            cellManager.ApplyLifeRules(world);
+            cellManager.CheckEachCellForLife(world);
 
-            cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
+            cellManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
@@ -187,11 +185,10 @@ namespace GameOfLifeTests
             
             for (int i = 0; i < 3; i++)
             {
-                cellManager.FindNextTickLiveCities(world);
-                cellManager.ApplyLifeRules(world);
-                cellManager.AddSeeds(cellManager.NextTickSeeds);
+                cellManager.CheckEachCellForLife(world);
+                cellManager.AddSeeds(cellManager.CurrentState);
             }
-            cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
+            cellManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
     }
 }
