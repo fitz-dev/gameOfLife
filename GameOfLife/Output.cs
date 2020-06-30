@@ -35,7 +35,7 @@ namespace GameOfLife
             {
                 for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    Console.Write($"{SetLifeDisplay(world.Grid[columnIndex, rowIndex])} ");
+                    // Console.Write($"{SetLifeDisplay(world.Grid[columnIndex, rowIndex])} ");
                 }
                 Console.WriteLine();
             }

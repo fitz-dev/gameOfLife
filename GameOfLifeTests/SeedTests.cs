@@ -13,7 +13,7 @@ namespace GameOfLifeTests
         public void Given_StillLifeStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
         {
             var cellManager = new CellManager();
-            var world = new World(cellManager, 6, 6);
+            var world = new World(6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(2,1),
@@ -24,7 +24,7 @@ namespace GameOfLifeTests
                 new Seed(3,3),
             };
             
-            cellManager.AddSeeds(world, seeds);
+            cellManager.AddSeeds(seeds);
             
             cellManager.FindNextTickLiveCities(world);
         
@@ -35,7 +35,7 @@ namespace GameOfLifeTests
         public void Given_OscillatorToadStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
         {
             var cellManager = new CellManager();
-            var world = new World(cellManager, 6, 6);
+            var world = new World(6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(2,2),
@@ -56,7 +56,7 @@ namespace GameOfLifeTests
                 new Seed(2,4)
             };
             
-            cellManager.AddSeeds(world, seeds);
+            cellManager.AddSeeds(seeds);
             
             cellManager.FindNextTickLiveCities(world);
         
@@ -67,7 +67,7 @@ namespace GameOfLifeTests
         public void Given_OscillatorBeaconStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
         {
             var cellManager = new CellManager();
-            var world = new World(cellManager, 6, 6);
+            var world = new World(6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(1,1),
@@ -90,7 +90,7 @@ namespace GameOfLifeTests
                 new Seed(4,4),
             };
             
-            cellManager.AddSeeds(world, seeds);
+            cellManager.AddSeeds(seeds);
             cellManager.FindNextTickLiveCities(world);
         
             cellManager.NextTickSeeds.Should().BeEquivalentTo(expectedSeedCoordinates);
@@ -100,7 +100,7 @@ namespace GameOfLifeTests
         public void Given_OscillatorBeaconStartingSeeds_When_TwoTicksHaveElapsed_Then_ExpectedSeedCoordinatedAreReturned()
         {
             var cellManager = new CellManager();
-            var world = new World(cellManager, 6, 6);
+            var world = new World(6, 6);
             var seeds = new List<Seed>()
             {
                 new Seed(1,1),
@@ -113,12 +113,12 @@ namespace GameOfLifeTests
                 new Seed(4,4),
             };
             
-            cellManager.AddSeeds(world, seeds);
+            cellManager.AddSeeds(seeds);
             
             cellManager.FindNextTickLiveCities(world);
             cellManager.ApplyLifeRules(world);
             
-            cellManager.AddSeeds(world, cellManager.NextTickSeeds);
+            cellManager.AddSeeds(cellManager.NextTickSeeds);
             
             cellManager.FindNextTickLiveCities(world);
             cellManager.ApplyLifeRules(world);
@@ -130,7 +130,7 @@ namespace GameOfLifeTests
         public void Given_OscillatorPulsarStartingSeeds_When_ThreeTicksHaveElapsed_Then_ExpectedSeedCoordinatedAreReturned()
         {
             var cellManager = new CellManager();
-            var world = new World(cellManager, 20, 20);
+            var world = new World(20, 20);
             var seeds = new List<Seed>()
             {
                 new Seed(4,2),
@@ -183,13 +183,13 @@ namespace GameOfLifeTests
                 new Seed(12,14),
             };
             
-            cellManager.AddSeeds(world, seeds);
+            cellManager.AddSeeds(seeds);
             
             for (int i = 0; i < 3; i++)
             {
                 cellManager.FindNextTickLiveCities(world);
                 cellManager.ApplyLifeRules(world);
-                cellManager.AddSeeds(world, cellManager.NextTickSeeds);
+                cellManager.AddSeeds(cellManager.NextTickSeeds);
             }
             cellManager.NextTickSeeds.Should().BeEquivalentTo(seeds);
         }

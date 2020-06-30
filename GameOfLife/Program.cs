@@ -19,7 +19,7 @@ namespace GameOfLife
             Console.WriteLine(outputMessages.AskHeight);
             var rowInt = input.ProcessWorldInput(Console.ReadLine());
             
-            var world = new World(cellManager, columnInt,rowInt);
+            var world = new World(columnInt,rowInt);
             
             var seeds = new List<Seed>()
             {
@@ -33,13 +33,13 @@ namespace GameOfLife
                 new Seed(4,4),
             };
 
-            cellManager.AddSeeds(world, seeds);
+            cellManager.AddSeeds(seeds);
             output.PrintWorld(world);
             for (int i = 0; i < 30; i++)
             {
                 cellManager.FindNextTickLiveCities(world);
                 cellManager.ApplyLifeRules(world);
-                cellManager.AddSeeds(world, cellManager.NextTickSeeds);
+                cellManager.AddSeeds(cellManager.NextTickSeeds);
                 output.PrintWorld(world);
             }
         }

@@ -1,64 +1,56 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Authentication;
 
 namespace GameOfLife
 {
     public class Cell
     {
-        public Dictionary<string, Tuple<int, int>> Neighbours;
-        public int Column;
-        public int Row;
+        public Dictionary<string, Seed> Neighbours;
+        public Seed Coordinates;
         public bool Live;
         public int LiveNeighbours;
         
-        public Cell(Cell[,] world, int column, int row)
+        public Cell(Seed seed)
         {
-            Column = column;
-            Row = row;
-            Neighbours = FindNeighbours(world);
+            Coordinates = seed;
         }
 
-        public void SetNumberOfLiveNeighbours(World world)
+        public void SetNumberOfLiveNeighbours(List<Seed> liveCities)
         {
             LiveNeighbours = 0;
-            foreach (var (_, (columnIndex, rowIndex)) in Neighbours)
-            {
-                if (world.Grid[columnIndex, rowIndex].Live)
-                {
-                    LiveNeighbours++;
-                }
-            }
+            LiveNeighbours = Neighbours.Count(neighbour => liveCities.Any(city => neighbour.Value.X == city.X && neighbour.Value.Y == city.Y));
         }
 
-        private Dictionary<string, Tuple<int, int>> FindNeighbours(Cell[,] world)
+        public Dictionary<string, Seed> FindNeighbours(int worldLength, int worldHeight)
         {
-            var neighbours = new Dictionary<string, Tuple<int, int>>
+            var neighbours = new Dictionary<string, Seed>
             {
-                {"topLeft", CheckForEdgeNeighbours(SetTopLeft(), world)},
-                {"left", CheckForEdgeNeighbours(SetLeft(), world)},
-                {"bottomLeft", CheckForEdgeNeighbours(SetBottomLeft(), world)},
-                {"top", CheckForEdgeNeighbours(SetTop(), world)},
-                {"bottom", CheckForEdgeNeighbours(SetBottom(), world)},
-                {"topRight", CheckForEdgeNeighbours(SetTopRight(), world)},
-                {"right", CheckForEdgeNeighbours(SetRight(), world)},
-                {"bottomRight", CheckForEdgeNeighbours(SetBottomRight(), world)}
+                {"topLeft", CheckForEdgeNeighbours(SetTopLeft(), worldLength, worldHeight)},
+                {"left", CheckForEdgeNeighbours(SetLeft(), worldLength, worldHeight)},
+                {"bottomLeft", CheckForEdgeNeighbours(SetBottomLeft(), worldLength, worldHeight)},
+                {"top", CheckForEdgeNeighbours(SetTop(), worldLength, worldHeight)},
+                {"bottom", CheckForEdgeNeighbours(SetBottom(), worldLength, worldHeight)},
+                {"topRight", CheckForEdgeNeighbours(SetTopRight(), worldLength, worldHeight)},
+                {"right", CheckForEdgeNeighbours(SetRight(), worldLength, worldHeight)},
+                {"bottomRight", CheckForEdgeNeighbours(SetBottomRight(), worldLength, worldHeight)}
             };
             return neighbours;
         }
         
-        private Tuple<int, int> CheckForEdgeNeighbours(Tuple<int, int> coordinates, Cell[,] world)
+        private Seed CheckForEdgeNeighbours(Seed coordinates, int worldLength, int worldHeight)
         {
-            var worldLength = world.GetLength(0) - 1;
-            var worldHeight = world.GetLength(1) - 1;
-            var (rowIndex, columnIndex) = coordinates;
+            var columnIndex = coordinates.Y;
+            var rowIndex = coordinates.X;
             
-            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, worldHeight);
-            columnIndex = CheckForIndexLargerThanWorld(columnIndex, worldLength);
+            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, worldHeight - 1);
+            columnIndex = CheckForIndexLargerThanWorld(columnIndex, worldLength - 1);
 
-            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, worldHeight);
-            rowIndex = CheckForIndexLargerThanWorld(rowIndex, worldLength);
+            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, worldHeight - 1);
+            rowIndex = CheckForIndexLargerThanWorld(rowIndex, worldLength - 1);
       
-            return new Tuple<int, int>(rowIndex, columnIndex);
+            return new Seed(rowIndex, columnIndex);
         }
 
         private int CheckForIndexSmallerThanWorld(int coordinate, int axisSize)
@@ -70,60 +62,60 @@ namespace GameOfLife
             return coordinate > axisSize ? 0 : coordinate;
         }
 
-        private Tuple<int, int> SetTopLeft()
+        private Seed SetTopLeft()
         {
-            var neighbourX = Column - 1;
-            var neighbourY = Row - 1;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X - 1;
+            var neighbourY = Coordinates.Y - 1;
+            return new Seed(neighbourX, neighbourY);
         } 
         
-        private Tuple<int, int> SetLeft()
+        private Seed SetLeft()
         {
-            var neighbourX = Column - 1;
-            var neighbourY = Row;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X - 1;
+            var neighbourY = Coordinates.Y;
+            return new Seed(neighbourX, neighbourY);
         }
         
-        private Tuple<int, int> SetBottomLeft()
+        private Seed SetBottomLeft()
         {
-            var neighbourX = Column - 1;
-            var neighbourY = Row + 1;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X - 1;
+            var neighbourY = Coordinates.Y + 1;
+            return new Seed(neighbourX, neighbourY);
         }
         
-        private Tuple<int, int> SetTop()
+        private Seed SetTop()
         {
-            var neighbourX = Column;
-            var neighbourY = Row - 1;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X;
+            var neighbourY = Coordinates.Y - 1;
+            return new Seed(neighbourX, neighbourY);
         } 
         
-        private Tuple<int, int> SetBottom()
+        private Seed SetBottom()
         {
-            var neighbourX = Column;
-            var neighbourY = Row + 1;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X;
+            var neighbourY = Coordinates.Y + 1;
+            return new Seed(neighbourX, neighbourY);
         }
         
-        private Tuple<int, int> SetTopRight()
+        private Seed SetTopRight()
         {
-            var neighbourX = Column + 1;
-            var neighbourY = Row - 1;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X + 1;
+            var neighbourY = Coordinates.Y - 1;
+            return new Seed(neighbourX, neighbourY);
         }
         
-        private Tuple<int, int> SetRight()
+        private Seed SetRight()
         {
-            var neighbourX = Column + 1;
-            var neighbourY = Row;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X + 1;
+            var neighbourY = Coordinates.Y;
+            return new Seed(neighbourX, neighbourY);
         }
         
-        private Tuple<int, int> SetBottomRight()
+        private Seed SetBottomRight()
         {
-            var neighbourX = Column + 1;
-            var neighbourY = Row + 1;
-            return new Tuple<int, int>(neighbourX, neighbourY);
+            var neighbourX = Coordinates.X + 1;
+            var neighbourY = Coordinates.Y + 1;
+            return new Seed(neighbourX, neighbourY);
         }
     }
 }
