@@ -34,10 +34,10 @@ namespace GameOfLife
             return neighbours;
         }
         
-        public int SetNumberOfLiveNeighbours(List<Coordinates> liveCities, Cell cell)
+        public int SetNumberOfLiveNeighbours(List<Coordinates> previousState, Cell cell)
         {
             cell.LiveNeighbours = 0;
-            return cell.Neighbours.Count(neighbour => liveCities.Any(city => neighbour.Value.X == city.X && neighbour.Value.Y == city.Y));
+            return cell.Neighbours.Count(neighbour => previousState.Any(city => neighbour.Value.X == city.X && neighbour.Value.Y == city.Y));
         }
         
         private Coordinates CheckForEdgeNeighbours(Coordinates coordinates, World world)
@@ -94,12 +94,7 @@ namespace GameOfLife
                     (cellWasLive && cell.LiveNeighbours == 3) || 
                     (!cellWasLive && cell.LiveNeighbours == 3));
         }
-        
-        public Cell FetchCell(int columnIndex, int rowIndex)
-        {
-            return new Cell(new Coordinates(columnIndex, rowIndex)){Live = true};
-        }
-        
+       
         private Coordinates SetTopLeft(Cell cell)
         {
             var neighbourX = cell.Position.X - 1;
