@@ -29,22 +29,22 @@ namespace GameOfLife
         }
 
 
-        public void PrintWorld(World world, CellManager cellManager)
+        public void PrintWorld(World world, StateManager stateManager)
         {
             Console.WriteLine("==================================");
             for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    Console.Write($"{SetLifeDisplay(new Coordinates(columnIndex, rowIndex), cellManager)} ");
+                    Console.Write($"{SetLifeDisplay(new Coordinates(columnIndex, rowIndex), stateManager)} ");
                 }
                 Console.WriteLine();
             }
         }
 
-        private string SetLifeDisplay(Coordinates coordinates, CellManager cellManager)
+        private string SetLifeDisplay(Coordinates coordinates, StateManager stateManager)
         {
-            var cellInCurrentState = cellManager.CurrentState.Any(seed => seed.X == coordinates.X && seed.Y == coordinates.Y);
+            var cellInCurrentState = stateManager.CurrentState.Any(seed => seed.X == coordinates.X && seed.Y == coordinates.Y);
             return cellInCurrentState ? "O" : "-";
         }
     }

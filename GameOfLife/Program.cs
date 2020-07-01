@@ -7,7 +7,7 @@ namespace GameOfLife
     {
         static void Main(string[] args)
         {
-            var cellManager = new CellManager();
+            var stateManager = new StateManager();
             var input = new Input();
             var output = new Output();
             var outputMessages = new Output.Messages();
@@ -33,21 +33,19 @@ namespace GameOfLife
                 new Coordinates(4,4),
             };
 
-            ProgressTicks(10, world, seeds, cellManager);
+            ProgressTicks(10, world, seeds, stateManager);
             
         }
 
-        private static void ProgressTicks(int number, World world, List<Coordinates> seeds, CellManager cellManager)
+        private static void ProgressTicks(int number, World world, List<Coordinates> seeds, StateManager stateManager)
         {
             var output = new Output();
-            cellManager.CurrentState = seeds;
+            stateManager.CurrentState = seeds;
             for (int i = 0; i <= number; i++)
             {
-                cellManager.PreviousState.Clear();
-                cellManager.PreviousState.AddRange(cellManager.CurrentState);
-                cellManager.CurrentState.Clear();
-                cellManager.CheckEachCellForLife(world);
-                output.PrintWorld(world, cellManager);
+                stateManager.RefreshStates();
+                stateManager.ProcessWorldForCurrentState(world);
+                output.PrintWorld(world, stateManager);
             }
         }
     }

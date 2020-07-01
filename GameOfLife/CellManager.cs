@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -6,58 +7,21 @@ namespace GameOfLife
 {
     public class CellManager
     {
-        public List<Coordinates> PreviousState = new List<Coordinates>();
-        public List<Coordinates> CurrentState = new List<Coordinates>();
 
-        public void ProgressTicks(int number, World world, List<Coordinates> seeds)
+        public Cell CreateCell(int columnIndex, int rowIndex)
         {
-            CurrentState = seeds;
-            for (int i = 0; i <= number; i++)
-            {
-                UpdateState();
-                CheckEachCellForLife(world);
-            }
+            return new Cell(new Coordinates(columnIndex, rowIndex));
         }
-        
-        private void UpdateState()
+
+        public void AssignNeighbourProperties(Cell cell, World world, List<Coordinates> state)
         {
-            PreviousState.Clear();
-            PreviousState.AddRange(CurrentState);
-            CurrentState.Clear();
+            cell.Neighbours = FindNeighbours(cell, world);
+            cell.LiveNeighbours = SetNumberOfLiveNeighbours(state, cell);
         }
-        
-        public void CheckEachCellForLife(World world)
-        {
-            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
-            {
-                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
-                {
-                    var cell = new Cell(new Coordinates(columnIndex, rowIndex));
-                    cell.Neighbours = FindNeighbours(cell, world);
-                    cell.LiveNeighbours = SetNumberOfLiveNeighbours(PreviousState, cell);
-                    var cellWasLive= CheckIfCellWasLiveInPreviousState(PreviousState, cell);
-                    if(CellIsLive(cell, cellWasLive))
-                    {
-                        cell.Live = true;
-                        CurrentState.Add(new Coordinates(cell.Position.X, cell.Position.Y));
-                    };
-                }
-            }
-        }
-         
-        private bool CheckIfCellWasLiveInPreviousState(List<Coordinates> state, Cell cell)
-        {
-            return state.Any(seed => seed.X == cell.Position.X && seed.Y == cell.Position.Y);
-        }
-        private bool CellIsLive(Cell cell, bool cellWasLive)
-        {
-            return ((cellWasLive && cell.LiveNeighbours == 2) || 
-                    (cellWasLive && cell.LiveNeighbours == 3) || 
-                    (!cellWasLive && cell.LiveNeighbours == 3));
-        }
+
         public Dictionary<string, Coordinates> FindNeighbours(Cell cell, World world)
         {
-            var neighbours = new Dictionary<string, Coordinates>
+            return new Dictionary<string, Coordinates>
             {
                 {"topLeft", CheckForEdgeNeighbours(SetTopLeft(cell), world)},
                 {"left", CheckForEdgeNeighbours(SetLeft(cell), world)},
@@ -68,10 +32,9 @@ namespace GameOfLife
                 {"right", CheckForEdgeNeighbours(SetRight(cell), world)},
                 {"bottomRight", CheckForEdgeNeighbours(SetBottomRight(cell), world)}
             };
-            return neighbours;
         }
         
-        public int SetNumberOfLiveNeighbours(List<Coordinates> previousState, Cell cell)
+        private int SetNumberOfLiveNeighbours(List<Coordinates> previousState, Cell cell)
         {
             cell.LiveNeighbours = 0;
             return cell.Neighbours.Count(neighbour => previousState.Any(city => neighbour.Value.X == city.X && neighbour.Value.Y == city.Y));
@@ -99,7 +62,7 @@ namespace GameOfLife
         {
             return coordinate > axisSize ? 0 : coordinate;
         }
-       private Coordinates SetTopLeft(Cell cell)
+        private Coordinates SetTopLeft(Cell cell)
         {
             var neighbourX = cell.Position.X - 1;
             var neighbourY = cell.Position.Y - 1;

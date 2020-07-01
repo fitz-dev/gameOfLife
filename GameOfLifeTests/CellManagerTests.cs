@@ -107,149 +107,25 @@ namespace GameOfLifeTests
                 new Coordinates(0,6)
             };
             
-            cellManager.PreviousState = seeds;
             var testCell = CreateTestCell(0, 5);
-            testCell.Neighbours = cellManager.FindNeighbours(testCell, world);
-            testCell.LiveNeighbours = cellManager.SetNumberOfLiveNeighbours(cellManager.PreviousState, testCell);
-        
+            cellManager.AssignNeighbourProperties(testCell, world, seeds);
+            
             Assert.Equal(2, testCell.LiveNeighbours);
         }
           
         [Fact]
         public void Given_ACellThatHasNoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
-        {
-            var cellManager = new CellManager();
-            var world = new World(10, 10);
-                        
-            var testCell = CreateTestCell(0, 5);
-            testCell.Neighbours = cellManager.FindNeighbours(testCell, world);
-            cellManager.SetNumberOfLiveNeighbours(cellManager.PreviousState, testCell);
-        
-            Assert.Equal(0, testCell.LiveNeighbours);
-        }
-        
-        [Fact]
-        public void Given_ALiveCellWithLessThanTwoLiveNeighbours_When_LifeRulesAreApplied_Then_CellDies()
-        {
-            var cellManager = new CellManager();
-            var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
-            {
-                new Coordinates(2,5),
-            };
-            
-            var testCoordinate = new Coordinates(2,5);
-            cellManager.PreviousState = seeds;
-            cellManager.CheckEachCellForLife(world);
-            
-            foreach (var coordinate in cellManager.CurrentState)
-            {
-                coordinate.Should().NotBeEquivalentTo(testCoordinate);
-            }
-        }
-        
-        
-        [Fact]
-        public void Given_ALiveCellWithMoreThanLiveThreeNeighbours_When_LifeRulesAreApplied_Then_CellDies()
-        {
-            var cellManager = new CellManager();
-            var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
-            {
-                new Coordinates(2,4),
-                new Coordinates(2,5),
-                new Coordinates(2,6),
-                new Coordinates(1,5),
-                new Coordinates(1,6)
-            };
-            
-            var testCoordinate = new Coordinates(2, 5);
-
-            cellManager.PreviousState = seeds;
-            cellManager.CheckEachCellForLife(world);
-
-            foreach (var coordinate in cellManager.CurrentState)
-            {
-                coordinate.Should().NotBeEquivalentTo(testCoordinate);
-            }
-        }
-        
-        
-        [Fact]
-        public void Given_ALiveCellWithTwoLiveNeighbours_When_LifeRulesAreApplied_Then_CellLives()
-        {
-            var cellManager = new CellManager();
-            var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
-            {
-                new Coordinates(2,4),
-                new Coordinates(2,5),
-                new Coordinates(2,6),
-            };
-
-            var testCoordinate = new Coordinates(2, 5);
-
-            cellManager.PreviousState = seeds;
-            cellManager.CheckEachCellForLife(world);
-
-            cellManager.CurrentState.Should().ContainEquivalentOf(testCoordinate);
-        }
-        
-        [Fact]
-        public void Given_ALiveCellWithThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CellLives()
-        {
-            var cellManager = new CellManager();
-            var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
-            {
-                new Coordinates(2,4),
-                new Coordinates(2,5),
-                new Coordinates(2,6),
-                new Coordinates(1,5),
-            };
-            
-            var testCoordinate = new Coordinates(2, 5);
-     
-            cellManager.PreviousState = seeds;
-            cellManager.CheckEachCellForLife(world);
-
-            cellManager.CurrentState.Should().ContainEquivalentOf(testCoordinate);
-        }
-
-       [Fact]
-        public void Given_ADeadCellWithExactlyThreeLiveNeighbours_When_LifeRulesAreApplied_Then_CellLives()
-        {
-            var cellManager = new CellManager();
-            var world = new World(7, 7);
-            var seeds = new List<Coordinates>()
-            {
-                new Coordinates(2,4),
-                new Coordinates(2,6),
-                new Coordinates(1,5),
-            };
-            
-            var testCoordinate = new Coordinates(2,5);
-            cellManager.PreviousState = seeds;
-            cellManager.CheckEachCellForLife(world);
-
-            cellManager.CurrentState.Should().ContainEquivalentOf(testCoordinate);
-        }
-        
-        [Fact]
-        public void Given_ADeadCellWithNoLiveNeighbours_When_LifeRulesAreApplied_Then_CellIsDead()
-        {
-            var cellManager = new CellManager();
-            var world = new World(10, 10);
-            var seeds = new List<Coordinates>();
-            
-            var testCoordinate = new Coordinates(7,5);
-            cellManager.PreviousState = seeds;
-            cellManager.CheckEachCellForLife(world);
-
-            cellManager.CurrentState.Should().NotContain(testCoordinate);
-        }
-        
-        
+       {
+           var cellManager = new CellManager();
+           var world = new World(10, 10);
+           var seeds = new List<Coordinates>();
+                       
+           var testCell = CreateTestCell(0, 5);
+           cellManager.AssignNeighbourProperties(testCell, world, seeds);
+       
+           Assert.Equal(0, testCell.LiveNeighbours);
+       }
+       
         private Cell CreateTestCell(int columnIndex, int rowIndex)
         {
             return new Cell(new Coordinates(columnIndex, rowIndex));

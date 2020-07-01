@@ -7,12 +7,12 @@ using Xunit;
 
 namespace GameOfLifeTests
 {
-    public class SeedTests
+    public class PatternTests
     {
         [Fact]
         public void Given_SeedsThatResultInAUnmovingShape_When_TwoTicksHavePassed_Then_SameCoordinatesAreReturned()
         {
-            var cellManager = new CellManager();
+            var stateManager = new StateManager();
             var world = new World(6, 6);
             var seeds = new List<Coordinates>()
             {
@@ -24,15 +24,15 @@ namespace GameOfLifeTests
                 new Coordinates(3,3),
             };
             
-            cellManager.ProgressTicks(2, world, seeds);
+            stateManager.ProgressTicks(2, world, seeds);
         
-            cellManager.CurrentState.Should().BeEquivalentTo(seeds);
+            stateManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
-        public void Given_SeedsForOscillatingShapeKnownAsToad_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledToad_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var cellManager = new CellManager();
+            var stateManager = new StateManager();
             var world = new World(6, 6);
             var seeds = new List<Coordinates>()
             {
@@ -54,15 +54,15 @@ namespace GameOfLifeTests
                 new Coordinates(2,4)
             };
 
-            cellManager.ProgressTicks(2, world, seeds);
+            stateManager.ProgressTicks(2, world, seeds);
         
-            cellManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
+            stateManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
         
         [Fact]
-        public void Given_SeedsForOscillatingShapeKnownAsBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var cellManager = new CellManager();
+            var stateManager = new StateManager();
             var world = new World(6, 6);
             var seeds = new List<Coordinates>()
             {
@@ -86,15 +86,15 @@ namespace GameOfLifeTests
                 new Coordinates(4,4),
             };
             
-            cellManager.ProgressTicks(2, world, seeds);
+            stateManager.ProgressTicks(2, world, seeds);
         
-            cellManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
+            stateManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
 
         [Fact]
-        public void Given_SeedsForOscillatingShapeKnownAsBeacon_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledBeacon_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var cellManager = new CellManager();
+            var stateManager = new StateManager();
             var world = new World(6, 6);
             var seeds = new List<Coordinates>()
             {
@@ -108,15 +108,15 @@ namespace GameOfLifeTests
                 new Coordinates(4,4),
             };
             
-            cellManager.ProgressTicks(3, world, seeds);
+            stateManager.ProgressTicks(3, world, seeds);
 
-            cellManager.CurrentState.Should().BeEquivalentTo(seeds);
+            stateManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
-        public void Given_SeedsForOscillatingShapeKnownAsPulsar_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledPulsar_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var cellManager = new CellManager();
+            var stateManager = new StateManager();
             var world = new World(20, 20);
             var seeds = new List<Coordinates>()
             {
@@ -170,9 +170,9 @@ namespace GameOfLifeTests
                 new Coordinates(12,14),
             };
             
-            cellManager.ProgressTicks(4, world, seeds);
+            stateManager.ProgressTicks(4, world, seeds);
             
-            cellManager.CurrentState.Should().BeEquivalentTo(seeds);
+            stateManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
     }
 }
