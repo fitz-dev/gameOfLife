@@ -8,16 +8,53 @@ namespace GameOfLife
     {
         public List<Coordinates> PreviousState = new List<Coordinates>();
         public List<Coordinates> CurrentState = new List<Coordinates>();
-        
-        public void AddSeeds(IEnumerable<Coordinates> seeds)
+
+        public void ProgressTicks(int number, World world, List<Coordinates> seeds)
         {
-            PreviousState.Clear();
-            foreach (var seed in seeds)
+            CurrentState = seeds;
+            for (int i = 0; i <= number; i++)
             {
-                PreviousState.Add(seed);
+                UpdateState();
+                CheckEachCellForLife(world);
             }
         }
         
+        private void UpdateState()
+        {
+            PreviousState.Clear();
+            PreviousState.AddRange(CurrentState);
+            CurrentState.Clear();
+        }
+        
+        public void CheckEachCellForLife(World world)
+        {
+            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
+                {
+                    var cell = new Cell(new Coordinates(columnIndex, rowIndex));
+                    cell.Neighbours = FindNeighbours(cell, world);
+                    cell.LiveNeighbours = SetNumberOfLiveNeighbours(PreviousState, cell);
+                    var cellWasLive= CheckIfCellWasLiveInPreviousState(PreviousState, cell);
+                    if(CellIsLive(cell, cellWasLive))
+                    {
+                        cell.Live = true;
+                        CurrentState.Add(new Coordinates(cell.Position.X, cell.Position.Y));
+                    };
+                }
+            }
+        }
+         
+        private bool CheckIfCellWasLiveInPreviousState(List<Coordinates> state, Cell cell)
+        {
+            return state.Any(seed => seed.X == cell.Position.X && seed.Y == cell.Position.Y);
+        }
+        private bool CellIsLive(Cell cell, bool cellWasLive)
+        {
+            return ((cellWasLive && cell.LiveNeighbours == 2) || 
+                    (cellWasLive && cell.LiveNeighbours == 3) || 
+                    (!cellWasLive && cell.LiveNeighbours == 3));
+        }
         public Dictionary<string, Coordinates> FindNeighbours(Cell cell, World world)
         {
             var neighbours = new Dictionary<string, Coordinates>
@@ -62,40 +99,7 @@ namespace GameOfLife
         {
             return coordinate > axisSize ? 0 : coordinate;
         }
-        
-        public void CheckEachCellForLife(World world)
-        {
-            // PreviousState = CurrentState;
-            CurrentState.Clear();
-            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
-            {
-                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
-                {
-                    var cell = new Cell(new Coordinates(columnIndex, rowIndex));
-                    cell.Neighbours = FindNeighbours(cell, world);
-                    cell.LiveNeighbours = SetNumberOfLiveNeighbours(PreviousState, cell);
-                    var cellWasLive= CheckIfCellWasLiveInPreviousState(PreviousState, cell);
-                    if(CellIsLive(cell, cellWasLive))
-                    {
-                        cell.Live = true;
-                        CurrentState.Add(new Coordinates(cell.Position.X, cell.Position.Y));
-                    };
-                }
-            }
-        }
-
-        private bool CheckIfCellWasLiveInPreviousState(List<Coordinates> state, Cell cell)
-        {
-            return state.Any(seed => seed.X == cell.Position.X && seed.Y == cell.Position.Y);
-        }
-        private bool CellIsLive(Cell cell, bool cellWasLive)
-        {
-            return ((cellWasLive && cell.LiveNeighbours == 2) || 
-                    (cellWasLive && cell.LiveNeighbours == 3) || 
-                    (!cellWasLive && cell.LiveNeighbours == 3));
-        }
-       
-        private Coordinates SetTopLeft(Cell cell)
+       private Coordinates SetTopLeft(Cell cell)
         {
             var neighbourX = cell.Position.X - 1;
             var neighbourY = cell.Position.Y - 1;

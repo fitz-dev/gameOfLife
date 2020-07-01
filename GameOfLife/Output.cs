@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks.Dataflow;
 
@@ -28,22 +29,23 @@ namespace GameOfLife
         }
 
 
-        public void PrintWorld(World world)
+        public void PrintWorld(World world, CellManager cellManager)
         {
             Console.WriteLine("==================================");
             for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
                 {
-                    // Console.Write($"{SetLifeDisplay(world.Grid[columnIndex, rowIndex])} ");
+                    Console.Write($"{SetLifeDisplay(new Coordinates(columnIndex, rowIndex), cellManager)} ");
                 }
                 Console.WriteLine();
             }
         }
-        
-        public string SetLifeDisplay(Cell cell)
+
+        private string SetLifeDisplay(Coordinates coordinates, CellManager cellManager)
         {
-            return cell.Live ? "O" : "-";
+            var cellInCurrentState = cellManager.CurrentState.Any(seed => seed.X == coordinates.X && seed.Y == coordinates.Y);
+            return cellInCurrentState ? "O" : "-";
         }
     }
 }

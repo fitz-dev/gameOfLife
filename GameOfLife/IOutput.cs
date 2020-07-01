@@ -2,6 +2,6 @@ namespace GameOfLife
 {
     public interface IOutput
     {
-        public void PrintWorld(World world);
+        public void PrintWorld(World world, CellManager cellManager);
     }
 }

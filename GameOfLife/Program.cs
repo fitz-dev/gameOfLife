@@ -12,14 +12,14 @@ namespace GameOfLife
             var output = new Output();
             var outputMessages = new Output.Messages();
             // outputmessages in their own methods? 
-            output.PrintOutput(outputMessages.Welcome);
+            // output.PrintOutput(outputMessages.Welcome);
+            //
+            // Console.WriteLine(outputMessages.AskLength);
+            // var columnInt = input.ProcessWorldInput(Console.ReadLine());
+            // Console.WriteLine(outputMessages.AskHeight);
+            // var rowInt = input.ProcessWorldInput(Console.ReadLine());
             
-            Console.WriteLine(outputMessages.AskLength);
-            var columnInt = input.ProcessWorldInput(Console.ReadLine());
-            Console.WriteLine(outputMessages.AskHeight);
-            var rowInt = input.ProcessWorldInput(Console.ReadLine());
-            
-            var world = new World(columnInt,rowInt);
+            var world = new World(20,20);
             
             var seeds = new List<Coordinates>()
             {
@@ -33,15 +33,22 @@ namespace GameOfLife
                 new Coordinates(4,4),
             };
 
-            cellManager.AddSeeds(seeds);
-            output.PrintWorld(world);
-            // for (int i = 0; i < 30; i++)
-            // {
-            //     cellManager.CheckForLiveCities(world);
-            //     cellManager.ApplyLifeRules(cell);
-            //     cellManager.AddSeeds(cellManager.CurrentState);
-            //     output.PrintWorld(world);
-            // }
+            ProgressTicks(10, world, seeds, cellManager);
+            
+        }
+
+        private static void ProgressTicks(int number, World world, List<Coordinates> seeds, CellManager cellManager)
+        {
+            var output = new Output();
+            cellManager.CurrentState = seeds;
+            for (int i = 0; i <= number; i++)
+            {
+                cellManager.PreviousState.Clear();
+                cellManager.PreviousState.AddRange(cellManager.CurrentState);
+                cellManager.CurrentState.Clear();
+                cellManager.CheckEachCellForLife(world);
+                output.PrintWorld(world, cellManager);
+            }
         }
     }
 }

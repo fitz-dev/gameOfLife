@@ -107,7 +107,7 @@ namespace GameOfLifeTests
                 new Coordinates(0,6)
             };
             
-            cellManager.AddSeeds(seeds);
+            cellManager.PreviousState = seeds;
             var testCell = CreateTestCell(0, 5);
             testCell.Neighbours = cellManager.FindNeighbours(testCell, world);
             testCell.LiveNeighbours = cellManager.SetNumberOfLiveNeighbours(cellManager.PreviousState, testCell);
@@ -139,7 +139,7 @@ namespace GameOfLifeTests
             };
             
             var testCoordinate = new Coordinates(2,5);
-            cellManager.AddSeeds(seeds);
+            cellManager.PreviousState = seeds;
             cellManager.CheckEachCellForLife(world);
             
             foreach (var coordinate in cellManager.CurrentState)
@@ -164,8 +164,8 @@ namespace GameOfLifeTests
             };
             
             var testCoordinate = new Coordinates(2, 5);
-     
-            cellManager.AddSeeds(seeds);
+
+            cellManager.PreviousState = seeds;
             cellManager.CheckEachCellForLife(world);
 
             foreach (var coordinate in cellManager.CurrentState)
@@ -188,8 +188,8 @@ namespace GameOfLifeTests
             };
 
             var testCoordinate = new Coordinates(2, 5);
-     
-            cellManager.AddSeeds(seeds);
+
+            cellManager.PreviousState = seeds;
             cellManager.CheckEachCellForLife(world);
 
             cellManager.CurrentState.Should().ContainEquivalentOf(testCoordinate);
@@ -210,7 +210,7 @@ namespace GameOfLifeTests
             
             var testCoordinate = new Coordinates(2, 5);
      
-            cellManager.AddSeeds(seeds);
+            cellManager.PreviousState = seeds;
             cellManager.CheckEachCellForLife(world);
 
             cellManager.CurrentState.Should().ContainEquivalentOf(testCoordinate);
@@ -229,7 +229,7 @@ namespace GameOfLifeTests
             };
             
             var testCoordinate = new Coordinates(2,5);
-            cellManager.AddSeeds(seeds);
+            cellManager.PreviousState = seeds;
             cellManager.CheckEachCellForLife(world);
 
             cellManager.CurrentState.Should().ContainEquivalentOf(testCoordinate);
@@ -243,7 +243,7 @@ namespace GameOfLifeTests
             var seeds = new List<Coordinates>();
             
             var testCoordinate = new Coordinates(7,5);
-            cellManager.AddSeeds(seeds);
+            cellManager.PreviousState = seeds;
             cellManager.CheckEachCellForLife(world);
 
             cellManager.CurrentState.Should().NotContain(testCoordinate);

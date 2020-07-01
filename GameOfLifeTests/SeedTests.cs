@@ -10,7 +10,7 @@ namespace GameOfLifeTests
     public class SeedTests
     {
         [Fact]
-        public void Given_StillLifeStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
+        public void Given_SeedsThatResultInAUnmovingShape_When_TwoTicksHavePassed_Then_SameCoordinatesAreReturned()
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
@@ -24,15 +24,13 @@ namespace GameOfLifeTests
                 new Coordinates(3,3),
             };
             
-            cellManager.AddSeeds(seeds);
-            
-            cellManager.CheckEachCellForLife(world);
+            cellManager.ProgressTicks(2, world, seeds);
         
             cellManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
-        public void Given_OscillatorToadStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
+        public void Given_SeedsForOscillatingShapeKnownAsToad_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
@@ -45,7 +43,7 @@ namespace GameOfLifeTests
                 new Coordinates(2,3),
                 new Coordinates(3,3),
             };
-            
+           
             var expectedSeedCoordinates = new List<Coordinates>()
             {
                 new Coordinates(3,1),
@@ -55,16 +53,14 @@ namespace GameOfLifeTests
                 new Coordinates(4,3),
                 new Coordinates(2,4)
             };
-            
-            cellManager.AddSeeds(seeds);
-            
-            cellManager.CheckEachCellForLife(world);
+
+            cellManager.ProgressTicks(2, world, seeds);
         
             cellManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
         
         [Fact]
-        public void Given_OscillatorBeaconStartingSeeds_When_NextTickLiveCitiesAreFound_Then_ExpectedSeedCoordinatedAreReturned()
+        public void Given_SeedsForOscillatingShapeKnownAsBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
@@ -90,14 +86,13 @@ namespace GameOfLifeTests
                 new Coordinates(4,4),
             };
             
-            cellManager.AddSeeds(seeds);
-            cellManager.CheckEachCellForLife(world);
+            cellManager.ProgressTicks(2, world, seeds);
         
             cellManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
 
         [Fact]
-        public void Given_OscillatorBeaconStartingSeeds_When_TwoTicksHaveElapsed_Then_ExpectedSeedCoordinatedAreReturned()
+        public void Given_SeedsForOscillatingShapeKnownAsBeacon_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
             var cellManager = new CellManager();
             var world = new World(6, 6);
@@ -113,19 +108,13 @@ namespace GameOfLifeTests
                 new Coordinates(4,4),
             };
             
-            cellManager.AddSeeds(seeds);
-            
-            cellManager.CheckEachCellForLife(world);
-            
-            cellManager.AddSeeds(cellManager.CurrentState);
-            
-            cellManager.CheckEachCellForLife(world);
+            cellManager.ProgressTicks(3, world, seeds);
 
             cellManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
-        public void Given_OscillatorPulsarStartingSeeds_When_ThreeTicksHaveElapsed_Then_ExpectedSeedCoordinatedAreReturned()
+        public void Given_SeedsForOscillatingShapeKnownAsPulsar_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
             var cellManager = new CellManager();
             var world = new World(20, 20);
@@ -181,13 +170,8 @@ namespace GameOfLifeTests
                 new Coordinates(12,14),
             };
             
-            cellManager.AddSeeds(seeds);
+            cellManager.ProgressTicks(4, world, seeds);
             
-            for (int i = 0; i < 3; i++)
-            {
-                cellManager.CheckEachCellForLife(world);
-                cellManager.AddSeeds(cellManager.CurrentState);
-            }
             cellManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
     }
