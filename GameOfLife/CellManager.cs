@@ -44,12 +44,14 @@ namespace GameOfLife
         {
             var columnIndex = coordinates.Y;
             var rowIndex = coordinates.X;
+            var worldLength = world.Grid.GetLength(0) - 1;
+            var worldHeight = world.Grid.GetLength(1) - 1;
             
-            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, world.ColumnLength - 1);
-            columnIndex = CheckForIndexLargerThanWorld(columnIndex, world.ColumnLength - 1);
+            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, worldLength);
+            columnIndex = CheckForIndexLargerThanWorld(columnIndex, worldLength);
 
-            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, world.RowLength -1);
-            rowIndex = CheckForIndexLargerThanWorld(rowIndex, world.RowLength -1);
+            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, worldHeight);
+            rowIndex = CheckForIndexLargerThanWorld(rowIndex, worldHeight);
       
             return new Coordinates(rowIndex, columnIndex);
         }

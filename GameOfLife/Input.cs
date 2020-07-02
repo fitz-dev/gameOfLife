@@ -25,7 +25,7 @@ namespace GameOfLife
         private bool ValidateCoordinateValues(World world, string input)
         {
             var convertedInput = Convert.ToInt32(input);
-            return convertedInput > world.ColumnLength || convertedInput > world.RowLength;
+            return convertedInput > world.Grid.GetLength(0) || convertedInput > world.Grid.GetLength(1);
         }
         
         //

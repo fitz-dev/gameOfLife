@@ -32,9 +32,9 @@ namespace GameOfLife
         public void PrintWorld(World world, StateManager stateManager)
         {
             Console.WriteLine("==================================");
-            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
+            for (int rowIndex = 0; rowIndex < world.Grid.GetLength(1); rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
+                for (int columnIndex = 0; columnIndex < world.Grid.GetLength(0); columnIndex++)
                 {
                     Console.Write($"{SetLifeDisplay(new Coordinates(columnIndex, rowIndex), stateManager)} ");
                 }

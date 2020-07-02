@@ -18,9 +18,9 @@ namespace GameOfLife
         public void ProcessWorldForCurrentState(World world)
         {
             var cellManager = new CellManager();
-            for (int rowIndex = 0; rowIndex < world.RowLength; rowIndex++)
+            for (int rowIndex = 0; rowIndex < world.Grid.GetLength(1); rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < world.ColumnLength; columnIndex++)
+                for (int columnIndex = 0; columnIndex < world.Grid.GetLength(0); columnIndex++)
                 {
                     var cell = cellManager.CreateCell(columnIndex, rowIndex);
                     cellManager.AssignNeighbourProperties(cell, world, _previousState);
