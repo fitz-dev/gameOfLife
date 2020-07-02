@@ -24,7 +24,7 @@ namespace GameOfLifeTests
                 new Coordinates(3,3),
             };
             
-            stateManager.ProgressTicks(2, world, seeds);
+            ProgressTicks(2, world, seeds, stateManager);
         
             stateManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
@@ -54,7 +54,7 @@ namespace GameOfLifeTests
                 new Coordinates(2,4)
             };
 
-            stateManager.ProgressTicks(2, world, seeds);
+            ProgressTicks(2, world, seeds, stateManager);
         
             stateManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
@@ -86,7 +86,7 @@ namespace GameOfLifeTests
                 new Coordinates(4,4),
             };
             
-            stateManager.ProgressTicks(2, world, seeds);
+            ProgressTicks(2, world, seeds, stateManager);
         
             stateManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
@@ -108,7 +108,7 @@ namespace GameOfLifeTests
                 new Coordinates(4,4),
             };
             
-            stateManager.ProgressTicks(3, world, seeds);
+            ProgressTicks(3, world, seeds, stateManager);
 
             stateManager.CurrentState.Should().BeEquivalentTo(seeds);
         }
@@ -170,9 +170,19 @@ namespace GameOfLifeTests
                 new Coordinates(12,14),
             };
             
-            stateManager.ProgressTicks(4, world, seeds);
+            ProgressTicks(4, world, seeds, stateManager);
             
             stateManager.CurrentState.Should().BeEquivalentTo(seeds);
+        }
+
+        private void ProgressTicks(int number, World world, List<Coordinates> seeds, StateManager stateManager)
+        {
+            stateManager.CurrentState = seeds;
+            for (int i = 0; i <= number; i++)
+            {
+                stateManager.RefreshStates();
+                stateManager.ProcessWorldForCurrentState(world);
+            }
         }
     }
 }

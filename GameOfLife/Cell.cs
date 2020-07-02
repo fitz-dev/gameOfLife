@@ -9,6 +9,7 @@ namespace GameOfLife
         public Coordinates Position;
         public bool Live;
         public int LiveNeighbours;
+        // num live neighbours? 
         
         public Cell(Coordinates position)
         {

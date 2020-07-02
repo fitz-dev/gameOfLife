@@ -8,16 +8,6 @@ namespace GameOfLife
         private List<Coordinates> _previousState = new List<Coordinates>();
         public List<Coordinates> CurrentState = new List<Coordinates>();
 
-        public void ProgressTicks(int number, World world, List<Coordinates> seeds)
-        {
-            CurrentState = seeds;
-            for (int i = 0; i <= number; i++)
-            {
-                RefreshStates();
-                ProcessWorldForCurrentState(world);
-            }
-        }
-        
         public void RefreshStates()
         {
             _previousState.Clear();
@@ -41,9 +31,8 @@ namespace GameOfLife
 
         private void DetermineIfCellShouldLive(Cell cell)
         {
-            var cellWasLive = CellWasLiveIn(_previousState, cell);
-            if (!CellMeetsConditionsForLife(cell, cellWasLive)) return;
-            // cell.Live = true;
+            cell.Live = CellWasLiveIn(_previousState, cell);
+            if (!CellMeetsConditionsForLife(cell, cell.Live)) return;
             CurrentState.Add(new Coordinates(cell.Position.X, cell.Position.Y));
         }
 

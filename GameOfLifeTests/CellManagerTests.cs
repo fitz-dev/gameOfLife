@@ -25,7 +25,7 @@ namespace GameOfLifeTests
         }
         
         [Fact]
-        public void Given_NeighbourThatIsToTheRightOfTheCell_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_NeighbourThatOnTheFringeToTheRightOfTheCell_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
         {
             var cellManager = new CellManager();
             var world = new World(5, 5);
