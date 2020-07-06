@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GameOfLife
+namespace GameOfLife.Managers
 {
     public class StateManager
     {

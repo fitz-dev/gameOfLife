@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GameOfLife;
+using GameOfLife.Managers;
 using Xunit;
 
 namespace GameOfLifeTests

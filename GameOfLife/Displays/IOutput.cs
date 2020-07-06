@@ -1,3 +1,5 @@
+using GameOfLife.Managers;
+
 namespace GameOfLife
 {
     public interface IOutput

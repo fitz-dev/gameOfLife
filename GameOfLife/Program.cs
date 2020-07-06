@@ -1,7 +1,8 @@
 ﻿﻿﻿using System;
 using System.Collections.Generic;
+  using GameOfLife.Managers;
 
-namespace GameOfLife
+  namespace GameOfLife
 {
     class Program
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using GameOfLife;
+using GameOfLife.Managers;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
