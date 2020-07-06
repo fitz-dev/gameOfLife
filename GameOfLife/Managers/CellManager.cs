@@ -15,13 +15,14 @@ namespace GameOfLife
 
         public void AssignNeighbourProperties(Cell cell, World world, List<Cell> state)
         {
-            cell.Neighbours = Neighbours.FindNeighbours(cell, world);
-            cell.LiveNeighbours = SetNumberOfLiveNeighbours(state, cell);
+            cell.Neighbours = NeighbourManager.FindNeighbours(cell, world);
+            cell.NumLiveNeighbours = SetNumberOfLiveNeighbours(state, cell);
         }
         
         private int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
         {
-            cell.LiveNeighbours = 0;
+            cell.NumLiveNeighbours = 0;
+            
             return cell.Neighbours.Count(neighbour => previousState.Any(city => neighbour.Value.X == city.Position.X && neighbour.Value.Y == city.Position.Y));
         }
     }

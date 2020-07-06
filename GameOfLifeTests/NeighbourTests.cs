@@ -12,7 +12,7 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
 
             var testCell = CreateTestCell(3, 1);
-            testCell.Neighbours = Neighbours.FindNeighbours(testCell, world);
+            testCell.Neighbours = NeighbourManager.FindNeighbours(testCell, world);
 
             var leftNeighbour = new Coordinates(2,1);
             
@@ -25,7 +25,7 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
                         
             var testCell = CreateTestCell(2, 2);
-            testCell.Neighbours = Neighbours.FindNeighbours(testCell, world);
+            testCell.Neighbours = NeighbourManager.FindNeighbours(testCell, world);
 
             var rightNeighbour = new Coordinates(3,2);
             
@@ -38,7 +38,7 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
                            
             var testCell = CreateTestCell(2, 0);
-            testCell.Neighbours = Neighbours.FindNeighbours(testCell, world);
+            testCell.Neighbours = NeighbourManager.FindNeighbours(testCell, world);
         
             var topNeighbour = new Coordinates(2,4);
             
@@ -51,7 +51,7 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
                         
             var testCell = CreateTestCell(2, 4);
-            testCell.Neighbours = Neighbours.FindNeighbours(testCell, world);
+            testCell.Neighbours = NeighbourManager.FindNeighbours(testCell, world);
         
             var bottomNeighbour = new Coordinates(2,0);                   
             
@@ -65,7 +65,7 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
                         
             var testCell = CreateTestCell(4, 2);
-            testCell.Neighbours = Neighbours.FindNeighbours(testCell, world);
+            testCell.Neighbours = NeighbourManager.FindNeighbours(testCell, world);
         
             var rightNeighbour = new Coordinates(0,2);
             
@@ -78,7 +78,7 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
                         
             var testCell = CreateTestCell(0, 3);
-            testCell.Neighbours = Neighbours.FindNeighbours(testCell, world);
+            testCell.Neighbours = NeighbourManager.FindNeighbours(testCell, world);
         
             var leftNeighbour = new Coordinates(4,3);
             

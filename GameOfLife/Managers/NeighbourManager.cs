@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace GameOfLife
 {
-    public static class Neighbours
+    public static class NeighbourManager
     {
         public static Dictionary<string, Coordinates> FindNeighbours(Cell cell, World world)
         {

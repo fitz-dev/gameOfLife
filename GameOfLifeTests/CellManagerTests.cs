@@ -26,7 +26,7 @@ namespace GameOfLifeTests
             var testCell = CreateTestCell(0, 5);
             cellManager.AssignNeighbourProperties(testCell, world, seeds);
             
-            Assert.Equal(2, testCell.LiveNeighbours);
+            Assert.Equal(2, testCell.NumLiveNeighbours);
         }
           
         [Fact]
@@ -39,7 +39,7 @@ namespace GameOfLifeTests
            var testCell = CreateTestCell(0, 5);
            cellManager.AssignNeighbourProperties(testCell, world, seeds);
        
-           Assert.Equal(0, testCell.LiveNeighbours);
+           Assert.Equal(0, testCell.NumLiveNeighbours);
        }
        
         private Cell CreateTestCell(int columnIndex, int rowIndex)

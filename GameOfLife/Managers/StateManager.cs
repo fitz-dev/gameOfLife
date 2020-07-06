@@ -44,9 +44,9 @@ namespace GameOfLife
         }
         private bool CellMeetsConditionsForLife(Cell cell, bool cellWasLive)
         {
-            return ((cellWasLive && cell.LiveNeighbours == 2) || 
-                    (cellWasLive && cell.LiveNeighbours == 3) || 
-                    (!cellWasLive && cell.LiveNeighbours == 3));
+            return ((cellWasLive && cell.NumLiveNeighbours == 2) || 
+                    (cellWasLive && cell.NumLiveNeighbours == 3) || 
+                    (!cellWasLive && cell.NumLiveNeighbours == 3));
         }
     }
 }

@@ -5,11 +5,10 @@ namespace GameOfLife
 {
     public class Cell
     {
-        public Dictionary<string, Coordinates> Neighbours;
-        public Coordinates Position;
         public bool Live;
-        public int LiveNeighbours;
-        // num live neighbours? 
+        public Coordinates Position;
+        public Dictionary<string, Coordinates> Neighbours;
+        public int NumLiveNeighbours;
         
         public Cell(Coordinates position)
         {
