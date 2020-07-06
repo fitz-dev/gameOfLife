@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
+using GameOfLife.Models;
 
 namespace GameOfLife
 {

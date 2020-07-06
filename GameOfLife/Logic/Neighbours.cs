@@ -1,21 +1,22 @@
 using System.Collections.Generic;
+using GameOfLife.Models;
 
-namespace GameOfLife.Managers
+namespace GameOfLife.Logic
 {
-    public static class NeighbourManager
+    public static class Neighbours
     {
-        public static Dictionary<string, Coordinates> FindNeighbours(Cell cell, World world)
+        public static List<Coordinates> FindNeighbours(Cell cell, World world)
         {
-            return new Dictionary<string, Coordinates>
+            return new List<Coordinates>
             {
-                {"topLeft", CheckForEdgeNeighbours(SetTopLeft(cell), world)},
-                {"left", CheckForEdgeNeighbours(SetLeft(cell), world)},
-                {"bottomLeft", CheckForEdgeNeighbours(SetBottomLeft(cell), world)},
-                {"top", CheckForEdgeNeighbours(SetTop(cell), world)},
-                {"bottom", CheckForEdgeNeighbours(SetBottom(cell), world)},
-                {"topRight", CheckForEdgeNeighbours(SetTopRight(cell), world)},
-                {"right", CheckForEdgeNeighbours(SetRight(cell), world)},
-                {"bottomRight", CheckForEdgeNeighbours(SetBottomRight(cell), world)}
+                {CheckForEdgeNeighbours(SetTopLeft(cell), world)},
+                {CheckForEdgeNeighbours(SetLeft(cell), world)},
+                {CheckForEdgeNeighbours(SetBottomLeft(cell), world)},
+                {CheckForEdgeNeighbours(SetTop(cell), world)},
+                {CheckForEdgeNeighbours(SetBottom(cell), world)},
+                {CheckForEdgeNeighbours(SetTopRight(cell), world)},
+                {CheckForEdgeNeighbours(SetRight(cell), world)},
+                {CheckForEdgeNeighbours(SetBottomRight(cell), world)}
             };
         }
        

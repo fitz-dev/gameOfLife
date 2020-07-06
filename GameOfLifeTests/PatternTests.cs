@@ -4,6 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using GameOfLife;
 using GameOfLife.Managers;
+using GameOfLife.Models;
 using Xunit;
 
 namespace GameOfLifeTests

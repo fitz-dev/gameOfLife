@@ -1,4 +1,5 @@
 using GameOfLife.Managers;
+using GameOfLife.Models;
 
 namespace GameOfLife
 {

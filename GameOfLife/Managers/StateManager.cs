@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using GameOfLife.Logic;
+using GameOfLife.Models;
 
 namespace GameOfLife.Managers
 {
     public class StateManager
     {
         private List<Cell> _previousState = new List<Cell>();
+
         public List<Cell> CurrentState = new List<Cell>();
 
         public void RefreshStates()
@@ -24,29 +27,23 @@ namespace GameOfLife.Managers
                 {
                     var cell = cellManager.CreateCell(columnIndex, rowIndex);
                     cellManager.AssignNeighbourProperties(cell, world, _previousState);
-                    DetermineIfCellShouldLive(cell);
+                    cell.Live = CellWasLiveIn(_previousState, cell);
+                    ApplyCellLifeRules(cell);
                 }
             }
         }
-
-        private void DetermineIfCellShouldLive(Cell cell)
-        {
-            cell.Live = CellWasLiveIn(_previousState, cell);
-            if (!CellMeetsConditionsForLife(cell, cell.Live)) return;
-            CurrentState.Add(cell);
-        }
-
         private bool CellWasLiveIn(List<Cell> previousState, Cell cell)
         {
             return previousState.Any(seed => 
                 seed.Position.X == cell.Position.X && 
                 seed.Position.Y == cell.Position.Y);
         }
-        private bool CellMeetsConditionsForLife(Cell cell, bool cellWasLive)
+
+        private void ApplyCellLifeRules(Cell cell)
         {
-            return ((cellWasLive && cell.NumLiveNeighbours == 2) || 
-                    (cellWasLive && cell.NumLiveNeighbours == 3) || 
-                    (!cellWasLive && cell.NumLiveNeighbours == 3));
+            if (!LifeRules.CellWillLive(cell)) return;
+            CurrentState.Add(cell);
         }
+
     }
 }

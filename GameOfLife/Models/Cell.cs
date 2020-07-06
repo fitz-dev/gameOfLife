@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 
-namespace GameOfLife
+namespace GameOfLife.Models
 {
     public class Cell
     {
         public bool Live;
         public Coordinates Position;
-        public Dictionary<string, Coordinates> Neighbours;
+        public List<Coordinates> Neighbours;
         public int NumLiveNeighbours;
         
         public Cell(Coordinates position)

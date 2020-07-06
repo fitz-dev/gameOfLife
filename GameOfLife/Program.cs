@@ -1,6 +1,7 @@
 ﻿﻿﻿using System;
 using System.Collections.Generic;
   using GameOfLife.Managers;
+  using GameOfLife.Models;
 
   namespace GameOfLife
 {

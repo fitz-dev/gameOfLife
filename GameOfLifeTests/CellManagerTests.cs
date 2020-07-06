@@ -4,6 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using GameOfLife;
 using GameOfLife.Managers;
+using GameOfLife.Models;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 

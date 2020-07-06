@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks.Dataflow;
 using GameOfLife.Managers;
+using GameOfLife.Models;
 
 namespace GameOfLife
 {

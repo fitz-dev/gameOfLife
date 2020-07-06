@@ -1,4 +1,4 @@
-namespace GameOfLife
+namespace GameOfLife.Models
 {
     public class Coordinates
     {

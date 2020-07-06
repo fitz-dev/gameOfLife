@@ -1,11 +1,8 @@
-using System;
-using System.Data;
-
-namespace GameOfLife
+namespace GameOfLife.Models
 {
     public class World
     {
-        public int[,] Grid { get; set; }
+        public int[,] Grid { get; }
 
         public World(int columns, int rows)
         {
