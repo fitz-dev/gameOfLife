@@ -32,6 +32,7 @@ namespace GameOfLife.Managers
                 }
             }
         }
+        
         private bool CellWasLiveIn(List<Cell> previousState, Cell cell)
         {
             return previousState.Any(seed => 

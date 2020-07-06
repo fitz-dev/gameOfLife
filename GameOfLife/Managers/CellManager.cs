@@ -15,7 +15,7 @@ namespace GameOfLife.Managers
 
         public void AssignNeighbourProperties(Cell cell, World world, List<Cell> state)
         {
-            cell.Neighbours = Neighbours.FindNeighbours(cell, world);
+            cell.Neighbours = Neighbours.SetNeighbours(cell, world);
             cell.NumLiveNeighbours = SetNumberOfLiveNeighbours(state, cell);
         }
         

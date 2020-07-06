@@ -8,8 +8,8 @@ using Xunit;
 namespace GameOfLifeTests
 {
     public class LifeRulesTests
-    {
-         [Fact]
+    { 
+        [Fact]
        public void Given_ALiveCellWithLessThanTwoLiveNeighbours_When_CellIsChecked_Then_CellDies()
        {
            var testCoordinate = new Cell(new Coordinates(2,4))

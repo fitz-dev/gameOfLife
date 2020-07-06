@@ -5,7 +5,7 @@ namespace GameOfLife.Logic
 {
     public static class Neighbours
     {
-        public static List<Coordinates> FindNeighbours(Cell cell, World world)
+        public static List<Coordinates> SetNeighbours(Cell cell, World world)
         {
             return new List<Coordinates>
             {
