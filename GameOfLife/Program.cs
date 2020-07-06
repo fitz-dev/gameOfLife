@@ -31,11 +31,24 @@ namespace GameOfLife
                 new Coordinates(3,3),
             };
 
-            RunVisuals(10, world, seeds, stateManager);
+            var seedCells = AddSeeds(seeds);
+
+            RunVisuals(10, world, seedCells, stateManager);
             
         }
 
-        private static void RunVisuals(int number, World world, List<Coordinates> seeds, StateManager stateManager)
+        private static List<Cell> AddSeeds(List<Coordinates> seeds)
+        {
+            var seedCells = new List<Cell>();
+            foreach (var seed in seeds)
+            {
+                seedCells.Add(new Cell(new Coordinates(seed.X, seed.Y)));
+            }
+
+            return seedCells;
+        }
+
+        private static void RunVisuals(int number, World world, List<Cell> seeds, StateManager stateManager)
         {
             var output = new Output();
             stateManager.CurrentState = seeds;

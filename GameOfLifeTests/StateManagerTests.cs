@@ -12,12 +12,12 @@ namespace GameOfLifeTests
        {
            var stateManager = new StateManager();
            var world = new World(10, 10);
-           var seeds = new List<Coordinates>()
+           var seeds = new List<Cell>()
            {
-               new Coordinates(2,5),
-               new Coordinates(4,6)
+               new Cell(new Coordinates(2,5)),
+               new Cell(new Coordinates(4,6))
            };
-           var testCoordinate = new Coordinates(2,5);
+           var testCoordinate = new Cell(new Coordinates(2,5));
            
            stateManager.CurrentState = seeds;
            stateManager.RefreshStates();
@@ -35,16 +35,16 @@ namespace GameOfLifeTests
         {
             var stateManager = new StateManager();
             var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,4),
-                new Coordinates(2,5),
-                new Coordinates(2,6),
-                new Coordinates(1,5),
-                new Coordinates(1,6)
+                new Cell(new Coordinates(2,4)),
+                new Cell(new Coordinates(2,5)),
+                new Cell(new Coordinates(2,6)),
+                new Cell(new Coordinates(1,5)),
+                new Cell(new Coordinates(1,6))
             };
             
-            var testCoordinate = new Coordinates(2, 5);
+            var testCoordinate = new Cell(new Coordinates(2, 5));
        
             stateManager.CurrentState = seeds;
             stateManager.RefreshStates();
@@ -62,14 +62,14 @@ namespace GameOfLifeTests
         {
             var stateManager = new StateManager();
             var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,4),
-                new Coordinates(2,5),
-                new Coordinates(2,6),
+                new Cell(new Coordinates(2,4)),
+                new Cell(new Coordinates(2,5)),
+                new Cell(new Coordinates(2,6)),
             };
        
-            var testCoordinate = new Coordinates(2, 5);
+            var testCoordinate = new Cell(new Coordinates(2, 5));
        
             stateManager.CurrentState = seeds;
             stateManager.ProcessWorldForCurrentState(world);
@@ -82,15 +82,15 @@ namespace GameOfLifeTests
         {
             var stateManager = new StateManager();
             var world = new World(10, 10);
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,4),
-                new Coordinates(2,5),
-                new Coordinates(2,6),
-                new Coordinates(1,5),
+                new Cell(new Coordinates(2,4)),
+                new Cell(new Coordinates(2,5)),
+                new Cell(new Coordinates(2,6)),
+                new Cell(new Coordinates(1,5)),
             };
             
-            var testCoordinate = new Coordinates(2, 5);
+            var testCoordinate = new Cell(new Coordinates(2, 5));
        
             stateManager.CurrentState = seeds;
             stateManager.ProcessWorldForCurrentState(world);
@@ -102,16 +102,18 @@ namespace GameOfLifeTests
         public void Given_APreviouslyDeadCellWithExactlyThreeLiveNeighbours_When_TheStateIsProcessed_Then_CellIsInCurrentState()
         {
             var stateManager = new StateManager();
+            var cellManager = new CellManager();
             var world = new World(7, 7);
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,4),
-                new Coordinates(2,6),
-                new Coordinates(1,5),
+                new Cell(new Coordinates(2,4)),
+                new Cell(new Coordinates(2,6)),
+                new Cell(new Coordinates(1,5)),
             };
             
-            var testCoordinate = new Coordinates(2,5);
+            var testCoordinate = new Cell(new Coordinates(2,5));
             stateManager.CurrentState = seeds;
+            cellManager.AssignNeighbourProperties(testCoordinate, world, stateManager.CurrentState);
             stateManager.RefreshStates();
             stateManager.ProcessWorldForCurrentState(world);
        
@@ -123,9 +125,9 @@ namespace GameOfLifeTests
         {
             var stateManager = new StateManager();
             var world = new World(10, 10);
-            var seeds = new List<Coordinates>();
+            var seeds = new List<Cell>();
             
-            var testCoordinate = new Coordinates(7,5);
+            var testCoordinate = new Cell(new Coordinates(7,5));
             stateManager.CurrentState = seeds;
             stateManager.RefreshStates();
             stateManager.ProcessWorldForCurrentState(world);

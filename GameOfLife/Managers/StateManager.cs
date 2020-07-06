@@ -5,8 +5,8 @@ namespace GameOfLife
 {
     public class StateManager
     {
-        private List<Coordinates> _previousState = new List<Coordinates>();
-        public List<Coordinates> CurrentState = new List<Coordinates>();
+        private List<Cell> _previousState = new List<Cell>();
+        public List<Cell> CurrentState = new List<Cell>();
 
         public void RefreshStates()
         {
@@ -33,14 +33,14 @@ namespace GameOfLife
         {
             cell.Live = CellWasLiveIn(_previousState, cell);
             if (!CellMeetsConditionsForLife(cell, cell.Live)) return;
-            CurrentState.Add(new Coordinates(cell.Position.X, cell.Position.Y));
+            CurrentState.Add(cell);
         }
 
-        private bool CellWasLiveIn(List<Coordinates> previousState, Cell cell)
+        private bool CellWasLiveIn(List<Cell> previousState, Cell cell)
         {
             return previousState.Any(seed => 
-                seed.X == cell.Position.X && 
-                seed.Y == cell.Position.Y);
+                seed.Position.X == cell.Position.X && 
+                seed.Position.Y == cell.Position.Y);
         }
         private bool CellMeetsConditionsForLife(Cell cell, bool cellWasLive)
         {
