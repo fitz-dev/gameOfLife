@@ -58,7 +58,7 @@ using System.Collections.Generic;
             for (int i = 0; i <= number; i++)
             {
                 stateManager.RefreshStates();
-                stateManager.ProcessWorldForCurrentState(world);
+                stateManager.ConstructInitialState(world);
                 output.PrintWorld(world, stateManager);
             }
         }

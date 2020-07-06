@@ -18,7 +18,7 @@ namespace GameOfLife.Managers
             CurrentState.Clear();
         }
 
-        public void ProcessWorldForCurrentState(World world)
+        public void ConstructInitialState(World world)
         {
             var cellManager = new CellManager();
             for (int rowIndex = 0; rowIndex < world.Grid.GetLength(1); rowIndex++)
@@ -26,9 +26,11 @@ namespace GameOfLife.Managers
                 for (int columnIndex = 0; columnIndex < world.Grid.GetLength(0); columnIndex++)
                 {
                     var cell = cellManager.CreateCell(columnIndex, rowIndex);
-                    cellManager.AssignNeighbourProperties(cell, world, _previousState);
-                    cell.Live = CellWasLiveIn(_previousState, cell);
-                    ApplyCellLifeRules(cell);
+                    cell.Neighbours = Neighbours.SetNeighbours(cell, world);
+                    _previousState.Add(cell);
+                    // cellManager.AssignNeighbourProperties(cell, world, _previousState);
+                    // cell.Live = CellWasLiveIn(_previousState, cell);
+                    // ApplyCellLifeRules(cell);
                 }
             }
         }
