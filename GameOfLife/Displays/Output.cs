@@ -46,7 +46,7 @@ namespace GameOfLife
 
         private string SetLifeDisplay(Coordinates coordinates, StateManager stateManager)
         {
-            var cellInCurrentState = stateManager.CurrentState.Any(seed => seed.Position.X == coordinates.X && seed.Position.Y == coordinates.Y);
+            var cellInCurrentState = stateManager.NextState.Any(seed => seed.Position.X == coordinates.X && seed.Position.Y == coordinates.Y);
             return cellInCurrentState ? "O" : "-";
         }
     }

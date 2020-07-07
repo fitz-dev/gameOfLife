@@ -28,7 +28,7 @@ namespace GameOfLifeTests
             
             ProgressTicks(2, world, seeds, stateManager);
         
-            stateManager.CurrentState.Should().BeEquivalentTo(seeds);
+            stateManager.NextState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
@@ -60,7 +60,7 @@ namespace GameOfLifeTests
             ProgressTicks(2, world, seeds, stateManager);
         
             // todo: correct coordinates are returning but status of the cells themselves are incorrect. The expected coordinates need to be more specific. 
-            stateManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
+            stateManager.NextState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
         
         [Fact]
@@ -92,7 +92,7 @@ namespace GameOfLifeTests
             
             ProgressTicks(2, world, seeds, stateManager);
         
-            stateManager.CurrentState.Should().BeEquivalentTo(expectedSeedCoordinates);
+            stateManager.NextState.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace GameOfLifeTests
             
             ProgressTicks(3, world, seeds, stateManager);
 
-            stateManager.CurrentState.Should().BeEquivalentTo(seeds);
+            stateManager.NextState.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
@@ -176,16 +176,16 @@ namespace GameOfLifeTests
             
             ProgressTicks(4, world, seeds, stateManager);
             
-            stateManager.CurrentState.Should().BeEquivalentTo(seeds);
+            stateManager.NextState.Should().BeEquivalentTo(seeds);
         }
 
         private void ProgressTicks(int number, World world, List<Cell> seeds, StateManager stateManager)
         {
-            stateManager.CurrentState = seeds;
+            stateManager.NextState = seeds;
             for (int i = 0; i <= number; i++)
             {
                 // stateManager.SetCurrentStateToPreviousState();
-                stateManager.ConstructInitialState(world);
+                // stateManager.ConstructInitialStateFor(world);
             }
         }
     }

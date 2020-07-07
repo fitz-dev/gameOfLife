@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using GameOfLife;
+using GameOfLife.Logic;
 using GameOfLife.Managers;
 using GameOfLife.Models;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
@@ -20,13 +21,25 @@ namespace GameOfLifeTests
             var world = new World(10, 10);
             var seeds = new List<Cell>()
             {
-                new Cell(new Coordinates(0,4)),
-                new Cell(new Coordinates(0,5)),
+                new Cell(new Coordinates(0,4))
+                {
+                    Live = true, 
+                    Neighbours = {}, 
+                    Position = {}, 
+                    NumLiveNeighbours = 0
+                },
                 new Cell(new Coordinates(0,6))
+                {
+                    Live = true, 
+                    Neighbours = {}, 
+                    Position = {}, 
+                    NumLiveNeighbours = 0
+                },
             };
             
-            var testCell = CreateTestCell(0, 5);
-            cellManager.AssignNeighbourProperties(testCell, world, seeds);
+            var testCell = new Cell(new Coordinates(0, 5));
+            testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
+            testCell.NumLiveNeighbours = cellManager.SetNumberOfLiveNeighbours(seeds, testCell);
             
             Assert.Equal(2, testCell.NumLiveNeighbours);
         }
@@ -38,15 +51,12 @@ namespace GameOfLifeTests
            var world = new World(10, 10);
            var seeds = new List<Cell>();
                        
-           var testCell = CreateTestCell(0, 5);
-           cellManager.AssignNeighbourProperties(testCell, world, seeds);
-       
+           var testCell = new Cell(new Coordinates(0, 5));
+           testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
+            
+           cellManager.SetNumberOfLiveNeighbours(seeds, testCell);
+
            Assert.Equal(0, testCell.NumLiveNeighbours);
        }
-       
-        private Cell CreateTestCell(int columnIndex, int rowIndex)
-        {
-            return new Cell(new Coordinates(columnIndex, rowIndex));
-        }
     }
 }

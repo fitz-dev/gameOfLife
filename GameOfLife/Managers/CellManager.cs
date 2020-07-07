@@ -12,23 +12,11 @@ namespace GameOfLife.Managers
         {
             return new Cell(new Coordinates(columnIndex, rowIndex));
         }
-
-        public void AssignNeighbourProperties(Cell cell, World world, List<Cell> state)
-        {
-            cell.Neighbours = Neighbours.SetNeighbours(cell, world);
-            // cell.NumLiveNeighbours = SetNumberOfLiveNeighbours(state, cell);
-        }
         
-        private int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
+        public int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
         {
-            cell.NumLiveNeighbours = 0;
-            return cell.Neighbours.Count(neighbour => previousState.Any(cell => neighbour.Position.X == cell.Position.X && neighbour.Position.Y == cell.Position.Y));
+            var liveCells = previousState.Where(cell1 => cell1.Live);
+            return liveCells.Sum(liveCell => cell.Neighbours.Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
         }
-        
-        // private int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
-        // {
-        //     cell.NumLiveNeighbours = 0;
-        //     return cell.Neighbours.Count(neighbour => previousState.Any(cell => neighbour.Position.X == cell.Position.X && neighbour.Position.Y == cell.Position.Y));
-        // }
     }
 }

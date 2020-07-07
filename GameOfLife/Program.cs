@@ -53,7 +53,7 @@ using System.Collections.Generic;
         private static void RunVisuals(int number, World world, List<Cell> seeds, StateManager stateManager)
         {
             var output = new Output();
-            stateManager.CurrentState = seeds;
+            stateManager.NextState = seeds;
             output.PrintWorld(world, stateManager);
             for (int i = 0; i <= number; i++)
             {

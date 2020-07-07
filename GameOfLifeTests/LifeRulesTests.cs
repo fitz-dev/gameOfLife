@@ -19,7 +19,7 @@ namespace GameOfLifeTests
                NumLiveNeighbours = 1,
            };
 
-           Assert.False(LifeRules.CellWillLive(testCoordinate));
+           Assert.False(LifeRules.CellShouldLive(testCoordinate));
        }
        
         
@@ -33,7 +33,7 @@ namespace GameOfLifeTests
                 NumLiveNeighbours = 4,
             };
 
-            Assert.False(LifeRules.CellWillLive(testCoordinate));
+            Assert.False(LifeRules.CellShouldLive(testCoordinate));
         }
         
         
@@ -47,7 +47,7 @@ namespace GameOfLifeTests
                 NumLiveNeighbours = 2,
             };
 
-            Assert.True(LifeRules.CellWillLive(testCoordinate));
+            Assert.True(LifeRules.CellShouldLive(testCoordinate));
         }
         
         [Fact]
@@ -60,7 +60,7 @@ namespace GameOfLifeTests
                 NumLiveNeighbours = 3,
             };
 
-            Assert.True(LifeRules.CellWillLive(testCoordinate));
+            Assert.True(LifeRules.CellShouldLive(testCoordinate));
         }
        
        [Fact]
@@ -73,7 +73,7 @@ namespace GameOfLifeTests
                 NumLiveNeighbours = 3,
             };
 
-            Assert.True(LifeRules.CellWillLive(testCoordinate));
+            Assert.True(LifeRules.CellShouldLive(testCoordinate));
         }
         
         [Fact]
@@ -86,7 +86,7 @@ namespace GameOfLifeTests
                 NumLiveNeighbours = 0,
             };
 
-            Assert.False(LifeRules.CellWillLive(testCoordinate));
+            Assert.False(LifeRules.CellShouldLive(testCoordinate));
         }
     }
 }

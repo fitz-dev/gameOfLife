@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using GameOfLife.Logic;
 using GameOfLife.Models;
 
@@ -7,32 +8,10 @@ namespace GameOfLife.Managers
 {
     public class StateManager
     {
-        private List<Cell> _previousState = new List<Cell>();
-
         public List<Cell> CurrentState = new List<Cell>();
+        public List<Cell> NextState = new List<Cell>();
 
-        public void UpdateStatesForNextTick()
-        {
-            SetCurrentStateToPreviousState();
-            ClearCurrentState();
-        }
-        
-        private void SetCurrentStateToPreviousState()
-        {
-            _previousState.Clear();
-            _previousState.AddRange(CurrentState);
-        }
-
-        private void ClearCurrentState()
-        {
-            foreach (var cell in CurrentState)
-            {
-                cell.Live = false;
-            }
-        }
-
-        //todo: go through and add seeds to initial / previous state. need to then update current state depending on the previous state. 
-        public void ConstructInitialState(World world)
+        public void ConstructInitialStateFor(List<Cell> state, World world)
         {
             var cellManager = new CellManager();
             for (int rowIndex = 0; rowIndex < world.Grid.GetLength(1); rowIndex++)
@@ -41,33 +20,59 @@ namespace GameOfLife.Managers
                 {
                     var cell = cellManager.CreateCell(columnIndex, rowIndex);
                     cell.Neighbours = Neighbours.SetNeighbours(cell, world);
-                    CurrentState.Add(cell);
+                    state.Add(cell);
+                }
+            }
+        }
+        
+        public void AddCoordinatesForNextState(List<Coordinates> coordinates)
+        {
+            foreach (var coordinate in coordinates)
+            {
+                NextState.First(cell => cell.Position.X == coordinate.X && cell.Position.Y == coordinate.Y).Live = true;
+            }
+        }
+        
+        public void RefreshStatesForNextTick()
+        {
+            SetNextStateToCurrentState();
+            ClearAllLiveCellsIn(NextState);
+        }
+        
+        private void SetNextStateToCurrentState()
+        {
+            foreach (var nextCell in NextState.Where(nextCell => nextCell.Live))
+            {
+                CurrentState.First(cell => cell.Position.X == nextCell.Position.X && cell.Position.Y == nextCell.Position.Y).Live = true;
+            }
+        }
+
+        public void FindLiveNeighboursForAllCells()
+        {
+            var cellManager = new CellManager();
+            foreach (var currentCell in CurrentState)
+            {
+                currentCell.NumLiveNeighbours = cellManager.SetNumberOfLiveNeighbours(CurrentState, currentCell);
+            }
+        }
+
+        public void DetermineCellsToLiveInNextState()
+        {
+            foreach (var currentCell in CurrentState)
+            {
+                if (LifeRules.CellShouldLive(currentCell))
+                {
+                    NextState.First(cell => cell.Position.X == currentCell.Position.X && cell.Position.Y == currentCell.Position.Y).Live = true;
                 }
             }
         }
 
-        public void AddCoordinates(List<Coordinates> coordinates)
+        private void ClearAllLiveCellsIn(List<Cell> state)
         {
-            foreach (var coordinate in coordinates)
+            foreach (var cell in state)
             {
-                CurrentState.First(cell => cell.Position.X == coordinate.X && cell.Position.Y == coordinate.Y).Live = true;
+                cell.Live = false;
             }
         }
-        
-        
-        
-        private bool CellWasLiveIn(List<Cell> previousState, Cell cell)
-        {
-            return previousState.Any(seed => 
-                seed.Position.X == cell.Position.X && 
-                seed.Position.Y == cell.Position.Y);
-        }
-
-        private void ApplyCellLifeRules(Cell cell)
-        {
-            if (!LifeRules.CellWillLive(cell)) return;
-            CurrentState.Add(cell);
-        }
-
     }
 }

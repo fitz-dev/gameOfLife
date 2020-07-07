@@ -4,7 +4,7 @@ namespace GameOfLife.Logic
 {
     public static class LifeRules
     {
-        public static bool CellWillLive(Cell cell)
+        public static bool CellShouldLive(Cell cell)
         {
             return cell.Live && cell.NumLiveNeighbours == 2 || 
                    cell.Live  && cell.NumLiveNeighbours == 3 || 
