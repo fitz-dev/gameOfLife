@@ -11,13 +11,27 @@ namespace GameOfLife.Managers
 
         public List<Cell> CurrentState = new List<Cell>();
 
-        public void RefreshStates()
+        public void UpdateStatesForNextTick()
+        {
+            SetCurrentStateToPreviousState();
+            ClearCurrentState();
+        }
+        
+        private void SetCurrentStateToPreviousState()
         {
             _previousState.Clear();
             _previousState.AddRange(CurrentState);
-            CurrentState.Clear();
         }
 
+        private void ClearCurrentState()
+        {
+            foreach (var cell in CurrentState)
+            {
+                cell.Live = false;
+            }
+        }
+
+        //todo: go through and add seeds to initial / previous state. need to then update current state depending on the previous state. 
         public void ConstructInitialState(World world)
         {
             var cellManager = new CellManager();
@@ -27,13 +41,20 @@ namespace GameOfLife.Managers
                 {
                     var cell = cellManager.CreateCell(columnIndex, rowIndex);
                     cell.Neighbours = Neighbours.SetNeighbours(cell, world);
-                    _previousState.Add(cell);
-                    // cellManager.AssignNeighbourProperties(cell, world, _previousState);
-                    // cell.Live = CellWasLiveIn(_previousState, cell);
-                    // ApplyCellLifeRules(cell);
+                    CurrentState.Add(cell);
                 }
             }
         }
+
+        public void AddCoordinates(List<Coordinates> coordinates)
+        {
+            foreach (var coordinate in coordinates)
+            {
+                CurrentState.First(cell => cell.Position.X == coordinate.X && cell.Position.Y == coordinate.Y).Live = true;
+            }
+        }
+        
+        
         
         private bool CellWasLiveIn(List<Cell> previousState, Cell cell)
         {

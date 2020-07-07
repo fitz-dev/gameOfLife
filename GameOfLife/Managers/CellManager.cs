@@ -22,7 +22,13 @@ namespace GameOfLife.Managers
         private int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
         {
             cell.NumLiveNeighbours = 0;
-            return cell.Neighbours.Count(neighbour => previousState.Any(cell => neighbour.X == cell.Position.X && neighbour.Y == cell.Position.Y));
+            return cell.Neighbours.Count(neighbour => previousState.Any(cell => neighbour.Position.X == cell.Position.X && neighbour.Position.Y == cell.Position.Y));
         }
+        
+        // private int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
+        // {
+        //     cell.NumLiveNeighbours = 0;
+        //     return cell.Neighbours.Count(neighbour => previousState.Any(cell => neighbour.Position.X == cell.Position.X && neighbour.Position.Y == cell.Position.Y));
+        // }
     }
 }

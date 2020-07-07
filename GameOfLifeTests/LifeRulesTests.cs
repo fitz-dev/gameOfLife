@@ -15,7 +15,7 @@ namespace GameOfLifeTests
            var testCoordinate = new Cell(new Coordinates(2,4))
            {
                Live = true, 
-               Neighbours = new List<Coordinates>(),
+               Neighbours = new List<Cell>(),
                NumLiveNeighbours = 1,
            };
 
@@ -29,7 +29,7 @@ namespace GameOfLifeTests
             var testCoordinate = new Cell(new Coordinates(2,4))
             {
                 Live = true, 
-                Neighbours = new List<Coordinates>(),
+                Neighbours = new List<Cell>(),
                 NumLiveNeighbours = 4,
             };
 
@@ -43,7 +43,7 @@ namespace GameOfLifeTests
             var testCoordinate = new Cell(new Coordinates(2,4))
             {
                 Live = true, 
-                Neighbours = new List<Coordinates>(),
+                Neighbours = new List<Cell>(),
                 NumLiveNeighbours = 2,
             };
 
@@ -56,7 +56,7 @@ namespace GameOfLifeTests
             var testCoordinate = new Cell(new Coordinates(2,4))
             {
                 Live = true, 
-                Neighbours = new List<Coordinates>(),
+                Neighbours = new List<Cell>(),
                 NumLiveNeighbours = 3,
             };
 
@@ -69,7 +69,7 @@ namespace GameOfLifeTests
             var testCoordinate = new Cell(new Coordinates(2,4))
             {
                 Live = false, 
-                Neighbours = new List<Coordinates>(),
+                Neighbours = new List<Cell>(),
                 NumLiveNeighbours = 3,
             };
 
@@ -82,7 +82,7 @@ namespace GameOfLifeTests
             var testCoordinate = new Cell(new Coordinates(2,4))
             {
                 Live = false, 
-                Neighbours = new List<Coordinates>(),
+                Neighbours = new List<Cell>(),
                 NumLiveNeighbours = 0,
             };
 

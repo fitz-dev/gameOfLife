@@ -6,7 +6,7 @@ namespace GameOfLife.Models
     {
         public bool Live;
         public Coordinates Position;
-        public List<Coordinates> Neighbours;
+        public List<Cell> Neighbours;
         public int NumLiveNeighbours;
         
         public Cell(Coordinates position)

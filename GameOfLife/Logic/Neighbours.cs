@@ -5,9 +5,9 @@ namespace GameOfLife.Logic
 {
     public static class Neighbours
     {
-        public static List<Coordinates> SetNeighbours(Cell cell, World world)
+        public static List<Cell> SetNeighbours(Cell cell, World world)
         {
-            return new List<Coordinates>
+            return new List<Cell>
             {
                 {CheckForEdgeNeighbours(SetTopLeft(cell), world)},
                 {CheckForEdgeNeighbours(SetLeft(cell), world)},
@@ -20,7 +20,7 @@ namespace GameOfLife.Logic
             };
         }
        
-        private static Coordinates CheckForEdgeNeighbours(Coordinates coordinates, World world)
+        private static Cell CheckForEdgeNeighbours(Coordinates coordinates, World world)
         {
             var columnIndex = coordinates.Y;
             var rowIndex = coordinates.X;
@@ -33,7 +33,7 @@ namespace GameOfLife.Logic
             rowIndex = CheckForIndexSmallerThanWorld(rowIndex, worldHeight);
             rowIndex = CheckForIndexLargerThanWorld(rowIndex, worldHeight);
       
-            return new Coordinates(rowIndex, columnIndex);
+            return new Cell(new Coordinates(rowIndex, columnIndex));
         }
 
         private static int CheckForIndexSmallerThanWorld(int coordinate, int axisSize)
