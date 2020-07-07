@@ -118,7 +118,7 @@ namespace GameOfLifeTests
             
             stateManager.DetermineCellsToLiveInNextState();
             
-            //todo: currentState is pulling in live cells when it should have been reset, so returning the wrong number of expected LiveCells. 
+            //todo: nextState is pulling in live cells when it should have been reset, so returning the wrong number of expected LiveCells. 
             
             var numberLiveCells = stateManager.NextState.Count(cell => cell.Live);
             
