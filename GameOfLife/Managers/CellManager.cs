@@ -13,10 +13,12 @@ namespace GameOfLife.Managers
             return new Cell(new Coordinates(columnIndex, rowIndex));
         }
         
-        public int SetNumberOfLiveNeighbours(List<Cell> previousState, Cell cell)
+        public int SetNumberOfLiveNeighbours(List<Cell> currentState, Cell cell)
         {
-            var liveCells = previousState.Where(cell1 => cell1.Live);
-            return liveCells.Sum(liveCell => cell.Neighbours.Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
+            var liveCells = currentState.Where(currentCell => currentCell.Live);
+            return liveCells
+                .Sum(liveCell => cell.Neighbours
+                .Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
         }
     }
 }

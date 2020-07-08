@@ -51,6 +51,7 @@ namespace GameOfLife.Managers
 
         public void FindLiveNeighboursForAllCells()
         {
+            // todo: get rid of cell manager? add find neighbours to state manager
             var cellManager = new CellManager();
             foreach (var currentCell in CurrentState)
             {
