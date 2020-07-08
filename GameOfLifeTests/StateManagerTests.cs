@@ -29,12 +29,12 @@ namespace GameOfLifeTests
             var world = new World(5, 5);
             stateManager.ConstructInitialStateFor(stateManager.NextState, world);
             
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,3),
-                new Coordinates(4,2),
-                new Coordinates(3,1),
-                new Coordinates(2,1),
+                new Cell(new Coordinates(2,3)),
+                new Cell(new Coordinates(4,2)),
+                new Cell(new Coordinates(3,1)),
+                new Cell(new Coordinates(2,1)),
             };
 
             stateManager.AddCoordinatesForNextState(seeds);
@@ -44,16 +44,16 @@ namespace GameOfLifeTests
         }
         
         [Fact]
-        public void Given_EmptyCurrentState_When_NextStateIsAdded_Then_LiveCellsAreFound()
+        public void Given_EmptyCurrentStateAndPopulatedNextState_When_NextStatesAreRefreshed_Then_LiveCellsAreFound()
         {
             var stateManager = new StateManager();
             var world = new World(5, 5);
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,3),
-                new Coordinates(4,2),
-                new Coordinates(3,1),
-                new Coordinates(2,1),
+                new Cell(new Coordinates(2,3)),
+                new Cell(new Coordinates(4,2)),
+                new Cell(new Coordinates(3,1)),
+                new Cell(new Coordinates(2,1)),
             };
 
             stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
@@ -69,16 +69,16 @@ namespace GameOfLifeTests
         }
         
         [Fact]
-        public void Given_PopulatedNextState_When_StatesAreReset_Then_NoLiveCellsAreFound()
+        public void Given_PopulatedNextState_When_StatesAreReset_Then_NoLiveCellsAreFoundInNextState()
         {
             var stateManager = new StateManager();
             var world = new World(5, 5);
-            var seeds = new List<Coordinates>()
+            var seeds = new List<Cell>()
             {
-                new Coordinates(2,3),
-                new Coordinates(4,2),
-                new Coordinates(3,1),
-                new Coordinates(2,1),
+                new Cell(new Coordinates(2,3)),
+                new Cell(new Coordinates(4,2)),
+                new Cell(new Coordinates(3,1)),
+                new Cell(new Coordinates(2,1)),
             };
 
             stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
@@ -96,57 +96,62 @@ namespace GameOfLifeTests
         public void Given_PopulatedCurrentState_When_LiveNeighboursAreSetForWholeState_Then_LifeRulesAreApplied()
         {
             var stateManager = new StateManager();
-            var world = new World(5, 5);
-            var seeds = new List<Coordinates>()
+            var world = new World(6, 6);
+            var seeds = new List<Cell>()
             {
-                new Coordinates(1,1),
-                new Coordinates(1,2),
-                new Coordinates(2,2),
-                new Coordinates(2,2),
-                new Coordinates(3,3),
-                new Coordinates(3,4),
-                new Coordinates(4,3),
-                new Coordinates(4,4),
+                new Cell(new Coordinates(1,1)),
+                new Cell(new Coordinates(2,1)),
+                new Cell(new Coordinates(1,2)),
+                new Cell(new Coordinates(2,2)),
+                new Cell(new Coordinates(3,3)),
+                new Cell(new Coordinates(4,3)),
+                new Cell(new Coordinates(3,4)),
+                new Cell(new Coordinates(4,4)),
             };
 
             stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
             stateManager.ConstructInitialStateFor(stateManager.NextState, world);
-            stateManager.AddCoordinatesForNextState(seeds);
             
+            stateManager.AddCoordinatesForNextState(seeds);
             stateManager.RefreshStatesForNextTick();
             stateManager.FindLiveNeighboursForAllCells();
-            
             stateManager.DetermineCellsToLiveInNextState();
-            
-            //todo: nextState is pulling in live cells when it should have been reset, so returning the wrong number of expected LiveCells. 
             
             var numberLiveCells = stateManager.NextState.Count(cell => cell.Live);
             
             Assert.Equal(6, numberLiveCells);
         }
         
-        // [Fact]
-        // public void Given_APreviousState_When_WorldIsProcessed_CurrentStateIsReturned()
-        // {
-        //     var stateManager = new StateManager();
-        //     var world = new World(10, 10);
-        //     
-        //     var previousState = new List<Cell>()
-        //     {
-        //         new Coordinates(2,5),
-        //         new Coordinates(4,6)
-        //     };
-        //
-        //     var testCoordinate = new Coordinates(2,5);
-        //    
-        //     stateManager.CurrentState = seeds;
-        //     stateManager.RefreshStates();
-        //     stateManager.ProcessWorldForCurrentState(world);
-        //    
-        //     foreach (var coordinate in stateManager.CurrentState)
-        //     {
-        //         coordinate.Should().NotBeEquivalentTo(testCoordinate);
-        //     }
-        // }
+        [Fact]
+        public void Given_NextStateHasBeenSet_When_StatesAreRefreshed_Then_CurrentStateIsPopulated()
+        {
+            var stateManager = new StateManager();
+            var world = new World(6, 6);
+            var seeds = new List<Cell>()
+            {
+                new Cell(new Coordinates(1,1)),
+                new Cell(new Coordinates(2,1)),
+                new Cell(new Coordinates(1,2)),
+                new Cell(new Coordinates(2,2)),
+                new Cell(new Coordinates(3,3)),
+                new Cell(new Coordinates(4,3)),
+                new Cell(new Coordinates(3,4)),
+                new Cell(new Coordinates(4,4)),
+            };
+
+            stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
+            stateManager.ConstructInitialStateFor(stateManager.NextState, world);
+            
+            stateManager.AddCoordinatesForNextState(seeds);
+            stateManager.RefreshStatesForNextTick();
+            stateManager.FindLiveNeighboursForAllCells();
+            stateManager.DetermineCellsToLiveInNextState();
+            
+            stateManager.RefreshStatesForNextTick();
+            
+            var numberLiveCells = stateManager.CurrentState.Count(cell => cell.Live);
+            
+            Assert.Equal(6, numberLiveCells);
+        }
     }
 }

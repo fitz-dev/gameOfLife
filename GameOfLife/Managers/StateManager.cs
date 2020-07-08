@@ -25,25 +25,27 @@ namespace GameOfLife.Managers
             }
         }
         
-        public void AddCoordinatesForNextState(List<Coordinates> coordinates)
-        {
-            foreach (var coordinate in coordinates)
-            {
-                NextState.First(cell => cell.Position.X == coordinate.X && cell.Position.Y == coordinate.Y).Live = true;
-            }
-        }
-        
+            
         public void RefreshStatesForNextTick()
         {
+            ClearAllLiveCellsIn(CurrentState);
             SetNextStateToCurrentState();
             ClearAllLiveCellsIn(NextState);
         }
-        
+
+        public void AddCoordinatesForNextState(List<Cell> coordinates)
+        {
+            foreach (var coordinate in coordinates)
+            {
+                SetMatchingCellPositionToLive(NextState, coordinate);
+            }
+        }
+    
         private void SetNextStateToCurrentState()
         {
             foreach (var nextCell in NextState.Where(nextCell => nextCell.Live))
             {
-                CurrentState.First(cell => cell.Position.X == nextCell.Position.X && cell.Position.Y == nextCell.Position.Y).Live = true;
+                SetMatchingCellPositionToLive(CurrentState, nextCell);
             }
         }
 
@@ -62,7 +64,7 @@ namespace GameOfLife.Managers
             {
                 if (LifeRules.CellShouldLive(currentCell))
                 {
-                    NextState.First(cell => cell.Position.X == currentCell.Position.X && cell.Position.Y == currentCell.Position.Y).Live = true;
+                    SetMatchingCellPositionToLive(NextState, currentCell);
                 }
             }
         }
@@ -74,5 +76,12 @@ namespace GameOfLife.Managers
                 cell.Live = false;
             }
         }
+        
+        
+        private void SetMatchingCellPositionToLive(List<Cell> state, Cell nextCell)
+        {
+            state.First(cell => cell.Position.X == nextCell.Position.X && cell.Position.Y == nextCell.Position.Y).Live = true;
+        }
+
     }
 }
