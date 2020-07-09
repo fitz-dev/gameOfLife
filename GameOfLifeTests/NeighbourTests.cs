@@ -10,82 +10,76 @@ namespace GameOfLifeTests
     public class NeighbourTests
     {
         [Fact]
-        public void Given_CellWithNeighbourOnTheLeft_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_CellWithNeighbourOnTheLeft_When_SetNeighboursIsCalled_Then_ExpectedCellCoordinatesAreFound()
         {
             var world = new World(5, 5);
-
             var testCell = CreateTestCell(3, 1);
-            testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
+            var expectedLeftNeighbour = CreateTestCell(2,1);
 
-            var leftNeighbour = new Coordinates(2,1);
+            testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
             
-            testCell.Neighbours.Should().ContainEquivalentOf(leftNeighbour);
+            testCell.Neighbours.Should().ContainEquivalentOf(expectedLeftNeighbour);
         }
         
         [Fact]
-        public void Given_CellWithNeighbourOnTheRight_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_CellWithNeighbourOnTheRight_When_SetNeighboursIsCalled_Then_ExpectedCellCoordinatesAreFound()
         {
             var world = new World(5, 5);
-                        
             var testCell = CreateTestCell(2, 2);
+            var expectedRightNeighbour = CreateTestCell(3,2);
+                        
             testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
-
-            var rightNeighbour = new Coordinates(3,2);
             
-            testCell.Neighbours.Should().ContainEquivalentOf(rightNeighbour);
+            testCell.Neighbours.Should().ContainEquivalentOf(expectedRightNeighbour);
         }
         
         [Fact]
-        public void Given_CellWithNeighbourOnTheTopFringe_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_CellWithNeighbourOnTheTopFringe_When_SetNeighboursIsCalled_Then_ExpectedCellCoordinatesAreFound()
         {
             var world = new World(5, 5);
-                           
             var testCell = CreateTestCell(2, 0);
+            var expectedTopNeighbour = CreateTestCell(2,4);
+                           
             testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
         
-            var topNeighbour = new Coordinates(2,4);
-            
-            testCell.Neighbours.Should().ContainEquivalentOf(topNeighbour);
+            testCell.Neighbours.Should().ContainEquivalentOf(expectedTopNeighbour);
         }
         
         [Fact]
-        public void Given_CellWithNeighbourOnTheBottomFringe_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_CellWithNeighbourOnTheBottomFringe_When_SetNeighboursIsCalled_Then_ExpectedCellCoordinatesAreFound()
         {
             var world = new World(5, 5);
-                        
             var testCell = CreateTestCell(2, 4);
+            var expectedBottomNeighbour = CreateTestCell(2,0);                   
             testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
-        
-            var bottomNeighbour = new Coordinates(2,0);                   
-            
-            testCell.Neighbours.Should().ContainEquivalentOf(bottomNeighbour);
+                        
+            testCell.Neighbours.Should().ContainEquivalentOf(expectedBottomNeighbour);
         }
         
         
         [Fact]
-        public void Given_CellWithNeighbourOnTheRightFringe_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_CellWithNeighbourOnTheRightFringe_When_SetNeighboursIsCalled_Then_ExpectedCellCoordinatesAreFound()
         {
             var world = new World(5, 5);
-                        
             var testCell = CreateTestCell(4, 2);
+            var expectedRightNeighbour = CreateTestCell(0,2);
+            
             testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
         
-            var rightNeighbour = new Coordinates(0,2);
-            
-            testCell.Neighbours.Should().ContainEquivalentOf(rightNeighbour);
+            testCell.Neighbours.Should().ContainEquivalentOf(expectedRightNeighbour);
         }
         
         [Fact]
-        public void Given_CellWithNeighbourOnTheTopRightFringe_When_FindNeighboursIsCalled_Then_ProperIndexIsFound()
+        public void Given_CellWithNeighbourOnTheTopRightFringe_When_SetNeighboursIsCalled_Then_ExpectedCellCoordinatesAreFound()
         {
             var world = new World(5, 5);
-                        
             var testCell = CreateTestCell(3, 0);
+            var expectedTopRightNeighbour = CreateTestCell(4,4);
+                        
             testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
         
-            var toprightNeighbour = new Coordinates(4,4);
+            testCell.Neighbours.Should().ContainEquivalentOf(expectedTopRightNeighbour);
 
-            testCell.Neighbours.Should().ContainEquivalentOf(toprightNeighbour);
         }
         
         private Cell CreateTestCell(int columnIndex, int rowIndex)

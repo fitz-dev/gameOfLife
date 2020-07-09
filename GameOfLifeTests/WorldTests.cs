@@ -8,7 +8,7 @@ namespace GameOfLifeTests
     public class WorldTests
     {
         [Fact]
-        public void Given_ANumberOfRowsAndColumns_When_WorldIsCreated_Then_CorrectArrayIsReturned()
+        public void Given_ANumberOfRowsAndColumns_When_WorldIsCreated_Then_CorrectNumberIsReturned()
         {
             var world = new World(8, 10);
 

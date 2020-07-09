@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FluentAssertions;
 using GameOfLife;
 using GameOfLife.Managers;
@@ -12,7 +13,7 @@ namespace GameOfLifeTests
     public class PatternTests
     {
         [Fact]
-        public void Given_SeedsThatResultInAUnmovingShape_When_TwoTicksHavePassed_Then_SameCoordinatesAreReturned()
+        public void Given_SeedsThatResultInAUnmovingShape_When_OneTickHasPassed_Then_SameCoordinatesAreReturned()
         {
             var stateManager = new StateManager();
             var world = new World(6, 6);
@@ -26,13 +27,37 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(3,3)),
             };
             
-            ProgressTicks(2, world, seeds, stateManager);
-        
-            stateManager.NextState.Should().BeEquivalentTo(seeds);
+            ProgressTicks(1, world, seeds, stateManager);
+            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager);
+
+            currentCoordinates.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledToad_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        {
+            var stateManager = new StateManager();
+            var cellManager = new CellManager();
+            var world = new World(6, 6);
+            var seeds = new List<Cell>()
+            {
+                new Cell(new Coordinates(2,2)),
+                new Cell(new Coordinates(3,2)),
+                new Cell(new Coordinates(4,2)),
+                new Cell(new Coordinates(1,3)),
+                new Cell(new Coordinates(2,3)),
+                new Cell(new Coordinates(3,3)),
+            };
+
+            ProgressTicks(2, world, seeds, stateManager);
+            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            
+            currentCoordinates.Should().BeEquivalentTo(seeds);
+        }
+
+        
+        [Fact]
+        public void Given_SeedsForARepeatingPatternCalledToad_When_OneTickHasPassed_Then_ExpectedCoordinatesAreReturned()
         {
             var stateManager = new StateManager();
             var cellManager = new CellManager();
@@ -57,14 +82,15 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(2,4))
             };
 
-            ProgressTicks(2, world, seeds, stateManager);
+            ProgressTicks(1, world, seeds, stateManager);
         
-            // todo: correct coordinates are returning but status of the cells themselves are incorrect. The expected coordinates need to be more specific. 
-            stateManager.NextState.Should().BeEquivalentTo(expectedSeedCoordinates);
+            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            
+            currentCoordinates.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
-        
+
         [Fact]
-        public void Given_SeedsForARepeatingPatternCalledBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledBeacon_When_OneTickHasPassed_Then_ExpectedCoordinatesAreReturned()
         {
             var stateManager = new StateManager();
             var world = new World(6, 6);
@@ -90,13 +116,14 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(4,4)),
             };
             
-            ProgressTicks(2, world, seeds, stateManager);
+            ProgressTicks(1, world, seeds, stateManager);
+            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
         
-            stateManager.NextState.Should().BeEquivalentTo(expectedSeedCoordinates);
+            currentCoordinates.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
 
         [Fact]
-        public void Given_SeedsForARepeatingPatternCalledBeacon_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
             var stateManager = new StateManager();
             var world = new World(6, 6);
@@ -112,13 +139,14 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(4,4)),
             };
             
-            ProgressTicks(3, world, seeds, stateManager);
+            ProgressTicks(2, world, seeds, stateManager);
+            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
 
-            stateManager.NextState.Should().BeEquivalentTo(seeds);
+            currentCoordinates.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
-        public void Given_SeedsForARepeatingPatternCalledPulsar_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
+        public void Given_SeedsForARepeatingPatternCalledPulsar_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
             var stateManager = new StateManager();
             var world = new World(20, 20);
@@ -174,19 +202,32 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(12,14)),
             };
             
-            ProgressTicks(4, world, seeds, stateManager);
+            ProgressTicks(3, world, seeds, stateManager);
+            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
             
-            stateManager.NextState.Should().BeEquivalentTo(seeds);
+            currentCoordinates.Should().BeEquivalentTo(seeds);
         }
 
         private void ProgressTicks(int number, World world, List<Cell> seeds, StateManager stateManager)
         {
-            stateManager.NextState = seeds;
+            stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
+            stateManager.ConstructInitialStateFor(stateManager.NextState, world);
+            stateManager.AddSeedsForNextState(seeds);
+            
             for (int i = 0; i <= number; i++)
             {
-                // stateManager.SetCurrentStateToPreviousState();
-                // stateManager.ConstructInitialStateFor(world);
+                stateManager.UpdateStatesForCurrentTick();
+                stateManager.FindLiveNeighboursForAllCells();
+                stateManager.DetermineCellsToLiveInNextState();
             }
+        }
+        
+        private static List<Cell> ExtractCurrentStateCoordinates(StateManager stateManager)
+        {
+            return stateManager.CurrentState
+                .Where(cell => cell.Live)
+                .Select(cell => new Cell(cell.Position))
+                .ToList();
         }
     }
 }

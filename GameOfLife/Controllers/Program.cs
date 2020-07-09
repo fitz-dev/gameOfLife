@@ -85,13 +85,12 @@ using System.Collections.Generic;
             
             stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
             stateManager.ConstructInitialStateFor(stateManager.NextState, world);
-            
-            stateManager.AddCoordinatesForNextState(seeds);
+            stateManager.AddSeedsForNextState(seeds);
             
             for (int i = 0; i <= number; i++)
             {
                 output.PrintWorld(world, stateManager);
-                stateManager.RefreshStatesForNextTick();
+                stateManager.UpdateStatesForCurrentTick();
                 stateManager.FindLiveNeighboursForAllCells();
                 stateManager.DetermineCellsToLiveInNextState();
             }

@@ -26,14 +26,14 @@ namespace GameOfLife.Managers
         }
         
             
-        public void RefreshStatesForNextTick()
+        public void UpdateStatesForCurrentTick()
         {
             ClearAllLiveCellsIn(CurrentState);
             SetNextStateToCurrentState();
             ClearAllLiveCellsIn(NextState);
         }
 
-        public void AddCoordinatesForNextState(List<Cell> coordinates)
+        public void AddSeedsForNextState(List<Cell> coordinates)
         {
             foreach (var coordinate in coordinates)
             {
