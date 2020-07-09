@@ -2,13 +2,13 @@ namespace GameOfLife.Models
 {
     public class World
     {
-        public int[,] Grid { get; }
-        // todo: 2D array is useless at this point? any other way to do the same thing? 
+        public int Length { get; }
+        public int Height { get; }
 
-        public World(int columns, int rows)
+        public World(int length, int height)
         {
-            // todo: check this isn't an issue
-            Grid = new int[rows, columns];
+            Length = length;
+            Height = height;
         }
     }
 }

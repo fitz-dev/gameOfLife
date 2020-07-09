@@ -22,18 +22,16 @@ namespace GameOfLife.Logic
        
         private static Cell CheckForEdgeNeighbours(Coordinates coordinates, World world)
         {
-            var columnIndex = coordinates.Y;
-            var rowIndex = coordinates.X;
-            var worldLength = world.Grid.GetLength(0) - 1;
-            var worldHeight = world.Grid.GetLength(1) - 1;
+            var xIndex = coordinates.X;
+            var yIndex = coordinates.Y;
             
-            columnIndex = CheckForIndexSmallerThanWorld(columnIndex, worldLength);
-            columnIndex = CheckForIndexLargerThanWorld(columnIndex, worldLength);
+            xIndex = CheckForIndexSmallerThanWorld(xIndex, world.Length - 1);
+            xIndex = CheckForIndexLargerThanWorld(xIndex, world.Length - 1);
 
-            rowIndex = CheckForIndexSmallerThanWorld(rowIndex, worldHeight);
-            rowIndex = CheckForIndexLargerThanWorld(rowIndex, worldHeight);
+            yIndex = CheckForIndexSmallerThanWorld(yIndex, world.Height - 1);
+            yIndex = CheckForIndexLargerThanWorld(yIndex, world.Height - 1);
       
-            return new Cell(new Coordinates(rowIndex, columnIndex));
+            return new Cell(new Coordinates(xIndex, yIndex));
         }
 
         private static int CheckForIndexSmallerThanWorld(int coordinate, int axisSize)

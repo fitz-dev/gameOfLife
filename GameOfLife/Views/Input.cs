@@ -86,13 +86,13 @@ namespace GameOfLife
         private bool IsInvalidSeedLength(string input, World world)
         {
             var convertedInput = Convert.ToInt32(input);
-            return convertedInput > world.Grid.GetLength(0);
+            return convertedInput > world.Length;
         }
 
         private bool IsInvalidSeedHeight(string input, World world)
         {
             var convertedInput = Convert.ToInt32(input);
-            return convertedInput > world.Grid.GetLength(1);
+            return convertedInput > world.Height;
         }
     }
 }

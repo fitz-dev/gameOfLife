@@ -8,9 +8,9 @@ namespace GameOfLife.Managers
     public class CellManager
     {
 
-        public Cell CreateCell(int columnIndex, int rowIndex)
+        public Cell CreateCell(int xIndex, int yIndex)
         {
-            return new Cell(new Coordinates(columnIndex, rowIndex));
+            return new Cell(new Coordinates(xIndex, yIndex));
         }
         
         public int SetNumberOfLiveNeighbours(List<Cell> currentState, Cell cell)

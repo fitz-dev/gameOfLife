@@ -14,12 +14,12 @@ namespace GameOfLife.Models
         public void ConstructInitialStateFor(List<Cell> state, World world)
         {
             var cellManager = new CellManager();
-            for (int rowIndex = 0; rowIndex < world.Grid.GetLength(1); rowIndex++)
+            for (int yIndex = 0; yIndex < world.Length; yIndex++)
             {
-                for (int columnIndex = 0; columnIndex < world.Grid.GetLength(0); columnIndex++)
+                for (int xIndex = 0; xIndex < world.Height; xIndex++)
                 {
                     // todo: change column and rows to X / Y?
-                    var cell = cellManager.CreateCell(columnIndex, rowIndex);
+                    var cell = cellManager.CreateCell(xIndex, yIndex);
                     cell.Neighbours = Neighbours.SetNeighbours(cell, world);
                     state.Add(cell);
                 }

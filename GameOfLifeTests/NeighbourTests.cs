@@ -82,9 +82,9 @@ namespace GameOfLifeTests
 
         }
         
-        private Cell CreateTestCell(int columnIndex, int rowIndex)
+        private Cell CreateTestCell(int xIndex, int yIndex)
         {
-            return new Cell(new Coordinates(columnIndex, rowIndex));
+            return new Cell(new Coordinates(xIndex, yIndex));
         }
     }
 }

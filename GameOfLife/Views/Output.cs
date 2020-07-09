@@ -34,11 +34,11 @@ namespace GameOfLife
         public void PrintWorld(World world, StateManager stateManager)
         {
             Console.WriteLine("==================================");
-            for (int rowIndex = 0; rowIndex < world.Grid.GetLength(1); rowIndex++)
+            for (int xIndex = 0; xIndex < world.Length; xIndex++)
             {
-                for (int columnIndex = 0; columnIndex < world.Grid.GetLength(0); columnIndex++)
+                for (int yIndex = 0; yIndex < world.Height; yIndex++)
                 {
-                    Console.Write($"{SetLifeDisplay(new Coordinates(columnIndex, rowIndex), stateManager)} ");
+                    Console.Write($"{SetLifeDisplay(new Coordinates(xIndex, yIndex), stateManager)} ");
                 }
                 Console.WriteLine();
             }
@@ -46,7 +46,7 @@ namespace GameOfLife
 
         private string SetLifeDisplay(Coordinates coordinates, StateManager stateManager)
         {
-            var cell = stateManager.CurrentState.First(cell => cell.Position.X == coordinates.X && cell.Position.Y == coordinates.Y);
+            var cell = stateManager.CurrentState.First(currentCell => currentCell.Position.X == coordinates.X && currentCell.Position.Y == coordinates.Y);
             return cell.Live ? "O" : "-";
         }
     }
