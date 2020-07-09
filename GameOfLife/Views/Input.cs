@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
@@ -9,38 +10,11 @@ namespace GameOfLife
 {
     public class Input
     {
-        public int ProcessSeedInput(World world, string input)
-        {
-            var outputMessage = new Output.Messages();
-
-            input = ValidateWorldFormat(input, outputMessage);
-            // input = ValidateCoordinateValues(world, input);
-            // while (!IsValidCoordinate(world, input) || !IsNumber(input))
-            // {
-            //     Console.WriteLine(outputMessage.SeedXEntry);
-            //     input = Console.ReadLine();
-            // }
-            return Convert.ToInt32(input);
-        }
-
-        private bool ValidateCoordinateValues(World world, string input)
-        {
-            var convertedInput = Convert.ToInt32(input);
-            return convertedInput > world.Grid.GetLength(0) || convertedInput > world.Grid.GetLength(1);
-        }
-        
-        //
-        // public Tuple<int, int> ProcessSeedFormat(string seed)
-        // {
-        //     var coordinates = seed.Split(",");
-        //     return new Tuple<int, int>(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
-        // }
-       
         public int ProcessWorldInput(string input)
         {
             var outputMessage = new Output.Messages();
             
-            input = ValidateWorldFormat(input, outputMessage);
+            input = ValidateInputFormat(input, outputMessage);
             input = ValidateValues(input, outputMessage);
             
             return Convert.ToInt32(input);
@@ -62,7 +36,7 @@ namespace GameOfLife
             return convertedInput < 1 || convertedInput > 100;
         }
 
-        private string ValidateWorldFormat(string input, Output.Messages outputMessage)
+        private string ValidateInputFormat(string input, Output.Messages outputMessage)
         {
             while (!IsNumber(input))
             {
@@ -75,6 +49,50 @@ namespace GameOfLife
         private bool IsNumber(string input)
         {
             return int.TryParse(input, out _);
+        }
+        
+        // public int ProcessSeedInput(string input)
+        // {
+        //     var outputMessage = new Output.Messages();
+        //     
+        //     input = ValidateSeedInput(input);
+        //     input = ValidateValues(input, outputMessage);
+        //     
+        //     return Convert.ToInt32(input);
+        // }
+        
+        public int ValidateSeedInput(string input)
+        {
+            var outputMessage = new Output.Messages();
+            var splitInput = input.Split(",");
+
+            for (int i = 0; i < splitInput.Length; i++)
+            {
+                input += ValidateInputFormat(input, outputMessage);
+            }
+            return Convert.ToInt32(input);
+        }
+        
+        private string ValidateSeedValues(string input, World world, Output.Messages outputMessage)
+        {
+            while (IsInvalidSeedLength(input, world) || IsInvalidSeedHeight(input, world))
+            {
+                Console.WriteLine(outputMessage.InputTooHighOrLow);
+                input = Console.ReadLine();
+            }
+            return input;
+        }
+
+        private bool IsInvalidSeedLength(string input, World world)
+        {
+            var convertedInput = Convert.ToInt32(input);
+            return convertedInput > world.Grid.GetLength(0);
+        }
+
+        private bool IsInvalidSeedHeight(string input, World world)
+        {
+            var convertedInput = Convert.ToInt32(input);
+            return convertedInput > world.Grid.GetLength(1);
         }
     }
 }

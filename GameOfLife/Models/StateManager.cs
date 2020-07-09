@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using GameOfLife.Logic;
-using GameOfLife.Models;
+using GameOfLife.Managers;
 
-namespace GameOfLife.Managers
+namespace GameOfLife.Models
 {
     public class StateManager
     {
+        // todo: worldstate, grid state. 
         public List<Cell> CurrentState = new List<Cell>();
         public List<Cell> NextState = new List<Cell>();
 
@@ -18,6 +18,7 @@ namespace GameOfLife.Managers
             {
                 for (int columnIndex = 0; columnIndex < world.Grid.GetLength(0); columnIndex++)
                 {
+                    // todo: change column and rows to X / Y?
                     var cell = cellManager.CreateCell(columnIndex, rowIndex);
                     cell.Neighbours = Neighbours.SetNeighbours(cell, world);
                     state.Add(cell);

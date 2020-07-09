@@ -1,9 +1,9 @@
-﻿﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
-  using GameOfLife.Managers;
-  using GameOfLife.Models;
+using GameOfLife.Managers;
+using GameOfLife.Models;
 
-  namespace GameOfLife
+namespace GameOfLife.Controllers
 {
     class Program
     {
@@ -20,63 +20,44 @@ using System.Collections.Generic;
             var columnInt = input.ProcessWorldInput(Console.ReadLine());
             Console.WriteLine(outputMessages.AskHeight);
             var rowInt = input.ProcessWorldInput(Console.ReadLine());
-            
             var world = new World(columnInt,rowInt);
-            
-            var seeds = new List<Cell>()
-            {
-                new Cell(new Coordinates(4,2)),
-                new Cell(new Coordinates(5,2)),
-                new Cell(new Coordinates(6,2)),
-                new Cell(new Coordinates(10,2)),
-                new Cell(new Coordinates(11,2)),
-                new Cell(new Coordinates(12,2)),
-                new Cell(new Coordinates(2,4)),
-                new Cell(new Coordinates(7,4)),
-                new Cell(new Coordinates(9,4)),
-                new Cell(new Coordinates(14,4)),
-                new Cell(new Coordinates(2,5)),
-                new Cell(new Coordinates(7,5)),
-                new Cell(new Coordinates(9,5)),
-                new Cell(new Coordinates(14,5)),
-                new Cell(new Coordinates(2,6)),
-                new Cell(new Coordinates(7,6)),
-                new Cell(new Coordinates(9,6)),
-                new Cell(new Coordinates(14,6)),
-                new Cell(new Coordinates(4,7)),
-                new Cell(new Coordinates(5,7)),
-                new Cell(new Coordinates(6,7)),
-                new Cell(new Coordinates(10,7)),
-                new Cell(new Coordinates(11,7)),
-                new Cell(new Coordinates(12,7)),
-                new Cell(new Coordinates(4,9)),
-                new Cell(new Coordinates(5,9)),
-                new Cell(new Coordinates(6,9)),
-                new Cell(new Coordinates(10,9)),
-                new Cell(new Coordinates(11,9)),
-                new Cell(new Coordinates(12,9)),
-                new Cell(new Coordinates(2,10)),
-                new Cell(new Coordinates(7,10)),
-                new Cell(new Coordinates(9,10)),
-                new Cell(new Coordinates(14,10)),
-                new Cell(new Coordinates(2,11)),
-                new Cell(new Coordinates(7,11)),
-                new Cell(new Coordinates(9,11)),
-                new Cell(new Coordinates(14,11)),
-                new Cell(new Coordinates(2,12)),
-                new Cell(new Coordinates(7,12)),
-                new Cell(new Coordinates(9,12)),
-                new Cell(new Coordinates(14,12)),
-                new Cell(new Coordinates(4,14)),
-                new Cell(new Coordinates(5,14)),
-                new Cell(new Coordinates(6,14)),
-                new Cell(new Coordinates(10,14)),
-                new Cell(new Coordinates(11,14)),
-                new Cell(new Coordinates(12,14)),
-            };
 
-            RunVisuals(10, world, seeds, stateManager);
             
+            var validatedSeeds = new List<Cell>();
+            Console.WriteLine("Enter seeds. Press 'x' to quit.");
+            var seedInput = "";
+            while (seedInput != "x")
+            {
+                // output.PrintOutput("Enter a seed X and Y separated by a comma like this: 3,4");
+                
+                seedInput = Console.ReadLine();
+                if (seedInput != "x")
+                {
+                    var readyToSplit = seedInput;
+                    var splitInput = readyToSplit.Split(",");
+                    while (splitInput.Length != 2)
+                    {
+                        Console.WriteLine("That's not the right format. Remember it's 3,4 or 14,32");
+                        var nextSeed = Console.ReadLine();
+                        splitInput = readyToSplit.Split(",");
+                    }
+
+                    while (!int.TryParse(splitInput[0], out _) || !int.TryParse(splitInput[1], out _))
+                    {
+                        Console.WriteLine("That's not a number dingus.");
+                        var nextSeed = Console.ReadLine();
+                        splitInput = readyToSplit.Split(",");
+                    }
+
+                    validatedSeeds.Add(new Cell(new Coordinates(Convert.ToInt32(splitInput[0]),
+                        Convert.ToInt32(splitInput[1]))));
+                }
+                
+
+            }
+
+            RunVisuals(20, world, validatedSeeds, stateManager);
+
         }
 
         private static void RunVisuals(int number, World world, List<Cell> seeds, StateManager stateManager)
@@ -93,6 +74,7 @@ using System.Collections.Generic;
                 stateManager.UpdateStatesForCurrentTick();
                 stateManager.FindLiveNeighboursForAllCells();
                 stateManager.DetermineCellsToLiveInNextState();
+                System.Threading.Thread.Sleep(1000);
             }
         }
     }

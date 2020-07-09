@@ -16,6 +16,7 @@ namespace GameOfLife.Managers
         public int SetNumberOfLiveNeighbours(List<Cell> currentState, Cell cell)
         {
             var liveCells = currentState.Where(currentCell => currentCell.Live);
+            
             return liveCells
                 .Sum(liveCell => cell.Neighbours
                 .Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
