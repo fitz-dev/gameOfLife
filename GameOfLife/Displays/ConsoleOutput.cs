@@ -10,9 +10,9 @@ namespace GameOfLife.Displays
         public void DisplayCurrentGeneration(World world, Generations generations)
         {
             Console.WriteLine("==================================");
-            for (int xIndex = 0; xIndex < world.Length; xIndex++)
+            for (int yIndex = 0; yIndex < world.Height; yIndex++)
             {
-                for (int yIndex = 0; yIndex < world.Height; yIndex++)
+                for (int xIndex = 0; xIndex < world.Length; xIndex++)
                 {
                     Console.Write($"{SetLifeDisplay(new Coordinates(xIndex, yIndex), generations)} ");
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameOfLife.Displays;
 using GameOfLife.Models;
 
@@ -11,7 +12,7 @@ namespace GameOfLife.Logic
         {
             var world = CreateWorld();
             var seeds = CreateSeeds();
-            RunGame(20, world, seeds);
+            RunGame(world, seeds);
         }
 
         private static World CreateWorld()
@@ -42,15 +43,15 @@ namespace GameOfLife.Logic
             return seeds;
         }
 
-        private static void RunGame(int numLoops, World world, List<Cell> seeds)
+        private static void RunGame(World world, List<Cell> seeds)
         {
             var output = new Output();
             var generations = new Generations();
 
             generations.ConstructGenerations(world);
             generations.AddSeedsForNextGeneration(seeds);
-            
-            for (int i = 0; i <= numLoops; i++)
+
+            while (generations.NextGeneration.Count(cell => cell.Live) > 0)
             {
                 output.DisplayCurrentGeneration(world, generations);
                 generations.UpdateGenerations();
@@ -58,6 +59,8 @@ namespace GameOfLife.Logic
                 generations.DetermineIfCellsWillLiveInNextGeneration();
                 System.Threading.Thread.Sleep(1000);
             }
+
+            Console.WriteLine("=====Everyone's dead=======");
         }
     }
 }

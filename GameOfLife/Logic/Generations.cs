@@ -50,9 +50,9 @@ namespace GameOfLife.Logic
         
         private void CreateGenerationFor(List<Cell> generation, World world)
         {
-            for (int xIndex = 0; xIndex < world.Height; xIndex++)
+            for (int yIndex = 0; yIndex < world.Height; yIndex++)
             {
-                for (int yIndex = 0; yIndex < world.Length; yIndex++)
+                for (int xIndex = 0; xIndex < world.Length; xIndex++)
                 {
                     var cell = new Cell(new Coordinates(xIndex, yIndex));
                     cell.Neighbours = Neighbours.SetNeighbours(cell, world);
