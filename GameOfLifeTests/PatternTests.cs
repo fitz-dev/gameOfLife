@@ -12,7 +12,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsThatResultInAUnmovingShape_When_OneTickHasPassed_Then_SameCoordinatesAreReturned()
         {
-            var generationManager = new Generations();
+            var generations = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -24,16 +24,16 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(3,3)),
             };
             
-            ProgressTicks(1, world, seeds, generationManager);
-            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager);
+            ProgressTicks(1, world, seeds, generations);
+            var currentGenerationCoordinates = ExtractCurrentGenerationCoordinates(generations);
 
-            currentCoordinates.Should().BeEquivalentTo(seeds);
+            currentGenerationCoordinates.Should().BeEquivalentTo(seeds);
         }
         
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledToad_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var generationManager = new Generations();
+            var generations = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -45,8 +45,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(3,3)),
             };
 
-            ProgressTicks(2, world, seeds, generationManager);
-            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
+            ProgressTicks(2, world, seeds, generations);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generations); 
             
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
@@ -55,7 +55,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledToad_When_OneTickHasPassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var generationManager = new Generations();
+            var generations = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -77,9 +77,9 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(2,4))
             };
 
-            ProgressTicks(1, world, seeds, generationManager);
+            ProgressTicks(1, world, seeds, generations);
         
-            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generations); 
             
             currentCoordinates.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
@@ -87,7 +87,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledBeacon_When_OneTickHasPassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var generationManager = new Generations();
+            var generations = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -111,8 +111,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(4,4)),
             };
             
-            ProgressTicks(1, world, seeds, generationManager);
-            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
+            ProgressTicks(1, world, seeds, generations);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generations); 
         
             currentCoordinates.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
@@ -120,7 +120,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var generationManager = new Generations();
+            var generations = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -134,8 +134,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(4,4)),
             };
             
-            ProgressTicks(2, world, seeds, generationManager);
-            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
+            ProgressTicks(2, world, seeds, generations);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generations); 
 
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
@@ -143,7 +143,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledPulsar_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var generationManager = new Generations();
+            var generations = new Generations();
             var world = new World(20, 20);
             var seeds = new List<Cell>()
             {
@@ -197,20 +197,20 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(12,14)),
             };
             
-            ProgressTicks(3, world, seeds, generationManager);
-            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
+            ProgressTicks(3, world, seeds, generations);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generations); 
             
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
 
-        private void ProgressTicks(int number, World world, List<Cell> seeds, Generations generations)
+        private void ProgressTicks(int numberOfTicks, World world, List<Cell> seeds, Generations generations)
         {
             generations.ConstructGenerations(world);
             generations.AddSeedsForNextGeneration(seeds);
             
-            for (int i = 0; i <= number; i++)
+            for (int i = 0; i <= numberOfTicks; i++)
             {
-                generations.UpdateGenerations();
+                generations.UpdateGenerationsForNextTick();
                 generations.FindLiveNeighboursForAllCells();
                 generations.DetermineIfCellsWillLiveInNextGeneration();
             }

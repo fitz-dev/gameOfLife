@@ -14,20 +14,20 @@ namespace GameOfLife.Logic
             CreateGenerationFor(CurrentGeneration, world);
             CreateGenerationFor(NextGeneration, world);
         }
-        public void UpdateGenerations()
+        public void AddSeedsForNextGeneration(List<Cell> seeds)
+        {
+            foreach (var seed in seeds)
+            {
+                SetMatchingCellPositionToLive(NextGeneration, seed);
+            }
+        }
+        public void UpdateGenerationsForNextTick()
         {
             ClearAllLiveCellsIn(CurrentGeneration);
-            SetNextStateToCurrentGeneration();
+            SetNextGenerationToCurrentGeneration();
             ClearAllLiveCellsIn(NextGeneration);
         }
 
-        public void AddSeedsForNextGeneration(List<Cell> coordinates)
-        {
-            foreach (var coordinate in coordinates)
-            {
-                SetMatchingCellPositionToLive(NextGeneration, coordinate);
-            }
-        }
 
         public void FindLiveNeighboursForAllCells()
         {
@@ -61,7 +61,7 @@ namespace GameOfLife.Logic
             }
         }
         
-        private void SetNextStateToCurrentGeneration()
+        private void SetNextGenerationToCurrentGeneration()
         {
             foreach (var nextCell in NextGeneration.Where(nextCell => nextCell.Live))
             {

@@ -2,7 +2,7 @@ using System;
 
 namespace GameOfLife.Displays
 {
-    public class Input
+    public class ConsoleInput
     {
         public int ProcessWorldInput(string input)
         {

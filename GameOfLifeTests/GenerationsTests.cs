@@ -56,7 +56,7 @@ namespace GameOfLifeTests
 
             generations.ConstructGenerations(world);
             generations.AddSeedsForNextGeneration(seeds);
-            generations.UpdateGenerations();
+            generations.UpdateGenerationsForNextTick();
             
             var numberLiveCells = generations.CurrentGeneration.Count(cell => cell.Live);
             
@@ -79,7 +79,7 @@ namespace GameOfLifeTests
             generations.ConstructGenerations(world);
             generations.AddSeedsForNextGeneration(seeds);
             
-            generations.UpdateGenerations();
+            generations.UpdateGenerationsForNextTick();
             
             var numberLiveCells = generations.NextGeneration.Count(cell => cell.Live);
             
@@ -106,10 +106,10 @@ namespace GameOfLifeTests
             generations.ConstructGenerations(world);
             
             generations.AddSeedsForNextGeneration(seeds);
-            generations.UpdateGenerations();
+            generations.UpdateGenerationsForNextTick();
             generations.FindLiveNeighboursForAllCells();
             generations.DetermineIfCellsWillLiveInNextGeneration();
-            generations.UpdateGenerations();
+            generations.UpdateGenerationsForNextTick();
             
             var numberLiveCells = generations.CurrentGeneration.Count(cell => cell.Live);
             

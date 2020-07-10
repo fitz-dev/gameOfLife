@@ -17,7 +17,7 @@ namespace GameOfLife.Logic
 
         private static World CreateWorld()
         {
-            var input = new Input();
+            var input = new ConsoleInput();
             Console.WriteLine("Hello there. Let's make a world...");
             Console.WriteLine("Enter length of the world between 1 & 100: ");
             var length = input.ProcessWorldInput(Console.ReadLine());
@@ -45,22 +45,29 @@ namespace GameOfLife.Logic
 
         private static void RunGame(World world, List<Cell> seeds)
         {
-            var output = new Output();
+            var output = new ConsoleOutput();
             var generations = new Generations();
 
             generations.ConstructGenerations(world);
             generations.AddSeedsForNextGeneration(seeds);
 
-            while (generations.NextGeneration.Count(cell => cell.Live) > 0)
+            while (ThereAreLiveCells(generations))
             {
                 output.DisplayCurrentGeneration(world, generations);
-                generations.UpdateGenerations();
+                generations.UpdateGenerationsForNextTick();
                 generations.FindLiveNeighboursForAllCells();
                 generations.DetermineIfCellsWillLiveInNextGeneration();
                 System.Threading.Thread.Sleep(1000);
             }
 
-            Console.WriteLine("=====Everyone's dead=======");
+            Console.WriteLine("=========Everyone's dead===========");
         }
+
+        private static bool ThereAreLiveCells(Generations generations)
+        {
+            return generations.NextGeneration.Count(cell => cell.Live) > 0;
+        }
+        
+        
     }
 }

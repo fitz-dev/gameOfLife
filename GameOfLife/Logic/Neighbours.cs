@@ -6,6 +6,14 @@ namespace GameOfLife.Logic
 {
     public static class Neighbours
     {
+        public static int SetNumberOfLiveNeighbours(List<Cell> currentGeneration, Cell cell)
+        {
+            var liveCells = currentGeneration.Where(currentCell => currentCell.Live);
+            
+            return liveCells
+                .Sum(liveCell => cell.Neighbours
+                .Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
+        }
         public static List<Cell> SetNeighbours(Cell cell, World world)
         {
             return new List<Cell>
@@ -20,15 +28,7 @@ namespace GameOfLife.Logic
                 {CheckForEdgeNeighbours(SetBottomRight(cell), world)}
             };
         }
-        public static int SetNumberOfLiveNeighbours(List<Cell> currentGeneration, Cell cell)
-        {
-            var liveCells = currentGeneration.Where(currentCell => currentCell.Live);
-            
-            return liveCells
-                .Sum(liveCell => cell.Neighbours
-                    .Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
-        }
-  
+        
         private static Cell CheckForEdgeNeighbours(Coordinates coordinates, World world)
         {
             var xIndex = coordinates.X;
@@ -53,58 +53,42 @@ namespace GameOfLife.Logic
         }
         private static Coordinates SetTopLeft(Cell cell)
         {
-            var neighbourX = cell.Position.X - 1;
-            var neighbourY = cell.Position.Y - 1;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X - 1, cell.Position.Y - 1);
         } 
         
         private static Coordinates SetLeft(Cell cell)
         {
-            var neighbourX = cell.Position.X - 1;
-            var neighbourY = cell.Position.Y;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X - 1, cell.Position.Y);
         }
         
         private static Coordinates SetBottomLeft(Cell cell)
         {
-            var neighbourX = cell.Position.X - 1;
-            var neighbourY = cell.Position.Y + 1;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X - 1, cell.Position.Y + 1);
         }
         
         private static Coordinates SetTop(Cell cell)
         {
-            var neighbourX = cell.Position.X;
-            var neighbourY = cell.Position.Y - 1;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X, cell.Position.Y - 1);
         } 
         
         private static Coordinates SetBottom(Cell cell)
         {
-            var neighbourX = cell.Position.X;
-            var neighbourY = cell.Position.Y + 1;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X, cell.Position.Y + 1);
         }
         
         private static Coordinates SetTopRight(Cell cell)
         {
-            var neighbourX = cell.Position.X + 1;
-            var neighbourY = cell.Position.Y - 1;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X + 1, cell.Position.Y - 1);
         }
         
         private static Coordinates SetRight(Cell cell)
         {
-            var neighbourX = cell.Position.X + 1;
-            var neighbourY = cell.Position.Y;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X + 1, cell.Position.Y);
         }
         
         private static Coordinates SetBottomRight(Cell cell)
         {
-            var neighbourX = cell.Position.X + 1;
-            var neighbourY = cell.Position.Y + 1;
-            return new Coordinates(neighbourX, neighbourY);
+            return new Coordinates(cell.Position.X + 1, cell.Position.Y + 1);
         }
     }
 }
