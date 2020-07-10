@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using GameOfLife.Models;
 
 namespace GameOfLife.Logic
@@ -19,7 +20,15 @@ namespace GameOfLife.Logic
                 {CheckForEdgeNeighbours(SetBottomRight(cell), world)}
             };
         }
-       
+        public static int SetNumberOfLiveNeighbours(List<Cell> currentGeneration, Cell cell)
+        {
+            var liveCells = currentGeneration.Where(currentCell => currentCell.Live);
+            
+            return liveCells
+                .Sum(liveCell => cell.Neighbours
+                    .Count(neighbour => neighbour.Position.X == liveCell.Position.X && neighbour.Position.Y == liveCell.Position.Y));
+        }
+  
         private static Cell CheckForEdgeNeighbours(Coordinates coordinates, World world)
         {
             var xIndex = coordinates.X;

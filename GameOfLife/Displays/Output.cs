@@ -1,8 +1,5 @@
 using System;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks.Dataflow;
-using GameOfLife.Managers;
 using GameOfLife.Models;
 
 namespace GameOfLife
@@ -31,22 +28,22 @@ namespace GameOfLife
         }
 
 
-        public void PrintWorld(World world, StateManager stateManager)
+        public void PrintWorld(World world, Generations generations)
         {
             Console.WriteLine("==================================");
             for (int xIndex = 0; xIndex < world.Length; xIndex++)
             {
                 for (int yIndex = 0; yIndex < world.Height; yIndex++)
                 {
-                    Console.Write($"{SetLifeDisplay(new Coordinates(xIndex, yIndex), stateManager)} ");
+                    Console.Write($"{SetLifeDisplay(new Coordinates(xIndex, yIndex), generations)} ");
                 }
                 Console.WriteLine();
             }
         }
 
-        private string SetLifeDisplay(Coordinates coordinates, StateManager stateManager)
+        private string SetLifeDisplay(Coordinates coordinates, Generations generations)
         {
-            var cell = stateManager.CurrentState.First(currentCell => currentCell.Position.X == coordinates.X && currentCell.Position.Y == coordinates.Y);
+            var cell = generations.CurrentGeneration.First(currentCell => currentCell.Position.X == coordinates.X && currentCell.Position.Y == coordinates.Y);
             return cell.Live ? "O" : "-";
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameOfLife.Managers;
 using GameOfLife.Models;
 
 namespace GameOfLife.Controllers
@@ -9,7 +8,7 @@ namespace GameOfLife.Controllers
     {
         static void Main(string[] args)
         {
-            var stateManager = new StateManager();
+            var stateManager = new Generations();
             var input = new Input();
             var output = new Output();
             var outputMessages = new Output.Messages();
@@ -60,20 +59,19 @@ namespace GameOfLife.Controllers
 
         }
 
-        private static void RunVisuals(int number, World world, List<Cell> seeds, StateManager stateManager)
+        private static void RunVisuals(int number, World world, List<Cell> seeds, Generations generations)
         {
             var output = new Output();
-            
-            stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
-            stateManager.ConstructInitialStateFor(stateManager.NextState, world);
-            stateManager.AddSeedsForNextState(seeds);
+
+            generations.ConstructGenerations(world);
+            generations.AddSeedsForNextGeneration(seeds);
             
             for (int i = 0; i <= number; i++)
             {
-                output.PrintWorld(world, stateManager);
-                stateManager.UpdateStatesForCurrentTick();
-                stateManager.FindLiveNeighboursForAllCells();
-                stateManager.DetermineCellsToLiveInNextState();
+                output.PrintWorld(world, generations);
+                generations.UpdateGenerations();
+                generations.FindLiveNeighboursForAllCells();
+                generations.DetermineIfCellsWillLiveInNextGeneration();
                 System.Threading.Thread.Sleep(1000);
             }
         }

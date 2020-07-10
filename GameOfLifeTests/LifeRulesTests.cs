@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using FluentAssertions;
-using GameOfLife.Logic;
-using GameOfLife.Managers;
 using GameOfLife.Models;
 using Xunit;
 

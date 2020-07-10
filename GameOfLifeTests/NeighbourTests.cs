@@ -1,7 +1,5 @@
 using FluentAssertions;
-using GameOfLife;
 using GameOfLife.Logic;
-using GameOfLife.Managers;
 using GameOfLife.Models;
 using Xunit;
 

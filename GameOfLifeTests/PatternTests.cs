@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using FluentAssertions;
-using GameOfLife;
-using GameOfLife.Managers;
 using GameOfLife.Models;
 using Xunit;
 
@@ -15,7 +11,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsThatResultInAUnmovingShape_When_OneTickHasPassed_Then_SameCoordinatesAreReturned()
         {
-            var stateManager = new StateManager();
+            var generationManager = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -27,8 +23,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(3,3)),
             };
             
-            ProgressTicks(1, world, seeds, stateManager);
-            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager);
+            ProgressTicks(1, world, seeds, generationManager);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager);
 
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
@@ -36,8 +32,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledToad_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var stateManager = new StateManager();
-            var cellManager = new CellManager();
+            var generationManager = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -49,8 +44,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(3,3)),
             };
 
-            ProgressTicks(2, world, seeds, stateManager);
-            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            ProgressTicks(2, world, seeds, generationManager);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
             
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
@@ -59,8 +54,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledToad_When_OneTickHasPassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var stateManager = new StateManager();
-            var cellManager = new CellManager();
+            var generationManager = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -82,9 +76,9 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(2,4))
             };
 
-            ProgressTicks(1, world, seeds, stateManager);
+            ProgressTicks(1, world, seeds, generationManager);
         
-            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
             
             currentCoordinates.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
@@ -92,7 +86,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledBeacon_When_OneTickHasPassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var stateManager = new StateManager();
+            var generationManager = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -116,8 +110,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(4,4)),
             };
             
-            ProgressTicks(1, world, seeds, stateManager);
-            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            ProgressTicks(1, world, seeds, generationManager);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
         
             currentCoordinates.Should().BeEquivalentTo(expectedSeedCoordinates);
         }
@@ -125,7 +119,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledBeacon_When_TwoTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var stateManager = new StateManager();
+            var generationManager = new Generations();
             var world = new World(6, 6);
             var seeds = new List<Cell>()
             {
@@ -139,8 +133,8 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(4,4)),
             };
             
-            ProgressTicks(2, world, seeds, stateManager);
-            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            ProgressTicks(2, world, seeds, generationManager);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
 
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
@@ -148,7 +142,7 @@ namespace GameOfLifeTests
         [Fact]
         public void Given_SeedsForARepeatingPatternCalledPulsar_When_ThreeTicksHavePassed_Then_ExpectedCoordinatesAreReturned()
         {
-            var stateManager = new StateManager();
+            var generationManager = new Generations();
             var world = new World(20, 20);
             var seeds = new List<Cell>()
             {
@@ -202,29 +196,28 @@ namespace GameOfLifeTests
                 new Cell(new Coordinates(12,14)),
             };
             
-            ProgressTicks(3, world, seeds, stateManager);
-            var currentCoordinates = ExtractCurrentStateCoordinates(stateManager); 
+            ProgressTicks(3, world, seeds, generationManager);
+            var currentCoordinates = ExtractCurrentGenerationCoordinates(generationManager); 
             
             currentCoordinates.Should().BeEquivalentTo(seeds);
         }
 
-        private void ProgressTicks(int number, World world, List<Cell> seeds, StateManager stateManager)
+        private void ProgressTicks(int number, World world, List<Cell> seeds, Generations generations)
         {
-            stateManager.ConstructInitialStateFor(stateManager.CurrentState, world);
-            stateManager.ConstructInitialStateFor(stateManager.NextState, world);
-            stateManager.AddSeedsForNextState(seeds);
+            generations.ConstructGenerations(world);
+            generations.AddSeedsForNextGeneration(seeds);
             
             for (int i = 0; i <= number; i++)
             {
-                stateManager.UpdateStatesForCurrentTick();
-                stateManager.FindLiveNeighboursForAllCells();
-                stateManager.DetermineCellsToLiveInNextState();
+                generations.UpdateGenerations();
+                generations.FindLiveNeighboursForAllCells();
+                generations.DetermineIfCellsWillLiveInNextGeneration();
             }
         }
         
-        private static List<Cell> ExtractCurrentStateCoordinates(StateManager stateManager)
+        private static List<Cell> ExtractCurrentGenerationCoordinates(Generations generations)
         {
-            return stateManager.CurrentState
+            return generations.CurrentGeneration
                 .Where(cell => cell.Live)
                 .Select(cell => new Cell(cell.Position))
                 .ToList();
