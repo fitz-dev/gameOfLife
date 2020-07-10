@@ -6,49 +6,8 @@ using Xunit;
 
 namespace GameOfLifeTests
 {
-    public class GameTests
+    public class GenerationTests
     {
-        [Fact]
-        public void Given_ACellThatHasTwoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
-        {
-            var world = new World(10, 10);
-            var seeds = new List<Cell>()
-            {
-                new Cell(new Coordinates(0,4))
-                {
-                    Live = true, 
-                    Neighbours = {}, 
-                    Position = {}, 
-                    NumLiveNeighbours = 0
-                },
-                new Cell(new Coordinates(0,6))
-                {
-                    Live = true, 
-                    Neighbours = {}, 
-                    Position = {}, 
-                    NumLiveNeighbours = 0
-                },
-            };
-            var testCell = new Cell(new Coordinates(0, 5));
-            
-            testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
-            testCell.NumLiveNeighbours = Neighbours.SetNumberOfLiveNeighbours(seeds, testCell);
-            
-            Assert.Equal(2, testCell.NumLiveNeighbours);
-        }
-          
-        [Fact]
-        public void Given_ACellThatHasNoLiveNeighbours_When_FetchingNumberOfLiveNeighbours_Then_IntegerIsReturned()
-        {
-            var world = new World(10, 10);
-            var seeds = new List<Cell>();
-                       
-            var testCell = new Cell(new Coordinates(0, 5));
-            testCell.Neighbours = Neighbours.SetNeighbours(testCell, world);
-            testCell.NumLiveNeighbours = Neighbours.SetNumberOfLiveNeighbours(seeds, testCell);
-
-            Assert.Equal(0, testCell.NumLiveNeighbours);
-        }
         [Fact]
         public void Given_AnEmptyWorld_When_CurrentGenerationIsConstructed_Then_NoLiveCellsAreReturned()
         {

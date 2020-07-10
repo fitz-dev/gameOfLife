@@ -1,4 +1,6 @@
-namespace GameOfLife.Models
+using GameOfLife.Models;
+
+namespace GameOfLife.Logic
 {
     public static class LifeRules
     {

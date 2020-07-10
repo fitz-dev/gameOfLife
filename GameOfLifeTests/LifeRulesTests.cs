@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameOfLife.Logic;
 using GameOfLife.Models;
 using Xunit;
 

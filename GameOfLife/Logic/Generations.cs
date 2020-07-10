@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using GameOfLife.Logic;
+using GameOfLife.Models;
 
-namespace GameOfLife.Models
+namespace GameOfLife.Logic
 {
     public class Generations
     {

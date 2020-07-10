@@ -1,9 +1,10 @@
+using GameOfLife.Logic;
 using GameOfLife.Models;
 
-namespace GameOfLife
+namespace GameOfLife.Displays
 {
     public interface IOutput
     {
-        public void PrintWorld(World world, Generations generations);
+        public void DisplayCurrentGeneration(World world, Generations generations);
     }
 }

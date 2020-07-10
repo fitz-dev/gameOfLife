@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using GameOfLife.Logic;
 using GameOfLife.Models;
 using Xunit;
 

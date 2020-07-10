@@ -1,25 +1,22 @@
 using System;
-using GameOfLife.Models;
 
-namespace GameOfLife
+namespace GameOfLife.Displays
 {
     public class Input
     {
         public int ProcessWorldInput(string input)
         {
-            var outputMessage = new Output.Messages();
-            
-            input = ValidateInputFormat(input, outputMessage);
-            input = ValidateValues(input, outputMessage);
+            input = ValidateInputFormat(input);
+            input = ValidateValues(input);
             
             return Convert.ToInt32(input);
         }
 
-        private string ValidateValues(string input, Output.Messages outputMessage)
+        private string ValidateValues(string input)
         {
             while (IsInvalidWorldNumber(input))
             {
-                Console.WriteLine(outputMessage.InputTooHighOrLow);
+                Console.WriteLine("That number is too high or too low.");
                 input = Console.ReadLine();
             }
             return input;
@@ -27,15 +24,17 @@ namespace GameOfLife
 
         private bool IsInvalidWorldNumber(string input)
         {
+            var minWorldSize = 1;
+            var maxWorldSize = 100;
             var convertedInput = Convert.ToInt32(input);
-            return convertedInput < 1 || convertedInput > 100;
+            return convertedInput < minWorldSize || convertedInput > maxWorldSize;
         }
 
-        private string ValidateInputFormat(string input, Output.Messages outputMessage)
+        private string ValidateInputFormat(string input)
         {
             while (!IsNumber(input))
             {
-                Console.WriteLine(outputMessage.IncorrectFormat);
+                Console.WriteLine("That's not a number, please try again.");
                 input = Console.ReadLine();
             }
             return input;
@@ -44,50 +43,6 @@ namespace GameOfLife
         private bool IsNumber(string input)
         {
             return int.TryParse(input, out _);
-        }
-        
-        // public int ProcessSeedInput(string input)
-        // {
-        //     var outputMessage = new Output.Messages();
-        //     
-        //     input = ValidateSeedInput(input);
-        //     input = ValidateValues(input, outputMessage);
-        //     
-        //     return Convert.ToInt32(input);
-        // }
-        
-        public int ValidateSeedInput(string input)
-        {
-            var outputMessage = new Output.Messages();
-            var splitInput = input.Split(",");
-
-            for (int i = 0; i < splitInput.Length; i++)
-            {
-                input += ValidateInputFormat(input, outputMessage);
-            }
-            return Convert.ToInt32(input);
-        }
-        
-        private string ValidateSeedValues(string input, World world, Output.Messages outputMessage)
-        {
-            while (IsInvalidSeedLength(input, world) || IsInvalidSeedHeight(input, world))
-            {
-                Console.WriteLine(outputMessage.InputTooHighOrLow);
-                input = Console.ReadLine();
-            }
-            return input;
-        }
-
-        private bool IsInvalidSeedLength(string input, World world)
-        {
-            var convertedInput = Convert.ToInt32(input);
-            return convertedInput > world.Length;
-        }
-
-        private bool IsInvalidSeedHeight(string input, World world)
-        {
-            var convertedInput = Convert.ToInt32(input);
-            return convertedInput > world.Height;
         }
     }
 }
