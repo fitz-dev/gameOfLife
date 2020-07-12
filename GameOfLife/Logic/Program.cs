@@ -50,14 +50,15 @@ namespace GameOfLife.Logic
 
             generations.ConstructGenerations(world);
             generations.AddSeedsForNextGeneration(seeds);
+            output.DisplayCurrentGeneration(world, generations);
 
             while (ThereAreLiveCells(generations))
             {
-                output.DisplayCurrentGeneration(world, generations);
                 generations.UpdateGenerationsForNextTick();
                 generations.FindLiveNeighboursForAllCells();
                 generations.DetermineIfCellsWillLiveInNextGeneration();
                 System.Threading.Thread.Sleep(1000);
+                output.DisplayCurrentGeneration(world, generations);
             }
 
             Console.WriteLine("=========Everyone's dead===========");
