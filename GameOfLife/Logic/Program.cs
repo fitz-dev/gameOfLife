@@ -54,8 +54,8 @@ namespace GameOfLife.Logic
 
             while (ThereAreLiveCells(generations))
             {
-                generations.UpdateGenerationsForNextTick();
                 generations.FindLiveNeighboursForAllCells();
+                generations.UpdateGenerationsForNextTick();
                 generations.DetermineIfCellsWillLiveInNextGeneration();
                 System.Threading.Thread.Sleep(1000);
                 output.DisplayCurrentGeneration(world, generations);
